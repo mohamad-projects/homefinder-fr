@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../features/auth/authSlice'; // استيراد دالة login
+import { login } from '../../features/auth/authSlice';
 import './Login.scss';
-import backgroundImage from '../../assets/login.jpg'; // خلفية الصورة
+import backgroundImage from '../../assets/login.jpg';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth); // جلب حالة التحميل والخطأ من الـ Redux
+  const { loading, error } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -27,7 +27,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-wrapper">
+    <div className="login-wrapper" dir="ltr">
       <div className="login-container">
         <div className="login-box">
           <h1>Welcome Back to HomeFinder</h1>

@@ -50,45 +50,45 @@ const Register = () => {
         <div className="register-box">
           <h1>Create Account</h1>
           <p>Join HomeFinder now</p>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="form-grid">
             <div className="form-group">
               <label>Name</label>
               <input
                 type="text"
-                placeholder="Enter your full name"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                placeholder="Full Name"
               />
             </div>
             <div className="form-group">
               <label>Email</label>
               <input
                 type="email"
-                placeholder="Enter your email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                placeholder="Email"
               />
             </div>
             <div className="form-group">
               <label>Password</label>
               <input
                 type="password"
-                placeholder="Create a password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
+                placeholder="Password"
               />
             </div>
             <div className="form-group">
               <label>Confirm Password</label>
               <input
                 type="password"
-                placeholder="Confirm your password"
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
+                placeholder="Confirm Password"
               />
             </div>
             <div className="form-group icon-input">
@@ -97,60 +97,47 @@ const Register = () => {
                 <FaTelegramPlane className="icon" />
                 <input
                   type="text"
-                  placeholder="Enter your Telegram username"
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
+                  placeholder="@username"
                 />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group half-width">
-                <label>City</label>
-                <select
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                >
-                  <option value="">Select City</option>
-                  <option value="Damascus">Damascus</option>
-                  <option value="Homs">Homs</option>
-                  <option value="Hama">Hama</option>
-                  <option value="Aleppo">Aleppo</option>
-                </select>
-              </div>
-              <div className="form-group half-width">
-                <label>District</label>
-                <select
-                  name="district"
-                  value={formData.district}
-                  onChange={handleChange}
-                >
-                  <option value="">Select District</option>
-                  <option value="Bab Sarji">Bab Sarji</option>
-                  <option value="Air Messi">Air Messi</option>
-                  <option value="Hama">Hama</option>
-                  <option value="Aleppo">Aleppo</option>
-                </select>
               </div>
             </div>
             <div className="form-group">
               <label>Phone Number</label>
               <input
                 type="tel"
-                placeholder="Enter your phone number"
                 name="phone_no"
                 value={formData.phone_no}
                 onChange={handleChange}
+                placeholder="Phone Number"
                 inputMode="numeric"
               />
             </div>
-            <div className="buttons">
-              <button
-                type="button"
-                className="back"
-                onClick={() => navigate(-1)}
-              >
+            <div className="form-group">
+              <label>City</label>
+              <select name="city" value={formData.city} onChange={handleChange}>
+                <option value="">Select City</option>
+                <option value="Damascus">Damascus</option>
+                <option value="Homs">Homs</option>
+                <option value="Hama">Hama</option>
+                <option value="Aleppo">Aleppo</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>District</label>
+              <select name="district" value={formData.district} onChange={handleChange}>
+                <option value="">Select District</option>
+                <option value="Bab Sarji">Bab Sarji</option>
+                <option value="Air Messi">Air Messi</option>
+                <option value="Hama">Hama</option>
+                <option value="Aleppo">Aleppo</option>
+              </select>
+            </div>
+
+            <div className="form-buttons">
+              <button type="button" onClick={() => navigate(-1)} className="back">
                 Back
               </button>
               <button type="submit" className="next">
