@@ -1,0 +1,101 @@
+.office-card {
+    background: #000000;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(49, 42, 42, 0.06);
+    padding: 25px 30px;
+    margin: 25px auto;
+    width: 100%;
+    max-width: 600px;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+    }
+  
+    .office-info {
+      margin-bottom: 20px;
+  
+      h2 {
+        font-size: 1.7rem;
+        color: #ffffff;
+        margin-bottom: 10px;
+      }
+  
+      p {
+        margin: 6px 0;
+        display: flex;
+        align-items: center;
+        color: #666;
+        font-size: 0.95rem;
+  
+        svg {
+          margin-right: 8px;
+          color: #888;
+        }
+      }
+    }
+  
+    .cta {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fbfbfb;
+      margin-bottom: 15px;
+    }
+  
+    .buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+  
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 18px;
+        border-radius: 50px;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: background-color 0.3s ease;
+  
+        svg {
+          font-size: 1.1rem;
+        }
+  
+        &.whatsapp {
+          background-color: #25D366;
+  
+          &:hover {
+            background-color: #1cb85a;
+          }
+        }
+  
+        &.telegram {
+          background-color: #0088cc;
+  
+          &:hover {
+            background-color: #007ab3;
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .office-card {
+      padding: 20px;
+      .buttons {
+        flex-direction: column;
+        a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+  }
+  

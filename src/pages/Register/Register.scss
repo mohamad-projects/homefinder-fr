@@ -1,0 +1,151 @@
+.register-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f2f5;
+  padding: 2rem;
+
+  .register-container {
+    background-image: url('../../assets/login.jpg');
+    background-size: cover; /* تكبير الصورة لتغطية كامل الحاوية */
+    background-position: center;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 800px; /* الحد الأقصى للعرض */
+    height: 80vh; /* الارتفاع */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* لمنع ظهور أي محتوى خارج الصورة */
+  
+  
+    .register-box {
+      background: rgba(255, 255, 255, 0.8); /* خلفية شبه شفافة */
+      backdrop-filter: blur(10px); /* تأثير الضباب */
+      padding: 1.5rem; /* تقليل الحشوة */
+      border-radius: 20px;
+      max-width: 550px; /* تقليل الحد الأقصى للعرض */
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto; /* لتمكين السكروول داخل الحاوية */
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+
+      h1 {
+        font-size: 1.8rem; /* تقليل حجم الخط */
+        font-weight: 700;
+        margin-bottom: 0.8rem; /* تقليل المسافة */
+        text-align: center;
+        color: #3f3d56;
+      }
+
+      p {
+        font-size: 1rem; /* تقليل حجم الخط */
+        color: #555;
+        margin-bottom: 1.5rem; /* تقليل المسافة */
+        text-align: center;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.2rem; /* تقليل المسافة */
+
+        label {
+          font-size: 0.95rem; /* تقليل حجم الخط */
+          font-weight: bold;
+          margin-bottom: 0.5rem;
+          color: #333;
+        }
+
+        input,
+        select {
+          padding: 0.8rem; /* تقليل الحشوة */
+          border-radius: 12px;
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          font-size: 0.95rem; /* تقليل حجم الخط */
+          background: rgba(255, 255, 255, 0.5);
+          color: #333;
+          backdrop-filter: blur(5px);
+          outline: none;
+          transition: 0.3s ease-in-out;
+
+          &::placeholder {
+            color: #888;
+          }
+
+          &:focus {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: #6c63ff;
+          }
+        }
+      }
+
+      .form-row {
+        display: flex;
+        gap: 1rem;
+
+        .half-width {
+          flex: 1;
+        }
+      }
+
+      .input-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .icon {
+          position: absolute;
+          left: 12px;
+          color: #3f3d56;
+          font-size: 1.2rem; /* تقليل حجم الأيقونة */
+        }
+
+        input {
+          padding-left: 2.5rem; /* تقليل المسافة داخل الحقل */
+        }
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.2rem; /* تقليل المسافة */
+
+        button {
+          flex: 1;
+          background-color: #1d005c;
+          color: white;
+          padding: 0.8rem; /* تقليل الحشوة */
+          font-weight: bold;
+          border: none;
+          border-radius: 30px;
+          cursor: pointer;
+          font-size: 1rem; /* تقليل حجم الخط */
+          transition: 0.3s ease-in-out;
+
+          &:hover {
+            background-color: #3f00a4;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .register-container {
+    justify-content: center;
+    padding: 1rem;
+
+    .register-box {
+      width: 100%;
+      padding: 1.5rem;
+    }
+  }
+}
