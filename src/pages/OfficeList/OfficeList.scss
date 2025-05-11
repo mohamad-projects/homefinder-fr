@@ -1,0 +1,21 @@
+.office-list {
+  // padding: 40px 20px;
+  background: #f5f7fa;
+  // min-height: 100vh;
+  text-align: center;
+  
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    color: #000000;
+  }
+  
+  .office-cards-container {
+    display: grid;
+    padding-right: 65px; /* Increased padding */
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1px));
+    gap: 0 4rem; /* Increased gap between cards */
+    margin: 0rem; /* Optional: Adds outer margin */
+    }
+  }
+  
