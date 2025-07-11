@@ -1,0 +1,315 @@
+.navbar {
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 10px rgba(130, 129, 129, 0.08);
+  padding: 0.8rem 5%;
+  width: 87;
+  position: relative;
+}
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-left: 1px;
+}
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.navbar-brand .brand-icon {
+  color: black;
+  font-size: 1.4rem;
+  margin-left: 0;
+}
+.navbar-brand .search-icon {
+  color: red;
+  font-size: 1rem;
+  margin-left: 0;
+}
+.navbar-brand .brand-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+}
+.navbar-links .nav-link {
+  color: #2d3748;
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+}
+.navbar-links .nav-link:hover {
+  color: #4a6bff;
+}
+.navbar-links .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #4a6bff;
+  transition: all 0.3s ease;
+}
+.navbar-links .nav-link:hover::after {
+  width: 100%;
+}
+.navbar-links .nav-link-hot {
+  color: red;
+}
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.navbar .action-buttons {
+  display: flex;
+  gap: 1rem;
+}
+.navbar .action-buttons .action-button {
+  background-color: rgb(0, 120, 194);
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+.navbar .action-buttons .action-button:hover {
+  background-color: #1741ff;
+}
+.navbar .action-buttons .action-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+.navbar .action-buttons .logout-button {
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 25px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.navbar .action-buttons .logout-button:hover {
+  background-color: #ee3900;
+}
+
+@media (max-width: 992px) {
+  .navbar {
+    padding: 0.8rem 2rem;
+  }
+  .navbar-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .navbar-links {
+    gap: 1.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .navbar-links {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .navbar-actions {
+    gap: 1rem;
+  }
+}
+@media (max-width: 576px) {
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+  .navbar-brand .brand-text {
+    font-size: 1.1rem;
+  }
+  .navbar-links {
+    gap: 0.8rem;
+  }
+  .navbar-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .navbar-actions .language-toggle, .navbar-actions .login-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+[dir=rtl] .navbar-links .nav-link::after {
+  left: auto;
+  right: 0;
+}
+[dir=rtl] .navbar-brand .brand-icon {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+[dir=rtl] .navbar-actions .language-toggle {
+  flex-direction: row-reverse;
+}
+
+.contact-page {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.contact-title {
+  text-align: center;
+  color: rgb(69, 67, 67);
+  margin-bottom: 3rem;
+  font-size: 2.2rem;
+}
+
+.contact-sections {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .contact-sections {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vertical-divider {
+  background: #000;
+  width: 1px;
+  height: 100%;
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .vertical-divider {
+    display: none;
+  }
+}
+
+.left-container .company-card {
+  background: #f5f5f5;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.left-container .company-card .company-image {
+  width: 100%;
+  height: 350px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.left-container .company-card .company-details {
+  padding: 2rem;
+}
+.left-container .company-card .company-details h3 {
+  color: rgb(19, 88, 158);
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 1rem;
+}
+.left-container .company-card .company-details .info-line {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+.left-container .company-card .company-details .info-line span {
+  font-weight: 600;
+  color: rgb(29, 91, 177);
+  min-width: 80px;
+}
+.left-container .company-card .company-details .info-line p {
+  color: #000000;
+  margin: 0;
+}
+
+.right-container .contact-form {
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 2rem;
+}
+.right-container .contact-form .form-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.8rem;
+}
+.right-container .contact-form .form-row label {
+  font-weight: 600;
+  color: #2d3748;
+  min-width: 100px;
+}
+.right-container .contact-form .form-row .form-input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #151617;
+  border-radius: 50px;
+  background-color: #ffffff;
+  color: #000;
+}
+.right-container .contact-form .form-row .form-input:focus {
+  border-color: #4a6bff;
+  box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+}
+
+.send-button {
+  background: rgb(9, 9, 9);
+  color: #ffffff;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 70%;
+  margin-left: 150px;
+  transition: all 0.3s ease;
+  align-items: center;
+  justify-content: center;
+}
+.send-button:hover {
+  background: rgb(95, 98, 99);
+  transform: translateY(-2px);
+}
+
+.contact-note {
+  text-align: center;
+  margin-top: 3rem;
+  color: #718096;
+  line-height: 1.6;
+}
+
+[dir=rtl] .contact-sections {
+  direction: rtl;
+}
+[dir=rtl] .info-line, [dir=rtl] .form-row {
+  flex-direction: row-reverse;
+}
+[dir=rtl] .company-details h3 {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .contact-sections {
+    gap: 2rem;
+  }
+  .form-row {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  .form-row label {
+    min-width: auto !important;
+  }
+}/*# sourceMappingURL=Contact.css.map */

@@ -1,0 +1,408 @@
+// MostPages.scss
+
+$primary-color: #2A5C8D; // اللون الأساسي (أزرق داكن)
+$secondary-color: #f8f9fa; // لون خلفية الصفحة (رمادي فاتح جدًا)
+$light-bg: #f1f3f5; // لون خلفية فاتح للعناصر الداخلية
+$text-color: #2d3436; // لون النص الأساسي
+
+// الألوان الجديدة لـ Most Search
+$search-primary-color: #5e72e4; // أزرق بنفسجي
+$search-light-bg: #e0e7ff; // خلفية فاتحة لبطاقات البحث
+
+.most-pages-container {
+  padding: 1rem 3%;
+  background-color: $secondary-color;
+  min-height: 100vh;
+}
+
+.most-header {
+  text-align: center;
+  margin-bottom: 25px;
+  margin-top: 20px;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+  }
+}
+
+// --- Loading Spinner styles ---
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid $primary-color;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.no-results-text {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  line-height: 1.5;
+}
+
+// --- Styles for Most Searched Filters (NEW DESIGN) ---
+.most-searched-filters-grid {
+  display: grid;
+  // أظهر 3-4 أعمدة على الشاشات الكبيرة، بطاقات أصغر وأكثر كثافة
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem; // تباعد أقل بين البطاقات
+  padding: 10px; // Padding داخلي
+  justify-content: center; // توسيط الشبكة
+  max-width: 1200px; // حد أقصى لعرض الشبكة
+  margin: 0 auto; // توسيط الشبكة في الصفحة
+}
+
+.search-filter-card {
+  background-color: #ffffff;
+  border-radius: 12px; // حواف دائرية أكثر نعومة
+  padding: 15px; // Padding أقل قليلاً
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); // ظل أكثر وضوحاً
+  display: flex;
+  flex-direction: column; // محتوى البطاقة رأسيًا
+  align-items: center; // توسيط المحتوى
+  text-align: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer; // للإشارة إلى أنها تفاعلية
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .filter-icon {
+    background-color: $search-light-bg; // خلفية خفيفة للأيقونة
+    border-radius: 50%; // أيقونة دائرية
+    padding: 12px; // حجم الأيقونة
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $search-primary-color; // لون الأيقونة
+  }
+
+  .filter-details {
+    margin-bottom: 10px;
+
+    .filter-key {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+      display: block; // كل من المفتاح والقيمة في سطر منفصل
+      margin-bottom: 3px;
+    }
+
+    .filter-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: $search-primary-color; // لون مميز للقيمة
+      display: block;
+      white-space: nowrap; // منع التفاف النص
+      overflow: hidden; // إخفاء الفائض
+      text-overflow: ellipsis; // إضافة نقاط الحذف
+      max-width: 100%; // تأكد من احترام العرض
+    }
+  }
+
+  .filter-count {
+    background-color: #f0f4f8; // لون خلفية لشارة العدد
+    border-radius: 20px; // حواف دائرية جدًا (شكل قرص)
+    padding: 5px 12px; // حجم الشارة
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $primary-color;
+    display: flex;
+    align-items: center;
+    gap: 5px; // مسافة بين الرقم والنص
+
+    .filter-label {
+      font-size: 0.8rem;
+      color: #666;
+    }
+  }
+}
+
+
+// --- Styles for Most Watched Properties (Already perfect, just for context) ---
+.most-watched-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* 280px for smaller cards */
+  gap: 1.5rem;
+  margin: 0 auto;
+  justify-content: center; /* Center items in the grid */
+}
+
+.property-card-most-watched {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.image-section-most-watched {
+  height: 180px; /* Reduced height for a more compact card */
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.views-count-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center horizontally */
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  color: #666;
+  font-weight: 500;
+  border-bottom: 1px solid $light-bg; /* Separator */
+  margin-bottom: 0.5rem; /* Space below it */
+
+  .views-icon {
+    font-size: 1.2rem;
+    color: $primary-color;
+    margin-right: 0.4rem;
+  }
+}
+
+
+.content-section-most-watched {
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between; /* To push the button to the bottom */
+}
+
+.price-location-group {
+  display: flex;
+  flex-direction: column; /* Stack price and location vertically */
+  align-items: flex-start; /* Align to the start (left for LTR, right for RTL) */
+  margin-bottom: 1rem; /* Space below the group */
+
+  .price-tag {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $primary-color;
+    margin-bottom: 0.4rem; /* Space between price and location */
+  }
+
+  .location-info {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: $text-color;
+
+    .location-icon {
+      font-size: 1.1rem;
+      color: #888;
+      margin-right: 0.4rem;
+    }
+  }
+}
+
+
+.more-details-btn-most-watched {
+  width: 100%;
+  padding: 0.8rem;
+  background: $primary-color;
+  color: white;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 0.95rem;
+  border-radius: 0 0 8px 8px; /* Rounded corners only at the bottom */
+  margin-top: auto; /* Push button to the bottom if content height varies */
+  text-align: center; /* Ensure text is centered */
+}
+
+.more-details-btn-most-watched:hover {
+  background: darken($primary-color, 10%);
+}
+
+// --- Pagination Controls ---
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 1.5rem 0;
+  padding: 0 1rem;
+}
+
+.pagination-controls button {
+  padding: 7px 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: darken(#007bff, 10%);
+  }
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+// --- RTL support ---
+[dir="rtl"] {
+  // Styles for Most Searched Filters (NEW DESIGN)
+  .most-searched-filters-grid {
+    .search-filter-card {
+      text-align: center; // Center content in RTL too
+
+      .filter-details {
+        text-align: center; // Center details text
+      }
+    }
+  }
+
+  // Styles for Most Watched Properties
+  .most-watched-grid {
+    .views-count-centered {
+      .views-icon {
+        margin-right: 0;
+        margin-left: 0.4rem;
+      }
+    }
+    .content-section-most-watched {
+        // No specific text-align needed here, as children will handle it
+    }
+    .price-location-group {
+      align-items: flex-end; /* Align to the end (right) for RTL */
+      .location-info {
+        .location-icon {
+          margin-right: 0;
+          margin-left: 0.4rem;
+        }
+      }
+    }
+  }
+
+  .pagination-controls {
+    direction: ltr; /* Keep pagination left-to-right visually */
+  }
+}
+
+
+// --- Responsive adjustments ---
+@media (max-width: 768px) {
+  .most-header h1 {
+    font-size: 2rem;
+  }
+
+  // Most Searched adjustments
+  .most-searched-filters-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); // أصغر على الأجهزة اللوحية
+    gap: 0.8rem;
+  }
+  .search-filter-card {
+    padding: 12px;
+    .filter-key { font-size: 0.9rem; }
+    .filter-value { font-size: 1.1rem; }
+    .filter-count {
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      .filter-label { font-size: 0.7rem; }
+    }
+  }
+
+  // Most Watched adjustments (same as before, just for completeness)
+  .most-watched-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .image-section-most-watched {
+    height: 160px;
+  }
+  .views-count-centered {
+    font-size: 0.9rem;
+    .views-icon { font-size: 1.1rem; }
+  }
+  .content-section-most-watched {
+    padding: 0.7rem;
+  }
+  .price-location-group {
+    .price-tag { font-size: 1.1rem; }
+    .location-info { font-size: 0.8rem; }
+  }
+  .more-details-btn-most-watched { font-size: 0.9rem; }
+}
+
+@media (max-width: 480px) {
+  .most-pages-container {
+    padding: 0.8rem 2%;
+  }
+
+  // Most Searched adjustments
+  .most-searched-filters-grid {
+    grid-template-columns: 1fr; // عمود واحد على الجوالات الصغيرة
+    gap: 0.7rem;
+  }
+  .search-filter-card {
+    padding: 10px;
+    .filter-key { font-size: 0.85rem; }
+    .filter-value { font-size: 1rem; }
+    .filter-count {
+      padding: 3px 8px;
+      font-size: 0.75rem;
+    }
+  }
+
+  // Most Watched adjustments (same as before, for completeness)
+  .most-watched-grid {
+    gap: 0.7rem;
+  }
+  .image-section-most-watched {
+    height: 120px;
+  }
+  .views-count-centered { font-size: 0.85rem; }
+  .price-location-group {
+    .price-tag { font-size: 1rem; }
+    .location-info { font-size: 0.75rem; }
+  }
+  .more-details-btn-most-watched {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+}

@@ -17,17 +17,20 @@ import {
     OfficeDetails ,
     Profile,
     MostPages,
+    Services,
+    PanoramaViewer,
+    EditHome
     
 } from "./pages";
-// import Profile from "./pages/Profile/Profile";
+import Add360ImagesForm from "./components/Add360ImagesForm/Add360ImagesForm";
 
 export const createRoutes = (user) => createBrowserRouter([
     {
         path: "/",
-        element: <Layout />, // تمت إزالة ProtectedRoute هنا
+        element: <Layout />, 
         children: [
             { 
-                index: true, // هذه تحدد الصفحة الرئيسية
+                index: true, 
                 element: <Home />,
                 errorElement: <Error />
             },
@@ -36,9 +39,19 @@ export const createRoutes = (user) => createBrowserRouter([
                 element: user ? <RealEstate /> : <Navigate to="/" />,
                 errorElement: <Error /> 
             },
-            { 
+            {
                 path: "/office", 
                 element: <Office /> ,
+                errorElement: <Error /> 
+            },
+            { 
+                path: "/panorama/:id", 
+                element: <PanoramaViewer /> ,
+                errorElement: <Error /> 
+            },
+             { 
+                path: "/services", 
+                element: <Services /> ,
                 errorElement: <Error /> 
             },
             { 
@@ -66,6 +79,7 @@ export const createRoutes = (user) => createBrowserRouter([
                 element :<Profile /> ,
                 errorElement: <Error /> 
             },
+              
             { 
                 path: "/addhome", 
                 element: user ? <AddHome /> : <Navigate to="/" />,
@@ -89,6 +103,21 @@ export const createRoutes = (user) => createBrowserRouter([
             { 
                 path: "/property/:id", 
                 element: <PropertyDetails /> ,
+                errorElement: <Error /> 
+            },
+               { 
+                path: "/property/update/:id", 
+                element: <EditHome /> ,
+                errorElement: <Error /> 
+            },
+             {
+                path: "/Add360/:id",
+                element: <Add360ImagesForm /> ,
+                errorElement: <Error />
+            },
+            { 
+                path: "/pano", 
+                element: <PanoramaViewer /> ,
                 errorElement: <Error /> 
             },
         ],

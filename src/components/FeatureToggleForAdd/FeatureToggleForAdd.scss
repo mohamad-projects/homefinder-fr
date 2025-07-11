@@ -1,0 +1,141 @@
+.features-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem; // تباعد واضح بين البطاقات
+  padding: 2rem;
+}
+
+.feature-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 1.25rem;
+  background: #ffffff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  width: 90px; // This width seems very small for a whole card with icon, label, and options. Consider increasing.
+  text-align: center; // Center content if width is small
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .feature-icon { /* This class targets the icon component */
+    font-size: 2.2rem;
+    color: #2563eb;
+    margin: 0 auto; // Center the icon
+  }
+
+  .feature-label { /* This class targets the feature name (e.g., "حديقة") */
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #33371f;
+    margin-bottom: 0.5rem;
+  }
+
+  .toggle-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; // Center the options (Yes/No)
+    gap: 0.75rem;
+
+    .toggle-option { /* This class targets each <label> for Yes/No */
+      position: relative;
+      display: flex;
+      align-items: center;
+      border: 1px solid #d1d5db;
+      background-color: #c2bfbf; // Initial background color for unchecked options
+      border-radius: 2rem;
+      padding: 0.5rem 1rem; // Increased padding for better appearance
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-weight: 500;
+      color: #0a0a0a;
+
+
+      &:hover {
+        background: #e0edff;
+        border-color: #050505;
+      }
+
+      input[type='radio'] {
+        display: none; // Hides the default radio button
+      }
+
+      .custom-radio { /* This styles the custom radio circle */
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 2px solid #9ca3af;
+        background-color: #fff;
+        position: relative;
+        margin-right: 0.6rem;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 3px;
+          left: 3px;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #7cf361; // Color of the inner dot when checked
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+      }
+
+      input[type='radio']:checked + .custom-radio {
+        border-color: #2563eb; // Border color when selected
+
+        &::after {
+          opacity: 1; // Show the inner dot
+        }
+      }
+
+      .option-label { /* This styles the text (e.g., "نعم" or "لا") */
+        font-size: 0.95rem;
+      }
+
+      // Styles for when the radio option is checked
+      input[type='radio']:checked {
+        & ~ .option-label { /* Style the label text when its radio is checked */
+          color: #2563eb;
+        }
+        // To style the entire .toggle-option container when checked
+        // This is a common pattern for custom radio/checkbox styling
+        // `&` refers to the parent `.toggle-option`
+        & {
+          background-color: #e0edff; // Light blue background when selected
+          border-color: #2563eb; // Blue border when selected
+        }
+      }
+    }
+  }
+}
+
+// RTL adjustments for FeatureToggleForAdd.scss
+[dir="rtl"] {
+  .feature-toggle {
+    .feature-icon {
+      // If icons need specific RTL adjustments (e.g., flipping)
+      // transform: scaleX(-1); // Example for flipping horizontally
+    }
+
+    .toggle-options {
+      .toggle-option {
+        .custom-radio {
+          margin-right: 0;
+          margin-left: 0.6rem; // Adjust margin for RTL
+        }
+        input[type='radio']:checked + .custom-radio {
+          &::after {
+            // Adjust position for RTL if necessary, typically not needed for circle
+          }
+        }
+      }
+    }
+  }
+}

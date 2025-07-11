@@ -1,103 +1,124 @@
 .office-card {
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 5px 15px 30px rgba(8, 7, 7, 0.06);
-    padding: 20px 3px;
-    margin: 15px auto;
-    width: 100%;
-    max-width: 600px;
-    transition: all 0.3s ease-in-out;
-    position: relative;
-    overflow: hidden;
-  
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to bottom right, #ffffff, #f9f9f9);
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  padding: 24px 20px;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 600px;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  text-align: left;
+
+  &:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+  }
+h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 6px;
+
+  strong {
+    color: #cbcbcc; // لون الكلمة "اسم المكتب"
+  }
+
+  // لون الاسم نفسه
+  color: #121111; // أو أي لون مفضل
+}
+
+  p {
+    margin: 10px 0;
+    color: #555;
+    font-size: 1rem;
+
+    strong {
+      color: #333;
+      margin-right: 5px;
     }
-  
-    .office-info {
-      margin-bottom: 20px;
-  
-      h2 {
-        font-size: 1.7rem;
-        color: #000000;
-        margin-bottom: 10px;
-      }
-  
-      p {
-        margin: 6px 0;
-        display: flex;
-        align-items: center;
-        color: #666;
-        font-size: 0.95rem;
-  
-        svg {
-          margin-right: 8px;
-          color: #888;
-        }
-      }
-    }
-  
-    .cta {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #000000;
-      margin-bottom: 15px;
-    }
-  
-    .buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+  }
+
+  .contact-buttons {
+    margin: 15px 0;
+
+    .contact-btn {
+      display: inline-flex;
       align-items: center;
+      margin-right: 12px;
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      color: #fff;
+
+      svg {
+        margin-right: 8px;
+        font-size: 1.2rem;
+      }
+
+      &.whatsapp {
+        background-color: #25d366;
+
+        &:hover {
+          background-color: #1ebc5a;
+        }
+      }
+
+      &.telegram {
+        background-color: #0088cc;
+
+        &:hover {
+          background-color: #007bb5;
+        }
+      }
+    }
+  }
+
+  .details-btn {
+    margin-top: 15px;
+    background: #0088cc;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+      background: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .office-card {
+    padding: 20px;
+
+    h2 {
+      font-size: 1.4rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+
+    .details-btn,
+    .contact-btn {
+      width: 100%;
+      text-align: center;
       justify-content: center;
-      a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        max-width: 90%;
-        padding: 12px 18px;
-        border-radius: 50px;
-        font-weight: bold;
-        color: #fff;
-        text-decoration: none;
-        font-size: 0.95rem;
-        transition: background-color 0.3s ease;
-  
-        svg {
-          font-size: 1.1rem;
-        }
-  
-        &.whatsapp {
-          background-color: #25D366;
-  
-          &:hover {
-            background-color: #1cb85a;
-          }
-        }
-  
-        &.telegram {
-          background-color: #0088cc;
-  
-          &:hover {
-            background-color: #007ab3;
-          }
-        }
-      }
     }
   }
-  
-  @media (max-width: 600px) {
-    .office-card {
-      padding: 20px;
-      .buttons {
-        flex-direction: column;
-        a {
-          width: 100%;
-          justify-content: center;
-        }
-      }
-    }
-  }
-  
+}

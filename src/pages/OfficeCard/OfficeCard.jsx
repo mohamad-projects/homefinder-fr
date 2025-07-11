@@ -1,50 +1,52 @@
 import React from 'react';
-import { FaPhone, FaMapMarkerAlt, FaWhatsapp, FaTelegram } from 'react-icons/fa';
 import './OfficeCard.scss';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { FaWhatsapp, FaTelegram } from 'react-icons/fa';
 
 const OfficeCard = ({ office, translateMode }) => {
+  const navigate = useNavigate();
+
+  const handleDetails = () => {
+    navigate(`/profile/${office.id}`);
+  };
+
+  const whatsappLink = `https://wa.me/${office.whatsapp}`;
+  const telegramLink = `https://t.me/${office.telegram}`;
+
   return (
     <div className="office-card">
-      <div className="office-info">
-        <h2>{translateMode ? office.nameEn : office.name}</h2>
-        <p><FaMapMarkerAlt /> {translateMode ? office.addressEn : office.address}</p>
-        <p><FaPhone /> {office.phone}</p>
-      </div>
+<h2>
+  <strong>{translateMode ? 'Office Name:' : 'اسم المكتب:'}</strong> {office.name}
+</h2>
+      <p><strong>{translateMode ? 'Address' : 'العنوان'}:</strong> {office.address}</p>
+      <p><strong>{translateMode ? 'Phone' : 'الهاتف'}:</strong> {office.phone}</p>
 
-      <p className="cta">
-        {translateMode ? 'Submit a service or sale request' : 'تقديم طلب بيع أو خدمة'}
-      </p>
-
-      <div className="buttons">
-        <a
-          href={`https://wa.me/${office.whatsapp}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="whatsapp"
-        >
-          <FaWhatsapp />
-          {translateMode ? 'WhatsApp' : 'واتساب'}
-        </a>
-
-        <a
-          href={`https://t.me/${office.telegram}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="telegram"
-        >
-          <FaTelegram />
-          {translateMode ? 'Telegram' : 'تيليغرام'}
-        </a>
-        <Link to={`/officeDetails/${office.id}`}>
+      <div className="contact-buttons">
+        {office.whatsapp && (
           <a
-            className="telegram"
-            >
-            <FaTelegram />
-            {translateMode ? 'Details' : 'التفاصيل'}
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-btn whatsapp"
+          >
+            <FaWhatsapp /> {translateMode ? 'WhatsApp' : 'واتساب'}
           </a>
-        </Link>
+        )}
+        {office.telegram && (
+          <a
+            href={telegramLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-btn telegram"
+          >
+            <FaTelegram /> {translateMode ? 'Telegram' : 'تيليغرام'}
+          </a>
+        )}
       </div>
+
+      <button className="details-btn" onClick={handleDetails}>
+        {translateMode ? 'Details' : 'تفاصيل'}
+      </button>
     </div>
   );
 };

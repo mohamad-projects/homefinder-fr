@@ -1,41 +1,44 @@
-// src/components/FeatureToggle/FeatureToggle.jsx
 import React from 'react';
-import * as icons from 'react-icons/fa';
-import { MdApartment, MdHouse, MdVilla, MdCabin } from 'react-icons/md';
-import { RiHotelLine } from 'react-icons/ri';
+import * as faIcons from 'react-icons/fa'; 
+import {
+  MdApartment, MdHouse, MdVilla, MdCabin, MdElevator 
+} from 'react-icons/md'; 
+import { RiHotelLine } from 'react-icons/ri'; 
+import './FeatureToggle.scss';
 
 const iconComponents = {
-  ...icons,
-  MdApartment, MdHouse, MdVilla, MdCabin,
-  RiHotelLine
+  ...faIcons, 
+  MdApartment, MdHouse, MdVilla, MdCabin, MdElevator, 
+  RiHotelLine 
 };
 
-const FeatureToggle = ({ 
-  name, 
+const FeatureToggle = ({
+  name,
   icon, 
-  label, 
-  options, 
-  labels, 
-  value, 
-  onChange 
+  label,
+  options,
+  labels,
+  value,
+  onChange
 }) => {
-  const IconComponent = iconComponents[icon];
-  
+  const IconComponent = iconComponents[icon]; 
+
   return (
     <div className="feature-toggle">
-      {IconComponent && <IconComponent />}
-      <span>{label}</span>
+      {IconComponent && <IconComponent className="feature-icon" />} 
+      <span className="feature-label">{label}</span>
       <div className="toggle-options">
-        {options.map((option, index) => (
-          <label key={option}>
+        {options.map((optionValue, index) => (
+          <label key={optionValue} className="toggle-option">
             <input
               type="radio"
               name={name}
-              value={option}
-              checked={value === option}
+              value={optionValue}
+              checked={parseInt(value) === optionValue}
               onChange={onChange}
             />
-            {labels[index]}
+            <span className="custom-radio" />
+            <span className="option-label">{labels[index]}</span>
           </label>
         ))}
       </div>

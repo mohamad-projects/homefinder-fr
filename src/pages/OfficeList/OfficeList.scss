@@ -1,21 +1,31 @@
 .office-list {
-  // padding: 40px 20px;
-  background: #f5f7fa;
-  // min-height: 100vh;
-  text-align: center;
-  
-  h1 {
-    font-size: 2.2rem;
-    margin-bottom: 30px;
-    color: #000000;
-  }
-  
-  .office-cards-container {
-    display: grid;
-    padding-right: 65px; /* Increased padding */
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1px));
-    gap: 0 4rem; /* Increased gap between cards */
-    margin: 0rem; /* Optional: Adds outer margin */
+  background: #f9fafb;
+  padding: 40px 20px;
+  min-height: 100vh;
+
+  .office-header {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .subtext {
+      font-size: 1.1rem;
+      color: #7f8c8d;
     }
   }
-  
+
+  .office-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+    justify-content: center;
+    padding: 0 10px;
+  }
+}

@@ -5,168 +5,345 @@ $light-bg: #f1f3f5;
 $text-color: #2d3436;
 
 .display-page {
-  padding: 2rem 5%;
-  background-color: $secondary-color;
+    padding: 1rem 3%;
+    background-color: $secondary-color;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+
+    .action-icon {
+        background: transparent;
+        border: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: transform 0.3s ease, color 0.3s ease;
+        padding: 0.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        &.edit {
+            color: #007bff;
+            &:hover {
+                color: darken(#007bff, 10%);
+                animation: pulse 1s infinite;
+            }
+        }
+
+        &.delete {
+            color: #dc3545;
+            &:hover {
+                color: darken(#dc3545, 10%);
+                animation: pulse 1s infinite;
+            }
+        }
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+    }
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
 }
 
 .properties-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 2rem;
-  // max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
 }
 
 .property-card {
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex; // لجعل المحتوى داخله مرتبًا عموديًا
+    flex-direction: column;
 }
 
 .image-section {
-  height: 250px;
-  overflow: hidden;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s;
-    
-    &:hover {
-      transform: scale(1.05);
+    height: 180px;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+
+        &:hover {
+            transform: scale(1.05);
+        }
     }
-  }
 }
 
 .details-section {
-  padding: 1.2rem;
+    padding: 0.8rem;
+    flex-grow: 1; // للسماح بقسم التفاصيل بالتوسع وملء المساحة
 }
+
 .pagination-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 1.5rem 0;
 }
 
 .pagination-controls button {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+    padding: 7px 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
 }
 
 .pagination-controls button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+    background-color: #ccc;
+    cursor: not-allowed;
 }
+
 .details-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.4rem;
+    margin-bottom: 0.7rem;
+    flex-wrap: wrap;
 }
 
 .detail-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 0.7rem;
+    border-radius: 6px;
+    flex: 1;
 
-  padding: 1rem;
-  border-radius: 6px;
-  
-  .icon {
-    font-size: 1.2rem;
-    margin-right: 0.5rem;
-    color: $primary-color;
-  }
-  
-  .value {
-    font-weight: 600;
-    color: $text-color;
-    // display: block;
-  }
-  
-  .label {
-    font-size: 0.8rem;
-    color: lighten($text-color, 20%);
-  }
+    .icon {
+        font-size: 1rem;
+        margin-right: 0.3rem;
+        color: $primary-color;
+    }
+
+    .value {
+        font-weight: 600;
+        color: $text-color;
+        font-size: 0.95rem;
+    }
+
+    .label {
+        font-size: 0.7rem;
+        color: lighten($text-color, 20%);
+    }
 }
 
 .bg-light {
-  background-color: $light-bg;
+    background-color: $light-bg;
 }
 
 .info-section {
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 1rem;
-  
-  .price {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: $primary-color;
-    margin-bottom: 0.5rem;
-  }
-  
-  .location {
-    font-size: 0.9rem;
-    color: $text-color;
-    line-height: 1.4;
-  }
+    padding: 0.7rem;
+    border-radius: 6px;
+    margin-bottom: 0.7rem;
+
+    .price {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: $primary-color;
+        margin-bottom: 0.4rem;
+    }
+
+    .location {
+        font-size: 0.8rem;
+        color: $text-color;
+        line-height: 1.3;
+    }
 }
 
 .more-details-btn {
-  width: 100%;
-  padding: 1rem;
-  background: $primary-color;
-  color: white;
-  border: none;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.3s;
-  
-  &:hover {
-    background: darken($primary-color, 10%);
-  }
+    width: 100%;
+    padding: 0.8rem;
+    background: $primary-color;
+    color: white;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 0.95rem;
+    margin-top: auto; // لجعل الزر في الأسفل
 }
+
+.more-details-btn:hover {
+    background: darken($primary-color, 10%);
+}
+
+/* ⬅️ NEW STYLES: Compare Checkbox and Button */
+.compare-checkbox-container {
+    padding: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: $light-bg;
+    margin: 0.5rem 0.8rem;
+    border-radius: 5px;
+
+    input[type="checkbox"] {
+        width: 1.1rem;
+        height: 1.1rem;
+        cursor: pointer;
+        accent-color: $primary-color;
+    }
+
+    label {
+        font-size: 0.9rem;
+        color: $text-color;
+        cursor: pointer;
+        flex-grow: 1;
+    }
+}
+
+.compare-action-bar {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.compare-selected-btn {
+    padding: 12px 25px;
+    background-color: #28a745; // لون أخضر للمقارنة
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+        background-color: darken(#28a745, 10%);
+        transform: translateY(-2px);
+    }
+}
+
 
 // دعم اللغة العربية
 [dir="rtl"] {
-  .detail-item {
-    flex-direction: row-reverse;
-    
-    .icon {
-      margin-right: 0;
-      margin-left: 0.5rem;
+    .detail-item {
+        flex-direction: row-reverse;
+
+        .icon {
+            margin-right: 0;
+            margin-left: 0.3rem;
+        }
     }
-  }
-  
-  .info-section {
-    text-align: right;
-  }
+
+    .info-section {
+        text-align: right;
+    }
+
+    .compare-checkbox-container {
+        label {
+            text-align: right;
+        }
+    }
 }
 
 // التجاوب للشاشات الصغيرة
 @media (max-width: 768px) {
-  .properties-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .detail-item {
-    flex-direction: column;
-    text-align: center;
-    
-    .icon {
-      margin: 0 0 0.5rem 0;
+    .properties-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
-  }
-  
-  [dir="rtl"] .detail-item {
-    flex-direction: column;
-  }
+
+    .image-section {
+        height: 160px;
+    }
+
+    .details-section {
+        padding: 0.7rem;
+    }
+
+    .detail-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 0.5rem;
+
+        .icon {
+            margin: 0 0 0.2rem 0;
+            font-size: 1.1rem;
+        }
+
+        .value {
+            font-size: 0.9rem;
+        }
+
+        .label {
+            font-size: 0.65rem;
+        }
+    }
+
+    [dir="rtl"] .detail-item {
+        flex-direction: column;
+    }
+
+    .compare-selected-btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .display-page {
+        padding: 0.8rem 2%;
+    }
+    .properties-container {
+        gap: 0.7rem;
+    }
+    .image-section {
+        height: 120px;
+    }
+    .info-section .price {
+        font-size: 0.95rem;
+    }
+    .more-details-btn {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+    .compare-checkbox-container {
+        padding: 0.6rem;
+        gap: 6px;
+        label {
+            font-size: 0.8rem;
+        }
+        input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+    .compare-selected-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
 }

@@ -13,7 +13,6 @@ const realEstateSlice = createSlice({
     name: "realEstate",
     initialState,
     reducers: {
-        // You can add manual state reducers here if needed
     },
     extraReducers: (builder) => {
         builder
@@ -31,6 +30,17 @@ const realEstateSlice = createSlice({
             .addCase(AddRealEstate.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || true;
+            })
+            .addCase(Add360.pending, (state) => {
+                state.loading = true;
+                state.error = false;
+            })
+            .addCase(Add360.fulfilled, (state, action) => {
+                
+                state.loading = false;
+            })
+            .addCase(Add360.rejected, (state,action) => {
+                state.loading = false;
             })
             
             // Update Real Estate
@@ -78,7 +88,6 @@ const realEstateSlice = createSlice({
                 state.error = action.payload || true;
             })
             
-            // Delete Real Estate
             .addCase(deleteRealEstate.pending, (state) => {
                 state.loading = true;
                 state.error = false;
@@ -150,12 +159,28 @@ export const AddRealEstate = createAsyncThunk(
         }
     }
 );
-
+export const Add360 = createAsyncThunk(
+    'realEstate/Add360',
+    async ({ id, formData }, { rejectWithValue }) => { 
+        try {
+            console.log('realEstateId:', id);
+            console.log('formData:', formData); 
+            const response = await api.post(`/RealEstate/Add360/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || error.message);
+        }
+    }
+);
 export const updateRealEstate = createAsyncThunk(
     'realEstate/update',
     async ({ id, ...credentials }, { rejectWithValue }) => {
         try {
-            const response = await api.patch(`/RealEstate/update/${id}`, credentials);
+            const response = await api.post(`/RealEstate/update/${id}`, credentials);
             return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || error.message);
@@ -174,6 +199,7 @@ export const deleteRealEstate = createAsyncThunk(
         }
     }
 );
+
 
 export const getStatus = createAsyncThunk(
     'realEstate/getStatus',

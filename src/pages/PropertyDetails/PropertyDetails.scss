@@ -1,462 +1,1085 @@
-$primary-color: #2A5C8D;
-$secondary-color: #f8f9fa;
-$light-bg: #f1f3f5;
-$text-color: #2d3436;
-$accent-color: #e63946;
-$dark-color: #1d3557;
-$light-color: #f1faee;
+// _PropertyDetails.scss
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+// Modern & Refined Color Palette - ALL VARIABLES DEFINED HERE
+$primary-color: #2A5C8D; // Main accent for icons, links, etc. (Deep Ocean Blue)
+$secondary-color: #EFEFF1; // Soft, almost white background (Light Grayish Blue)
+$light-bg: #FFFFFF; // Pure white for card backgrounds
+$text-color: #34495E; // Darker text for readability (Charcoal Blue)
+$accent-color: #E74C3C; // Accent for errors/highlights (Vibrant Red)
+$dark-color: #2C3E50; // Darker text/element color (Midnight Blue)
+$border-color: #DDE1E6; // Subtle border color
+
+// Specific action/brand colors
+$color-whatsapp: #25D366;
+$color-telegram: #0088cc;
+$color-panorama: #28B463; // Slightly darker green for panorama button
+$color-add360: #007bff; // A nice blue for the Add 360 button
+
+// New colors for "Type" and "Kind" for a "fantastical" look
+// For 'sale' type
+$sale-background: linear-gradient(135deg, #FF6B6B 0%, #EE8A8A 100%); // Vibrant Red-Pink gradient
+$sale-icon-color: #fff;
+$sale-text-color: #fff;
+
+// For 'rental' type
+$rental-background: linear-gradient(135deg, #FFC300 0%, #FFD633 100%); // Golden-Yellow gradient
+$rental-icon-color: #333; // Darker icon for contrast
+$rental-text-color: #333; // Darker text for contrast
+
+// For 'apartment' kind
+$apartment-background: linear-gradient(135deg, #4ECDC4 0%, #87DCC7 100%); // Aqua-Green gradient
+$apartment-icon-color: #fff;
+$apartment-text-color: #fff;
+
+// For 'house' kind
+$house-background: linear-gradient(135deg, #9B59B6 0%, #AF7AC5 100%); // Purple gradient
+$house-icon-color: #fff;
+$house-text-color: #fff;
+
+// For 'land' kind
+$land-background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%); // Emerald green gradient
+$land-icon-color: #fff;
+$land-text-color: #fff;
+
+
+// Shadow variables
+$shadow-light: rgba(0, 0, 0, 0.08); // Lighter shadow for general elements
+$shadow-medium: rgba(0, 0, 0, 0.12); // Medium shadow for hover/prominent elements
+$shadow-deep: rgba(0, 0, 0, 0.18); // Deeper shadow for main image/interactive elements
+$shadow-magical: rgba(0, 0, 0, 0.25); // For a more pronounced, "magical" shadow
+
+// Spacing
+$spacing-xs: 0.4rem; // **تم التعديل:** تقليل
+$spacing-sm: 0.6rem; // **تم التعديل:** تقليل
+$spacing-md: 0.8rem; // **تم التعديل:** تقليل
+$spacing-lg: 1.2rem; // **تم التعديل:** تقليل
+$spacing-xl: 1.6rem; // **تم التعديل:** تقليل
+$spacing-xxl: 2rem; // **تم التعديل:** تقليل
+$spacing-3xl: 2.8rem; // **تم التعديل:** تقليل
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: $secondary-color;
+    color: $text-color;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 .property-details-page {
-  padding: 2rem 5%;
-  background-color: $secondary-color;
-  min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    // تقليل الـ padding الأفقي والعام لـ "الصفحة"
+    padding: $spacing-xxl 6%; // **تم التعديل:** تقليل الـ padding العام
+    min-height: 100vh;
+    box-sizing: border-box;
+    background-color: $secondary-color;
 
-  .back-button {
-    background: black;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 6px;
-    margin-bottom: 2rem;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    .status-message {
+        text-align: center;
+        padding: $spacing-xl;
+        font-size: 1.2rem; // **تم التعديل:** تقليل حجم الخط
+        font-weight: 500;
+        border-radius: 10px; // **تم التعديل:** تقليل
+        margin: $spacing-3xl auto;
+        max-width: 550px; // **تم التعديل:** تقليل
+        box-shadow: 0 5px 15px $shadow-medium; // **تم التعديل:** تقليل الظل
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: $spacing-sm;
+
+        svg {
+            font-size: 1.4em; // **تم التعديل:** تقليل حجم الأيقونة
+        }
+    }
+
+    .loading-message {
+        background-color: lighten($primary-color, 45%);
+        color: darken($primary-color, 10%);
+        border: 1px solid $primary-color;
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+    }
+
+    .error-message {
+        background-color: lighten($accent-color, 35%);
+        color: darken($accent-color, 10%);
+        border: 1px solid $accent-color;
+    }
+
+    .button-group {
+        display: flex;
+        gap: $spacing-md;
+        margin-bottom: $spacing-xxl;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .back-button,
+    .add-360-button {
+        background: $dark-color;
+        color: white;
+        border: none;
+        padding: $spacing-md $spacing-lg; // **تم التعديل:** تقليل الـ padding
+        border-radius: 7px; // **تم التعديل:** تقليل
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-xs; // **تم التعديل:** تقليل
+        box-shadow: 0 3px 8px $shadow-light; // **تم التعديل:** تقليل الظل
+        text-decoration: none;
+        font-size: 0.95rem; // **تم التعديل:** تقليل الخط
+
+        &:hover {
+            background: lighten($dark-color, 15%);
+            transform: translateY(-2px); // **تم التعديل:** تقليل حركة الرفع
+            box-shadow: 0 5px 12px $shadow-medium; // **تم التعديل:** تقليل الظل
+        }
+
+        svg {
+            font-size: 1rem; // **تم التعديل:** تقليل حجم الأيقونة
+        }
+    }
+
+    .add-360-button {
+        background: $color-add360;
+        box-shadow: 0 3px 10px rgba($color-add360, 0.3); // **تم التعديل:** تقليل الظل
+
+        &:hover {
+            background: darken($color-add360, 8%);
+            box-shadow: 0 5px 15px rgba($color-add360, 0.5); // **تم التعديل:** تقليل الظل
+        }
+    }
+
+    .property-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: $spacing-3xl; // **تم التعديل:** تقليل الفجوة الرئيسية
+        max-width: 1000px; // **تم التعديل:** تقليل العرض الأقصى قليلاً
+        margin: 0 auto; 
+
+        .left-section,
+        .right-section {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-xxl; // **تم التعديل:** تقليل الفجوة بين الأقسام
+        }
+    }
+}
+
+.info-card {
+    background: $light-bg;
+    padding: $spacing-xl; // **تم التعديل:** تقليل الـ padding
+    border-radius: 10px; // **تم التعديل:** تقليل
+    box-shadow: 0 3px 12px $shadow-light; // **تم التعديل:** تقليل الظل
+    border: 1px solid $border-color;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; // **تم التعديل:** تقليل مدة الانتقال
 
     &:hover {
-      background: darken($primary-color, 10%);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        transform: translateY(-3px); // **تم التعديل:** تقليل حركة الرفع
+        box-shadow: 0 6px 18px $shadow-medium; // **تم التعديل:** تقليل الظل
     }
-  }
 
-  .property-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    h2 {
+        font-size: 1.6rem; // **تم التعديل:** تقليل حجم الخط
+        margin-bottom: $spacing-lg; // **تم التعديل:** تقليل
+        display: flex;
+        align-items: center;
+        color: $dark-color;
+        font-weight: 600;
+        position: relative;
+        padding-bottom: $spacing-xs;
 
-    .left-section,
-    .right-section {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px; // **تم التعديل:** تقليل عرض الخط
+            height: 2px; // **تم التعديل:** تقليل سمك الخط
+            background-color: $primary-color;
+            border-radius: 1px; // **تم التعديل:** تقليل
+        }
+
+        .section-icon {
+            margin-right: $spacing-sm;
+            color: $primary-color;
+            font-size: 1.3rem; // **تم التعديل:** تقليل حجم الأيقونة
+        }
     }
-  }
+
+    p {
+        line-height: 1.6; // **تم التعديل:** تقليل
+        color: $text-color;
+        margin: 0;
+        font-size: 0.95rem; // **تم التعديل:** تقليل حجم الخط للوصف
+    }
 }
 
 .image-gallery {
-  position: relative;
-
-  .main-image-container {
-    position: relative;
-    height: 500px;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 1rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-
-    .main-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
+    @extend .info-card;
+    box-shadow: 0 6px 20px $shadow-medium; // **تم التعديل:** تقليل الظل
+    &:hover {
+        box-shadow: 0 6px 20px $shadow-medium; // **تم التعديل:** تقليل الظل
     }
 
-    &:hover .main-image {
-      transform: scale(1.02);
-    }
-
-    .image-counter {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(0,0,0,0.6);
-      color: white;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-    }
-
-    .nav-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.9);
-      border: none;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      color: $primary-color;
-
-      &:hover {
-        background: white;
-        transform: translateY(-50%) scale(1.1);
-        color: $dark-color;
-      }
-
-      &.prev {
-        left: 20px;
-      }
-
-      &.next {
-        right: 20px;
-      }
-    }
-  }
-
-  .thumbnails {
-    display: flex;
-    gap: 0.8rem;
-    overflow-x: auto;
-    scrollbar-width: thin;
-    scrollbar-color: $primary-color $light-bg;
-
-    &::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: $primary-color;
-      border-radius: 3px;
-    }
-
-    .thumbnail-item {
-      width: 100px;
-      height: 75px;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      flex-shrink: 0;
-      border: 2px solid transparent;
-
-      img {
+    .main-image-container {
+        position: relative;
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+        padding-top: 60%; // **تم التعديل:** تقليل ارتفاع الصورة الرئيسية قليلاً
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: $spacing-md;
+        box-shadow: 0 4px 12px $shadow-deep; // **تم التعديل:** تقليل الظل
+        background-color: $secondary-color;
 
-      &.active {
-        border-color: $primary-color;
-        transform: scale(1.05);
-      }
+        img.main-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease; // **تم التعديل:** تقليل مدة الانتقال
+            display: block;
+        }
 
-      &:hover {
-        transform: scale(1.05);
-      }
+        &:hover .main-image {
+            transform: scale(1.02); // **تم التعديل:** تقليل حجم التكبير
+        }
 
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.3);
-        transition: all 0.3s;
-      }
+        .image-counter {
+            position: absolute;
+            bottom: $spacing-lg;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7); // **تم التعديل:** تقليل الشفافية قليلاً
+            color: white;
+            padding: 0.3rem $spacing-md; // **تم التعديل:** تقليل الـ padding
+            border-radius: 20px; // **تم التعديل:** تقليل
+            font-size: 0.85rem; // **تم التعديل:** تقليل حجم الخط
+            font-weight: 500;
+            z-index: 10;
+        }
 
-      &.active::after, &:hover::after {
-        background: rgba(0,0,0,0);
-      }
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9); // **تم التعديل:** تقليل الشفافية قليلاً
+            border: none;
+            width: 45px; // **تم التعديل:** تقليل الحجم
+            height: 45px; // **تم التعديل:** تقليل الحجم
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease; // **تم التعديل:** تقليل مدة الانتقال
+            box-shadow: 0 2px 8px $shadow-medium; // **تم التعديل:** تقليل الظل
+            color: $dark-color;
+            font-size: 1.1rem; // **تم التعديل:** تقليل حجم الأيقونة
+            z-index: 11;
+
+            &:hover {
+                background: $primary-color;
+                color: white;
+                transform: translateY(-50%) scale(1.05); // **تم التعديل:** تقليل حجم التكبير
+                box-shadow: 0 4px 12px $shadow-deep; // **تم التعديل:** تقليل الظل
+            }
+
+            &.prev {
+                left: $spacing-md;
+            }
+
+            &.next {
+                right: $spacing-md;
+            }
+        }
     }
-  }
-}
 
-.header-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+    .thumbnails {
+        display: flex;
+        gap: $spacing-sm; // **تم التعديل:** تقليل الفجوة
+        overflow-x: auto;
+        padding: $spacing-xs 0;
+        scrollbar-width: thin;
+        scrollbar-color: $primary-color $border-color;
 
-  h1 {
-    color: rgb(13, 12, 12);
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 700;
-  }
+        &::-webkit-scrollbar {
+            height: 7px; // **تم التعديل:** تقليل سمك شريط التمرير
+        }
 
-  .price-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+        &::-webkit-scrollbar-thumb {
+            background-color: $primary-color;
+            border-radius: 3px; // **تم التعديل:** تقليل
+        }
 
-    .price {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-top: 20px;
-      color: red;
+        &::-webkit-scrollbar-track {
+            background-color: $border-color;
+        }
+
+        .thumbnail-item {
+            width: 90px; // **تم التعديل:** تقليل
+            height: 60px; // **تم التعديل:** تقليل
+            border-radius: 7px; // **تم التعديل:** تقليل
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s; // **تم التعديل:** تقليل مدة الانتقال
+            position: relative;
+            flex-shrink: 0;
+            border: 2px solid transparent; // **تم التعديل:** تقليل سمك الحدود
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            &.active {
+                border-color: $primary-color;
+                transform: scale(1.05); // **تم التعديل:** تقليل التكبير
+            }
+
+            &:hover {
+                transform: scale(1.05); // **تم التعديل:** تقليل التكبير
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.2); // **تم التعديل:** تقليل الشفافية
+                transition: all 0.2s; // **تم التعديل:** تقليل مدة الانتقال
+            }
+
+            &.active::after,
+            &:hover::after {
+                background: rgba(0, 0, 0, 0);
+            }
+        }
     }
-
-    .price-label {
-      font-size: 0.9rem;
-      color: lighten($text-color, 20%);
-    }
-  }
 }
 
 .details-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+    @extend .info-card;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); // **تم التعديل:** تقليل minmax
+    gap: $spacing-md; // **تم التعديل:** تقليل الفجوة
 
-  .detail-item {
-    background: white;
-    padding: 1.2rem;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    border: 1px solid rgba(0,0,0,0.05);
-    transition: all 0.3s;
+    .detail-item {
+        background: $secondary-color;
+        padding: $spacing-md; // **تم التعديل:** تقليل الـ padding
+        border-radius: 8px; // **تم التعديل:** تقليل
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm; // **تم التعديل:** تقليل
+        box-shadow: 0 1px 6px $shadow-light; // **تم التعديل:** تقليل الظل
+        border: 1px solid lighten($border-color, 3%);
+        transition: all 0.2s; // **تم التعديل:** تقليل مدة الانتقال
 
-    &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .word-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 2px; // **تم التعديل:** تقليل
+        }
+
+        &:hover {
+            transform: translateY(-2px); // **تم التعديل:** تقليل حركة الرفع
+            box-shadow: 0 4px 10px $shadow-medium; // **تم التعديل:** تقليل الظل
+        }
+
+        .icon {
+            font-size: 1.4rem; // **تم التعديل:** تقليل
+            color: $primary-color;
+        }
+
+        .label {
+            font-size: 0.85rem; // **تم التعديل:** تقليل
+            color: rgb(121, 120, 120);
+            font-weight: 900;
+            margin-top: 0;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .value {
+            font-weight: 700;
+            font-size: 1.1rem; // **تم التعديل:** تقليل
+            color: rgb(67, 67, 67);
+        }
     }
-
-    .icon {
-      font-size: 1.5rem;
-      color: $primary-color;
-    }
-
-    .label {
-      font-size: 0.9rem;
-      color: lighten($text-color, 20%);
-    }
-
-    .value {
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: $dark-color;
-    }
-  }
 }
 
 .location-section,
 .description-section,
-.map-section,
 .amenities-section,
-.contact-section {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
-  h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    color: $dark-color;
-
-    .section-icon {
-      margin-right: 0.5rem;
-      color: $primary-color;
-    }
-  }
-
-  p {
-    line-height: 1.8;
-    color: $text-color;
-    margin: 0;
-  }
+.map-section,
+.contact-sections {
+    @extend .info-card;
 }
 
-.amenities-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 0.8rem;
+.header-section {
+    h1 {
+        font-size: 2.2rem; // **تم التعديل:** تقليل
+        color: $dark-color;
+        margin-bottom: $spacing-md;
+        font-weight: 700;
+        text-align: center;
+    }
 
-  .amenity-item {
-    background: $light-bg;
-    padding: 0.6rem 1rem;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: $text-color;
-  }
+    .price-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: $spacing-xl;
+        padding: $spacing-md $spacing-xl;
+        background-color: lighten($secondary-color, 2%);
+        border-radius: 10px; // **تم التعديل:** تقليل
+        border: 1px solid darken($border-color, 5%);
+        box-shadow: 0 1px 8px $shadow-light; // **تم التعديل:** تقليل
+
+        .price {
+            font-size: 2.5rem; // **تم التعديل:** تقليل
+            font-weight: 800;
+            color: $dark-color;
+            line-height: 1;
+            margin-bottom: $spacing-xs;
+        }
+
+        .price-label {
+            font-size: 1rem; // **تم التعديل:** تقليل
+            font-weight: 500;
+            color: $text-color;
+            text-transform: uppercase;
+            letter-spacing: 0.8px; // **تم التعديل:** تقليل
+        }
+    }
+}
+
+/* Styles for Type and Kind Section */
+.type-kind-section {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-md; // **تم التعديل:** تقليل الفجوة
+    margin-bottom: $spacing-lg;
+    flex-wrap: wrap;
+
+    .type-kind-item {
+        flex: 1;
+        min-width: 140px; // **تم التعديل:** تقليل
+        max-width: 220px; // **تم التعديل:** تقليل
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: $spacing-xs; // **تم التعديل:** تقليل
+        padding: $spacing-md $spacing-lg; // **تم التعديل:** تقليل
+        border-radius: 10px; // **تم التعديل:** تقليل
+        font-weight: 700;
+        font-size: 1rem; // **تم التعديل:** تقليل
+        text-transform: uppercase;
+        letter-spacing: 0.4px; // **تم التعديل:** تقليل
+        box-shadow: 0 4px 15px $shadow-magical; // **تم التعديل:** تقليل
+        transition: all 0.3s ease-in-out; // **تم التعديل:** تقليل مدة الانتقال
+
+        .icon {
+            font-size: 1.3rem; // **تم التعديل:** تقليل
+        }
+
+        // Apply specific styles for 'sale' and 'rental' types
+        &.type-item {
+            // Default styling, will be overridden by .type-sale or .type-rental
+            background: linear-gradient(135deg, #CCC 0%, #AAA 100%); // Fallback if type not matched
+            color: $dark-color;
+            .icon { color: $dark-color; }
+        }
+
+        &.type-sale {
+            background: $sale-background;
+            color: $sale-text-color;
+            .icon { color: $sale-icon-color; }
+        }
+
+        &.type-rental {
+            background: $rental-background;
+            color: $rental-text-color;
+            .icon { color: $rental-icon-color; }
+        }
+
+        // Apply specific styles for different 'kind' values
+        &.kind-item {
+            // Default styling, will be overridden by .kind-apartment, .kind-house, .kind-land
+            background: linear-gradient(135deg, #CCC 0%, #AAA 100%); // Fallback if kind not matched
+            color: $dark-color;
+            .icon { color: $dark-color; }
+        }
+
+        &.kind-apartment {
+            background: $apartment-background;
+            color: $apartment-text-color;
+            .icon { color: $apartment-icon-color; }
+        }
+
+        &.kind-house {
+            background: $house-background;
+            color: $house-text-color;
+            .icon { color: $house-icon-color; }
+        }
+
+        &.kind-land {
+            background: $land-background;
+            color: $land-text-color;
+            .icon { color: $land-icon-color; }
+        }
+
+
+        &:hover {
+            transform: translateY(-3px) scale(1.01); // **تم التعديل:** تقليل حركة الرفع والتكبير
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); // **تم التعديل:** تقليل الظل
+        }
+    }
+}
+
+
+.view-panorama-button {
+    background: $color-panorama;
+    color: white;
+    border: none;
+    padding: $spacing-md $spacing-xl; // **تم التعديل:** تقليل
+    border-radius: 7px; // **تم التعديل:** تقليل
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease; // **تم التعديل:** تقليل مدة الانتقال
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm; // **تم التعديل:** تقليل
+    box-shadow: 0 3px 10px rgba($color-panorama, 0.3); // **تم التعديل:** تقليل
+    margin-top: $spacing-md;
+    width: 100%;
+    font-size: 1rem; // **تم التعديل:** تقليل
+
+    &:hover {
+        background: darken($color-panorama, 10%);
+        transform: translateY(-2px); // **تم التعديل:** تقليل
+        box-shadow: 0 5px 15px rgba($color-panorama, 0.5); // **تم التعديل:** تقليل
+    }
+
+    svg {
+        font-size: 1.1rem; // **تم التعديل:** تقليل
+    }
 }
 
 .agency-info-box {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-  border-left: 5px solid $primary-color;
+    @extend .info-card;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md; // **تم التعديل:** تقليل
+    border-left: 5px solid $primary-color; // **تم التعديل:** تقليل سمك الحد
+    box-shadow: 0 2px 8px $shadow-light; // **تم التعديل:** تقليل
+    padding: $spacing-lg; // **تم التعديل:** تقليل
 
-  .agency-icon {
-    font-size: 2.5rem;
-    color: $primary-color;
-  }
+    .agency-details {
+        flex-grow: 1;
 
-  .agency-details {
-    h3 {
-      margin: 0;
-      font-size: 1.2rem;
-      color: $dark-color;
+        h3 {
+            margin: 0 0 $spacing-xs 0;
+            font-size: 1.2rem; // **تم التعديل:** تقليل
+            color: $text-color;
+            font-weight: 600;
+            padding-bottom: 0;
+            &::after {
+                display: none;
+            }
+        }
+
+        p {
+            margin: 0.2rem 0; // **تم التعديل:** تقليل
+            font-size: 1.3rem; // **تم التعديل:** تقليل
+            color: $dark-color;
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs; // **تم التعديل:** تقليل
+
+            strong {
+                color: $dark-color;
+                font-weight: 900;
+                margin-left: 0;
+            }
+
+            svg {
+                color: $primary-color;
+            }
+        }
     }
-
-    p {
-      margin: 0.3rem 0;
-      font-size: 0.95rem;
-      color: $text-color;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-
-      svg {
-        color: $primary-color;
-      }
-    }
-  }
 }
 
-.contact-section {
-  .contact-buttons {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+.amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); // **تم التعديل:** تقليل minmax
+    gap: $spacing-sm; // **تم التعديل:** تقليل
 
-    .contact-button {
-      flex: 1;
-      padding: 1rem;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-
-      &.phone {
-        background: $primary-color;
-        color: white;
+    .amenity-item {
+        background: $secondary-color;
+        padding: 0.6rem $spacing-md; // **تم التعديل:** تقليل
+        border-radius: 20px; // **تم التعديل:** تقليل
+        text-align: center;
+        font-size: 0.85rem; // **تم التعديل:** تقليل
+        color: $dark-color;
+        font-weight: 500;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04); // **تم التعديل:** تقليل
+        transition: transform 0.15s ease, background-color 0.15s ease; // **تم التعديل:** تقليل
 
         &:hover {
-          background: darken($primary-color, 10%);
+            transform: translateY(-1px); // **تم التعديل:** تقليل
+            background-color: lighten($secondary-color, 1%); // **تم التعديل:** تقليل
         }
-      }
     }
-  }
 }
 
-.not-found {
-  text-align: center;
-  padding: 5rem;
-  font-size: 1.5rem;
-  color: $accent-color;
+.map-section {
+    .leaflet-container {
+        border-radius: 8px; // **تم التعديل:** تقليل
+        box-shadow: 0 3px 12px $shadow-light; // **تم التعديل:** تقليل
+        border: 1px solid $border-color;
+    }
 }
+
+.contact-sections {
+    h2 {
+        margin-bottom: $spacing-md;
+        color: $dark-color;
+        font-size: 20px; // **تم التعديل:** تقليل
+    }
+
+    .contact-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-md; // **تم التعديل:** تقليل
+        justify-content: center;
+    }
+
+    a.whatsapp-link,
+    a.telegram-link {
+        flex: 1;
+        min-width: 130px; // **تم التعديل:** تقليل
+        padding: $spacing-md $spacing-lg; // **تم التعديل:** تقليل
+        border: none;
+        border-radius: 7px; // **تم التعديل:** تقليل
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s; // **تم التعديل:** تقليل
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: $spacing-sm; // **تم التعديل:** تقليل
+        text-decoration: none;
+        font-size: 0.95rem; // **تم التعديل:** تقليل
+        color: white;
+
+        .contact-icon {
+            font-size: 1.1rem; // **تم التعديل:** تقليل
+        }
+    }
+
+    a.whatsapp-link {
+        background: $color-whatsapp;
+
+        &:hover {
+            background: darken($color-whatsapp, 8%);
+            box-shadow: 0 3px 10px rgba($color-whatsapp, 0.3); // **تم التعديل:** تقليل
+        }
+    }
+
+    a.telegram-link {
+        background: $color-telegram;
+        margin-top: 0;
+
+        &:hover {
+            background: darken($color-telegram, 8%);
+            box-shadow: 0 3px 10px rgba($color-telegram, 0.3); // **تم التعديل:** تقليل
+        }
+    }
+}
+
 
 /* RTL Support */
 [dir="rtl"] {
-  .property-content {
-    direction: rtl;
+    .property-content {
+        direction: rtl;
 
-    .details-grid .detail-item {
-      flex-direction: row-reverse;
+        .details-grid .detail-item {
+            flex-direction: row-reverse;
+            .word-item {
+                align-items: flex-end;
+            }
+        }
+
+        .section-icon {
+            margin-left: $spacing-sm;
+            margin-right: 0;
+        }
     }
 
-    .section-icon {
-      margin-left: 0.5rem;
-      margin-right: 0;
-    }
-  }
+    .image-gallery {
+        .main-image-container {
+            .image-counter {
+                left: auto;
+                right: 50%;
+                transform: translateX(50%);
+            }
 
-  .nav-button {
-    &.prev {
-      right: 20px;
-      left: auto;
+            .nav-button {
+                &.prev {
+                    right: $spacing-md;
+                    left: auto;
+                }
+
+                &.next {
+                    left: $spacing-md;
+                    right: auto;
+                }
+            }
+        }
     }
 
-    &.next {
-      left: 20px;
-      right: auto;
+    .info-card h2::after {
+        left: auto;
+        right: 0;
     }
-  }
+
+    .agency-info-box {
+        border-left: none;
+        border-right: 5px solid $primary-color; // **تم التعديل:** سمك الحد
+    }
+
+    .agency-details p svg {
+        margin-left: $spacing-xs;
+        margin-right: 0;
+    }
+
+    .view-panorama-button,
+    .add-360-button {
+        flex-direction: row-reverse;
+
+        svg {
+            margin-left: $spacing-sm;
+            margin-right: 0;
+        }
+    }
+
+    .type-kind-section {
+        .type-kind-item {
+            flex-direction: row-reverse;
+            .icon {
+                margin-left: $spacing-sm;
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+/* Animations */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-  .property-content {
-    grid-template-columns: 1fr !important;
-  }
+    .property-details-page {
+        // حافظ على الـ padding لهذا الـ breakpoint لتبدو جيدة
+        padding: $spacing-xxl 5%;
+        .property-content {
+            grid-template-columns: 1fr;
+            gap: $spacing-3xl;
+            max-width: 750px; // **تم التعديل:** تقليل العرض الأقصى قليلاً
+            margin: 0 auto;
+        }
+
+        .left-section,
+        .right-section {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .image-gallery .main-image-container {
+            padding-top: 60%;
+        }
+    }
 }
 
 @media (max-width: 768px) {
-  .details-grid {
-    grid-template-columns: 1fr 1fr !important;
-  }
+    .property-details-page {
+        padding: $spacing-xl 4%;
 
-  .contact-buttons {
-    flex-direction: column;
-  }
+        .button-group {
+            justify-content: center;
+        }
+
+        .back-button,
+        .add-360-button {
+            padding: $spacing-sm $spacing-lg;
+            font-size: 0.9rem; // **تم التعديل:** تقليل الخط
+        }
+
+        .status-message {
+            padding: $spacing-lg;
+            font-size: 1rem; // **تم التعديل:** تقليل الخط
+        }
+
+        .info-card {
+            padding: $spacing-lg;
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        .image-gallery .main-image-container {
+            padding-top: 66.66%;
+            .nav-button {
+                width: 40px; // **تم التعديل:** تقليل
+                height: 40px; // **تم التعديل:** تقليل
+                font-size: 1rem; // **تم التعديل:** تقليل
+            }
+        }
+
+        .thumbnails {
+            gap: $spacing-xs;
+
+            .thumbnail-item {
+                width: 80px; // **تم التعديل:** تقليل
+                height: 55px; // **تم التعديل:** تقليل
+            }
+        }
+
+        .details-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: $spacing-md;
+        }
+
+        .detail-item {
+            padding: $spacing-md;
+
+            .icon {
+                font-size: 1.2rem; // **تم التعديل:** تقليل
+            }
+
+            .label {
+                font-size: 0.8rem; // **تم التعديل:** تقليل
+            }
+
+            .value {
+                font-size: 1rem; // **تم التعديل:** تقليل
+            }
+        }
+
+        .header-section {
+            h1 {
+                font-size: 1.8rem; // **تم التعديل:** تقليل
+            }
+
+            .price-section {
+                .price {
+                    font-size: 2.2rem; // **تم التعديل:** تقليل
+                }
+
+                .price-label {
+                    font-size: 0.9rem; // **تم التعديل:** تقليل
+                }
+            }
+        }
+
+        .type-kind-section {
+            gap: $spacing-md;
+            flex-direction: column;
+            align-items: center;
+
+            .type-kind-item {
+                width: 100%;
+                max-width: 280px; // **تم التعديل:** تقليل
+                font-size: 0.9rem; // **تم التعديل:** تقليل
+                padding: 0.7rem $spacing-lg; // **تم التعديل:** تقليل
+            }
+        }
+
+        .agency-info-box {
+            padding: $spacing-md;
+            gap: $spacing-md;
+
+            .agency-icon-wrapper {
+                width: 50px; // **تم التعديل:** تقليل
+                height: 50px; // **تم التعديل:** تقليل
+                font-size: 1.6rem; // **تم التعديل:** تقليل
+            }
+
+            .agency-details h3 {
+                font-size: 1rem; // **تم التعديل:** تقليل
+            }
+
+            .agency-details p {
+                font-size: 0.85rem; // **تم التعديل:** تقليل
+            }
+        }
+
+        .amenities-grid {
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); // **تم التعديل:** تقليل
+            gap: $spacing-xs;
+        }
+
+        .amenity-item {
+            padding: 0.5rem $spacing-sm; // **تم التعديل:** تقليل
+            font-size: 0.8rem; // **تم التعديل:** تقليل
+        }
+
+        .contact-sections .contact-links {
+            flex-direction: column;
+            gap: $spacing-sm;
+        }
+
+        a.whatsapp-link,
+        a.telegram-link {
+            font-size: 0.9rem; // **تم التعديل:** تقليل
+            padding: 0.5rem 0.7rem; // **تم التعديل:** تقليل
+        }
+
+        .view-panorama-button {
+            padding: 0.7rem $spacing-lg; // **تم التعديل:** تقليل
+            font-size: 0.95rem; // **تم التعديل:** تقليل
+        }
+    }
 }
 
 @media (max-width: 576px) {
-  .details-grid {
-    grid-template-columns: 1fr !important;
-  }
+    .property-details-page {
+        padding: $spacing-lg 3%;
 
-  .image-gallery .main-image-container {
-    height: 350px;
-  }
+        .button-group {
+            flex-direction: column;
+            align-items: stretch;
+        }
 
-  .thumbnails .thumbnail-item {
-    width: 80px;
-    height: 60px;
-  }
-}
-.contact-links {
-  display: flex;
-  gap: 15px;
-  margin-top: 20px;
-}
+        .back-button,
+        .add-360-button {
+            padding: 0.5rem 0.8rem; // **تم التعديل:** تقليل
+            font-size: 0.8rem; // **تم التعديل:** تقليل
+            justify-content: center;
+        }
 
-.contact-links a {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #25D366; /* WhatsApp green */
-  color: white;
-  font-size: 16px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background-color 0.3s;
-}
+        .info-card {
+            padding: $spacing-md;
 
-.contact-links .telegram-link {
-  background-color: #0088cc; /* Telegram blue */
-}
+            h2 {
+                font-size: 1.2rem; // **تم التعديل:** تقليل
+            }
+        }
 
-.contact-links .whatsapp-link:hover,
-.contact-links .telegram-link:hover {
-  background-color: #128C7E; /* WhatsApp hover */
-}
+        .image-gallery .main-image-container {
+            .nav-button {
+                width: 35px; // **تم التعديل:** تقليل
+                height: 35px; // **تم التعديل:** تقليل
+                font-size: 0.8rem; // **تم التعديل:** تقليل
+            }
 
-.contact-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
+            .image-counter {
+                bottom: $spacing-sm;
+                padding: 0.2rem 0.5rem; // **تم التعديل:** تقليل
+                font-size: 0.75rem; // **تم التعديل:** تقليل
+            }
+        }
+
+        .thumbnails {
+            gap: 0.3rem; // **تم التعديل:** تقليل
+
+            .thumbnail-item {
+                width: 50px; // **تم التعديل:** تقليل
+                height: 35px; // **تم التعديل:** تقليل
+                border-width: 2px;
+            }
+        }
+
+        .details-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .header-section {
+            h1 {
+                font-size: 1.6rem; // **تم التعديل:** تقليل
+            }
+
+            .price-section {
+                .price {
+                    font-size: 1.8rem; // **تم التعديل:** تقليل
+                }
+
+                .price-label {
+                    font-size: 0.8rem; // **تم التعديل:** تقليل
+                }
+            }
+        }
+        
+        .type-kind-section {
+            .type-kind-item {
+                font-size: 0.85rem; // **تم التعديل:** تقليل
+                padding: 0.5rem $spacing-md; // **تم التعديل:** تقليل
+            }
+        }
+
+        .agency-info-box {
+            padding: $spacing-sm;
+            gap: $spacing-md;
+
+            .agency-icon-wrapper {
+                width: 45px; // **تم التعديل:** تقليل
+                height: 45px; // **تم التعديل:** تقليل
+                font-size: 1.5rem; // **تم التعديل:** تقليل
+            }
+
+            .agency-details h3 {
+                font-size: 0.9rem; // **تم التعديل:** تقليل
+            }
+
+            .agency-details p {
+                font-size: 0.75rem; // **تم التعديل:** تقليل
+            }
+        }
+
+        .amenities-grid {
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); // **تم التعديل:** تقليل
+        }
+
+        .amenity-item {
+            padding: 0.25rem 0.4rem; // **تم التعديل:** تقليل
+            font-size: 0.75rem; // **تم التعديل:** تقليل
+        }
+
+        a.whatsapp-link,
+        a.telegram-link {
+            font-size: 0.8rem; // **تم التعديل:** تقليل
+            padding: 0.5rem 0.7rem; // **تم التعديل:** تقليل
+        }
+
+        .view-panorama-button {
+            padding: 0.5rem 0.8rem; // **تم التعديل:** تقليل
+            font-size: 0.85rem; // **تم التعديل:** تقليل
+        }
+    }
 }

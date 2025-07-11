@@ -1,0 +1,204 @@
+// src/components/ComparisonPreferencesModal/ComparisonPreferencesModal.scss
+$primary-color: #2A5C8D;
+$secondary-color: #f8f9fa;
+$light-bg: #f1f3f5;
+$text-color: #2d3436;
+
+.comparison-preferences-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001; // تأكد أنها أعلى من مودال النتائج
+}
+
+.comparison-preferences-modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 90%;
+    width: 600px; // عرض متوسط للمودال
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeInScale 0.3s ease-out forwards;
+
+    .close-button {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: #333;
+        transition: color 0.3s;
+        &:hover {
+            color: #f00;
+        }
+    }
+
+    h2 {
+        text-align: center;
+        color: $primary-color;
+        margin-bottom: 25px;
+        font-size: 1.8rem;
+    }
+
+    .preferences-form {
+        display: grid;
+        grid-template-columns: 1fr; // عمود واحد افتراضيا
+        gap: 20px;
+        padding: 0 10px; // قليل من الـ padding لنموذج
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            font-size: 1rem;
+            color: $text-color;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            box-sizing: border-box; // يتضمن الـ padding والـ border في العرض الكلي
+        }
+    }
+
+    .boolean-group {
+        flex-direction: row; // لجعل الأزرار أفقية
+        align-items: center;
+        flex-wrap: wrap; // لتجاوب أفضل
+        gap: 10px;
+
+        label {
+            margin-bottom: 0;
+            flex-basis: 100%; // تأكد أن التسمية تأخذ عرضها الكامل
+            margin-bottom: 5px; // مسافة بين التسمية والأزرار
+        }
+
+        .boolean-btn {
+            padding: 8px 15px;
+            border: 1px solid $primary-color;
+            border-radius: 5px;
+            background-color: white;
+            color: $primary-color;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            font-size: 0.9rem;
+
+            &.active {
+                background-color: $primary-color;
+                color: white;
+            }
+
+            &:hover:not(.active) {
+                background-color: lighten($primary-color, 40%);
+            }
+        }
+    }
+
+    .submit-compare-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745; // لون أخضر للمقارنة
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-top: 20px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+
+        &:hover {
+            background-color: darken(#28a745, 10%);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+// الرسوم المتحركة
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+// دعم RTL
+[dir="rtl"] {
+    .comparison-preferences-modal-content {
+        .close-button {
+            right: auto;
+            left: 15px;
+        }
+        h2 {
+            text-align: right;
+        }
+        .preferences-form {
+            text-align: right;
+        }
+        .form-group {
+            label {
+                text-align: right;
+            }
+        }
+        .boolean-group {
+            // يمكن أن تحتاج تعديلات محددة إذا كان ترتيب الأزرار يختلف في RTL
+            // flex-direction: row-reverse; // قد تحتاجها لبعض التخطيطات
+        }
+    }
+}
+
+// التجاوب
+@media (min-width: 768px) {
+    .comparison-preferences-modal-content .preferences-form {
+        grid-template-columns: repeat(2, 1fr); // عمودين على الشاشات الكبيرة
+    }
+    .comparison-preferences-modal-content .boolean-group {
+        grid-column: span 2; // لجعل المجموعات المنطقية تمتد على عمودين
+    }
+    .comparison-preferences-modal-content .submit-compare-btn {
+        grid-column: span 2; // لجعل زر الإرسال يمتد على عمودين
+    }
+}
+
+@media (max-width: 767px) {
+    .comparison-preferences-modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    .comparison-preferences-modal-content .form-group {
+        label {
+            font-size: 0.95rem;
+        }
+        input[type="number"], select, .boolean-btn {
+            font-size: 0.9rem;
+            padding: 8px;
+        }
+    }
+    .comparison-preferences-modal-content .submit-compare-btn {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
