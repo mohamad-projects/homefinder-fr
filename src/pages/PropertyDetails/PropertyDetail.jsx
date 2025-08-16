@@ -17,6 +17,7 @@ import houseImage from '../../assets/soc.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRealEstateDetails } from '../../features/auth/authSlice';
 
+// Fix for default Leaflet icon paths
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
     iconRetinaUrl,
@@ -71,7 +72,7 @@ const PropertyDetails = () => {
     };
 
     const handleViewPanorama = () => {
-        navigate('/pano');
+        navigate('/pano'); // Assumes '/pano' route exists for 360 viewer
     };
 
     const contact = property.user?.contact?.[0] || {};
@@ -80,15 +81,26 @@ const PropertyDetails = () => {
 
     const isOwner = user && property.user_id === user.id;
 
+    // --- المميزات (Amenities) ---
     const amenities = [];
-    if (property.properties?.electricity_status === "1") amenities.push(translateMode ? "Electricity" : "كهرباء");
-    if (property.properties?.water_status === "1") amenities.push(translateMode ? "Water" : "مياه");
-    if (property.properties?.transportation_status === "1") amenities.push(translateMode ? "Transportation" : "مواصلات");
-    if (property.properties?.water_well === "1") amenities.push(translateMode ? "Water well" : "بئر ماء");
-    if (property.properties?.solar_energy === "1") amenities.push(translateMode ? "Solar energy" : "طاقة شمسية");
-    if (property.properties?.garage === "1") amenities.push(translateMode ? "Garage" : "كراج");
-    if (property.properties?.elevator === "1") amenities.push(translateMode ? "Elevator" : "مصعد");
-    if (property.properties?.garden_status === "1") amenities.push(translateMode ? "Garden" : "حديقة");
+    const properties = property.properties || {}; 
+
+    const checkAmenity = (key, textAr, textEn, expectedValue = 1) => {
+        const value = parseInt(String(properties[key]));
+        if (!isNaN(value) && value === expectedValue) {
+            amenities.push(translateMode ? textEn : textAr);
+        }
+    };
+
+    checkAmenity('electricity_status', "كهرباء", "Electricity", 1);
+    checkAmenity('water_status', "مياه", "Water", 1);
+    checkAmenity('water_well', "بئر ماء", "Water well", 1);
+    checkAmenity('solar_energy', "طاقة شمسية", "Solar energy", 1);
+    checkAmenity('garage', "كراج", "Garage", 1);
+    checkAmenity('elevator', "مصعد", "Elevator", 1);
+    checkAmenity('garden_status', "حديقة", "Garden", 1);
+    checkAmenity('transportation_status', "مواصلات ", " Transportation", 1); 
+    // --- نهاية المميزات ---
 
     return (
         <div className="property-details-page">
@@ -152,7 +164,7 @@ const PropertyDetails = () => {
                         <h2>{translateMode ? 'Description' : 'الوصف'}</h2>
                         <p>{property.description || (translateMode ? 'No description available' : 'لا يوجد وصف')}</p>
                     </div>
-                       <div className="location-section">
+                    <div className="location-section">
                         <h2>
                             <FaMapMarkerAlt className="section-icon" style={{ color: "green" }} />
                             {translateMode ? 'Location' : 'الموقع'}
@@ -164,40 +176,33 @@ const PropertyDetails = () => {
                     <div className="details-grid">
                         <div className="detail-item">
                             <FaBed className="icon" />
-                            <div className="word-item">
-                                <span className="label">{translateMode ? 'Bedrooms' : 'غرف نوم'}</span>
+                            <div className="word-item-inline">
+                                <span className="label">{translateMode ? 'Bedrooms: ' : 'عدد الغرف: '}</span>
                                 <span className="value">{property.properties?.room_no || 'N/A'}</span>
                             </div>
                         </div>
 
-                        <div className="detail-item">
-                            <FaBath className="icon" />
-                            <div className="word-item">
-                                <span className="label">{translateMode ? 'Bathrooms' : 'حمامات'}</span>
-                                <span className="value">{property.properties?.bathroom_no || 'N/A'}</span>
-                            </div>
-                        </div>
 
                         <div className="detail-item">
                             <FaRulerCombined className="icon" />
-                            <div className="word-item">
-                                <span className="label">{translateMode ? 'Area' : 'المساحة'}</span>
+                            <div className="word-item-inline">
+                                <span className="label">{translateMode ? 'Area: ' : 'المساحة: '}</span>
                                 <span className="value">{property.properties?.space_status || 'N/A'} m²</span>
                             </div>
                         </div>
 
                         <div className="detail-item">
                             <FaRulerCombined className="icon" />
-                            <div className="word-item">
-                                <span className="label">{translateMode ? 'Floor' : 'الطابق'}</span>
+                            <div className="word-item-inline">
+                                <span className="label">{translateMode ? 'Floor: ' : 'الطابق: '}</span>
                                 <span className="value">{property.properties?.floor || 'N/A'}</span>
                             </div>
                         </div>
 
                         <div className="detail-item">
                             <FaRulerCombined className="icon" />
-                            <div className="word-item">
-                                <span className="label">{translateMode ? 'Direction' : 'عدد الاتجاهات'}</span>
+                            <div className="word-item-inline">
+                                <span className="label">{translateMode ? 'Direction: ' : 'الاتجاه: '}</span>
                                 <span className="value">
                                     {property.properties?.direction || 'N/A'}
                                 </span>
@@ -206,8 +211,8 @@ const PropertyDetails = () => {
 
                         <div className="detail-item">
                             <FaRulerCombined className="icon" />
-                            <div className="word-item">
-                                <span className="label">{translateMode ? 'Ownership Type' : 'نوع الملكية'}</span>
+                            <div className="word-item-inline">
+                                <span className="label">{translateMode ? 'Ownership Type: ' : 'نوع الملكية: '}</span>
                                 <span className="value">
                                     {property.properties?.ownership_type === "green" ? (translateMode ? "Green" : "أخضر") :
                                         property.properties?.ownership_type === "court" ? (translateMode ? "Court" : "محكمة") :
@@ -220,33 +225,30 @@ const PropertyDetails = () => {
 
                 <div className="right-section">
                     <div className="header-section">
-                        <h1>{translateMode ? 'Property Details' : 'تفاصيل العقار'}</h1>
+                        <div className="price-section">
+                            <span className="price">
+                                {translateMode ? 'Price: ' : 'السعر: '}
+                                {property.price?.toLocaleString() || '0'} $
+                            </span>
+                        </div>
                         <div className="type-kind-section">
-                            <div className="type-kind-item type-item"> {/* Added class 'type-item' */}
+                            <div className="type-kind-item type-item">
                                 <FaTag className="icon" />
                                 <span className="value">
-                                    {/* Corrected logic for 'type' translation */}
                                     {property.type === "sale" ? (translateMode ? "For Sale" : "للبيع") :
-                                     property.type === "rental" ? (translateMode ? "For Rent" : "للإيجار") : 'N/A'}
+                                        property.type === "rental" ? (translateMode ? "For Rent" : "للإيجار") : 'N/A'}
                                 </span>
                             </div>
-                            <div className="type-kind-item kind-item"> {/* Added class 'kind-item' */}
+                            <div className="type-kind-item kind-item">
                                 <FaHome className="icon" />
                                 <span className="value">
                                     {
                                     property.kind === "apartment" ? (translateMode ? "Apartment" : "شقة") :
                                     property.kind === "villa" ? (translateMode ? "Villa" : "فيلا") :
-                                 property.kind === "chalet" ? (translateMode ? "Chalet" : "شاليه") :  'N/A'
-                                     }
+                                    property.kind === "chalet" ? (translateMode ? "Chalet" : "شاليه") : 'N/A'
+                                    }
                                 </span>
                             </div>
-                        </div>
-
-                        <div className="price-section">
-                            <span className="price">
-                                {property.price?.toLocaleString() || '0'} $
-                            </span>
-                            <span className="price-label">{translateMode ? 'Price' : 'السعر'}</span>
                         </div>
                     </div>
 
@@ -259,12 +261,16 @@ const PropertyDetails = () => {
                     <div className="agency-info-box">
                         <div className="agency-details">
                             <h3>{translateMode ? 'Real Estate name' : 'اسم المكتب العقاري'}</h3>
-                            <p><strong>{property.user?.name || 'N/A'}</strong></p>
-                            <p><FaPhone /> {phoneNumber || 'N/A'}</p>
+                            <p className="agency-contact-line">
+                                <FaPhone className="agency-phone-icon" />
+                                <strong>{property.user?.name || 'N/A'}</strong>
+                                <span> {phoneNumber || 'N/A'}</span>
+                            </p>
                         </div>
                     </div>
 
-                    {amenities.length > 0 && (
+                    {/* المميزات (Amenities) */}
+                    {amenities.length > 0 && ( 
                         <div className="amenities-section">
                             <h2>{translateMode ? 'Amenities' : 'المرافق'}</h2>
                             <div className="amenities-grid">
@@ -298,8 +304,7 @@ const PropertyDetails = () => {
                     )}
 
                     <div className="contact-sections">
-                        <h2>{translateMode ? 'Contact Seller' : ' للتواصل'}</h2>
-                        <div className="contact-links">
+                        <div className="contact-links-grid">
                             {phoneNumber && (
                                 <a
                                     href={`https://wa.me/${phoneNumber}`}

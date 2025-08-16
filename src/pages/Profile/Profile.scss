@@ -1,13 +1,10 @@
-/* Profile.scss */
-
-/* General Styles */
+.pageprofile{
+  width: 100%;
+  height: 100%;
+  background-color: #f1f5f3;
+}
 .app-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  // **التعديل الرئيسي هنا:**
-  // زيادة الـ `max-width` لتستوعب 3 بطاقات بحجم حوالي 370px + المسافات.
-  // 370 * 3 = 1110px. 1.5rem (24px) * 2 gaps = 48px.
-  // 1110 + 48 = 1158px.
-  // سنختار `max-width: 1200px;` أو 1250px لضمان مساحة كافية.
   max-width: 1200px; /* زيادة الـ max-width لضمان استيعاب 3 بطاقات بشكل مريح */
   margin: 0 auto;
   padding: 30px 40px; /* حافظ على الـ padding المريح */

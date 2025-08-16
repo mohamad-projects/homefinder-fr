@@ -25,7 +25,6 @@ const ComparisonModal = ({ isOpen, onClose, comparisonData }) => {
     const { translateMode } = useContext(DarkModeContext);
     const t = getTranslations(translateMode);
 
-    // إضافة console.log هنا للتحقق من قيم isOpen و comparisonData
     console.log("ComparisonModal - isOpen:", isOpen);
     console.log("ComparisonModal - comparisonData:", comparisonData);
 
@@ -41,19 +40,17 @@ const ComparisonModal = ({ isOpen, onClose, comparisonData }) => {
         <div className="comparison-modal-overlay">
             <div className="comparison-modal-content">
                 <button className="close-button" onClick={onClose}>&times;</button>
-                <h2>{t.comparison.title}</h2>
-                <p className="comparison-message">{message}</p>
-
+                <h2>{t.comparison.winner}: {overall_winner === 'Tie' ? t.comparison.tie : overall_winner}</h2>
+                
                 <div className={`overall-scores ${winnerClass}`}>
+                    
                     <div className={`score-item ${overall_winner === `RealEstate ${real_estate_1.id}` ? 'highlight-score' : ''}`}>
-                        <strong>{t.comparison.estate1Score} (ID: {real_estate_1.id}):</strong> {real_estate_1.total_score}
+                        <strong>{t.comparison.estate1Score} : {real_estate_1.total_score}</strong> 
                     </div>
                     <div className={`score-item ${overall_winner === `RealEstate ${real_estate_2.id}` ? 'highlight-score' : ''}`}>
-                        <strong>{t.comparison.estate2Score} (ID: {real_estate_2.id}):</strong> {real_estate_2.total_score}
+                        <strong>{t.comparison.estate2Score} : {real_estate_2.total_score} </strong> 
                     </div>
-                    <h3 className="winner-highlight">
-                        {t.comparison.winner}: {overall_winner === 'Tie' ? t.comparison.tie : overall_winner}
-                    </h3>
+                    
                 </div>
 
                 <div className="comparison-table-container">
@@ -61,11 +58,9 @@ const ComparisonModal = ({ isOpen, onClose, comparisonData }) => {
                         <thead>
                             <tr>
                                 <th>{t.comparison.feature}</th>
-                                <th>{t.comparison.estate1Value} (ID: {real_estate_1.id})</th>
-                                <th>{t.comparison.estate2Value} (ID: {real_estate_2.id})</th>
+                                <th>{t.comparison.estate1Value} </th>
+                                <th>{t.comparison.estate2Value} </th>
                                 <th>{t.comparison.featureWinner}</th>
-                                <th>{t.comparison.description}</th>
-                                <th>{t.comparison.userPreference}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,8 +70,6 @@ const ComparisonModal = ({ isOpen, onClose, comparisonData }) => {
                                     <td>{item.value_1}</td>
                                     <td>{item.value_2}</td>
                                     <td>{item.winner === 'Tie' ? t.comparison.tie : item.winner}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.user_preference || (translateMode ? 'N/A' : 'غير متوفر')}</td>
                                 </tr>
                             ))}
                         </tbody>

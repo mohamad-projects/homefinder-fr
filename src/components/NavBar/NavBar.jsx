@@ -81,6 +81,7 @@ const Navbar = () => {
           </span>
         </Link>
 
+        {/* Links section - now horizontally scrollable on small screens */}
         <div className="navbar-links">
           {user && (
             <Link to={`profile/${user.id}`} className="nav-link">

@@ -1,5 +1,3 @@
-// src/components/AddServiceModal/AddServiceModal.jsx
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './AddServiceModal.scss';
@@ -43,7 +41,7 @@ const AddServiceModal = ({
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [lang, setLang] = useState('ar'); 
+  const [lang, setLang] = useState('ar');
 
   useEffect(() => {
     if (isOpen) {
@@ -51,7 +49,11 @@ const AddServiceModal = ({
       if (mode === 'edit' && serviceToEdit) {
         setTitle(serviceToEdit.title || '');
         setDescription(serviceToEdit.description || '');
-        dispatch(setSelectedServiceId(serviceToEdit.services_type_id));
+        if (serviceToEdit.services_type_id) {
+          dispatch(setSelectedServiceId(serviceToEdit.services_type_id));
+        } else {
+          dispatch(setSelectedServiceId(null));
+        }
       } else {
         setTitle('');
         setDescription('');
@@ -62,6 +64,11 @@ const AddServiceModal = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!selectedServiceId) {
+      alert(lang === 'ar' ? 'يرجى تحديد نوع الخدمة.' : 'Please select a service type.');
+      return;
+    }
 
     try {
       if (mode === 'edit') {
@@ -82,6 +89,7 @@ const AddServiceModal = ({
       onClose();
     } catch (err) {
       console.error('خطأ أثناء حفظ الخدمة:', err);
+      alert(lang === 'ar' ? 'فشل حفظ الخدمة. الرجاء المحاولة مرة أخرى.' : 'Failed to save service. Please try again.');
     }
   };
 
@@ -104,21 +112,25 @@ const AddServiceModal = ({
         </div>
 
         <form onSubmit={handleSubmit}>
-          <label>{t.serviceType}</label>
-          <div className="service-types">
+          <label htmlFor="service-type-select">{t.serviceType}</label>
+          <div className="service-types" id="service-type-select">
             {services.map((service) => (
               <div
                 key={service.id}
                 className={`service-type ${selectedServiceId === service.id ? 'selected' : ''}`}
                 onClick={() => dispatch(setSelectedServiceId(service.id))}
+                role="button"
+                tabIndex="0"
+                aria-pressed={selectedServiceId === service.id}
               >
                 {lang === 'ar' ? service.type_ar || service.type : service.type_en || service.type}
               </div>
             ))}
           </div>
 
-          <label>{t.titleLabel}</label>
+          <label htmlFor="service-title-input">{t.titleLabel}</label>
           <input
+            id="service-title-input"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -126,8 +138,9 @@ const AddServiceModal = ({
             placeholder={lang === 'ar' ? 'اكتب العنوان هنا' : 'Enter title here'}
           />
 
-          <label>{t.descriptionLabel}</label>
+          <label htmlFor="service-description-textarea">{t.descriptionLabel}</label>
           <textarea
+            id="service-description-textarea"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required

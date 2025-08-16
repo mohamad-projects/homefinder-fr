@@ -50,13 +50,13 @@ $shadow-deep: rgba(0, 0, 0, 0.18); // Deeper shadow for main image/interactive e
 $shadow-magical: rgba(0, 0, 0, 0.25); // For a more pronounced, "magical" shadow
 
 // Spacing
-$spacing-xs: 0.4rem; // **تم التعديل:** تقليل
-$spacing-sm: 0.6rem; // **تم التعديل:** تقليل
-$spacing-md: 0.8rem; // **تم التعديل:** تقليل
-$spacing-lg: 1.2rem; // **تم التعديل:** تقليل
-$spacing-xl: 1.6rem; // **تم التعديل:** تقليل
-$spacing-xxl: 2rem; // **تم التعديل:** تقليل
-$spacing-3xl: 2.8rem; // **تم التعديل:** تقليل
+$spacing-xs: 0.4rem;
+$spacing-sm: 0.6rem;
+$spacing-md: 0.8rem;
+$spacing-lg: 1.2rem;
+$spacing-xl: 1.6rem;
+$spacing-xxl: 2rem;
+$spacing-3xl: 2.8rem;
 
 
 body {
@@ -72,8 +72,7 @@ body {
 }
 
 .property-details-page {
-    // تقليل الـ padding الأفقي والعام لـ "الصفحة"
-    padding: $spacing-xxl 6%; // **تم التعديل:** تقليل الـ padding العام
+    padding: $spacing-xxl 6%;
     min-height: 100vh;
     box-sizing: border-box;
     background-color: $secondary-color;
@@ -81,19 +80,19 @@ body {
     .status-message {
         text-align: center;
         padding: $spacing-xl;
-        font-size: 1.2rem; // **تم التعديل:** تقليل حجم الخط
+        font-size: 1.2rem;
         font-weight: 500;
-        border-radius: 10px; // **تم التعديل:** تقليل
+        border-radius: 10px;
         margin: $spacing-3xl auto;
-        max-width: 550px; // **تم التعديل:** تقليل
-        box-shadow: 0 5px 15px $shadow-medium; // **تم التعديل:** تقليل الظل
+        max-width: 550px;
+        box-shadow: 0 5px 15px $shadow-medium;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: $spacing-sm;
 
         svg {
-            font-size: 1.4em; // **تم التعديل:** تقليل حجم الأيقونة
+            font-size: 1.4em;
         }
     }
 
@@ -125,71 +124,71 @@ body {
         background: $dark-color;
         color: white;
         border: none;
-        padding: $spacing-md $spacing-lg; // **تم التعديل:** تقليل الـ padding
-        border-radius: 7px; // **تم التعديل:** تقليل
+        padding: $spacing-md $spacing-lg;
+        border-radius: 7px;
         cursor: pointer;
         font-weight: 600;
         transition: all 0.3s ease;
         display: inline-flex;
         align-items: center;
-        gap: $spacing-xs; // **تم التعديل:** تقليل
-        box-shadow: 0 3px 8px $shadow-light; // **تم التعديل:** تقليل الظل
+        gap: $spacing-xs;
+        box-shadow: 0 3px 8px $shadow-light;
         text-decoration: none;
-        font-size: 0.95rem; // **تم التعديل:** تقليل الخط
+        font-size: 0.95rem;
 
         &:hover {
             background: lighten($dark-color, 15%);
-            transform: translateY(-2px); // **تم التعديل:** تقليل حركة الرفع
-            box-shadow: 0 5px 12px $shadow-medium; // **تم التعديل:** تقليل الظل
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px $shadow-medium;
         }
 
         svg {
-            font-size: 1rem; // **تم التعديل:** تقليل حجم الأيقونة
+            font-size: 1rem;
         }
     }
 
     .add-360-button {
         background: $color-add360;
-        box-shadow: 0 3px 10px rgba($color-add360, 0.3); // **تم التعديل:** تقليل الظل
+        box-shadow: 0 3px 10px rgba($color-add360, 0.3);
 
         &:hover {
             background: darken($color-add360, 8%);
-            box-shadow: 0 5px 15px rgba($color-add360, 0.5); // **تم التعديل:** تقليل الظل
+            box-shadow: 0 5px 15px rgba($color-add360, 0.5);
         }
     }
 
     .property-content {
         display: grid;
         grid-template-columns: 2fr 1fr;
-        gap: $spacing-3xl; // **تم التعديل:** تقليل الفجوة الرئيسية
-        max-width: 1000px; // **تم التعديل:** تقليل العرض الأقصى قليلاً
+        gap: $spacing-3xl;
+        max-width: 1000px;
         margin: 0 auto; 
 
         .left-section,
         .right-section {
             display: flex;
             flex-direction: column;
-            gap: $spacing-xxl; // **تم التعديل:** تقليل الفجوة بين الأقسام
+            gap: $spacing-xxl;
         }
     }
 }
 
 .info-card {
     background: $light-bg;
-    padding: $spacing-xl; // **تم التعديل:** تقليل الـ padding
-    border-radius: 10px; // **تم التعديل:** تقليل
-    box-shadow: 0 3px 12px $shadow-light; // **تم التعديل:** تقليل الظل
+    padding: $spacing-xl;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px $shadow-light;
     border: 1px solid $border-color;
-    transition: transform 0.2s ease, box-shadow 0.2s ease; // **تم التعديل:** تقليل مدة الانتقال
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 
     &:hover {
-        transform: translateY(-3px); // **تم التعديل:** تقليل حركة الرفع
-        box-shadow: 0 6px 18px $shadow-medium; // **تم التعديل:** تقليل الظل
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px $shadow-medium;
     }
 
     h2 {
-        font-size: 1.6rem; // **تم التعديل:** تقليل حجم الخط
-        margin-bottom: $spacing-lg; // **تم التعديل:** تقليل
+        font-size: 1.6rem;
+        margin-bottom: $spacing-lg;
         display: flex;
         align-items: center;
         color: $dark-color;
@@ -202,42 +201,42 @@ body {
             position: absolute;
             left: 0;
             bottom: 0;
-            width: 50px; // **تم التعديل:** تقليل عرض الخط
-            height: 2px; // **تم التعديل:** تقليل سمك الخط
+            width: 50px;
+            height: 2px;
             background-color: $primary-color;
-            border-radius: 1px; // **تم التعديل:** تقليل
+            border-radius: 1px;
         }
 
         .section-icon {
             margin-right: $spacing-sm;
             color: $primary-color;
-            font-size: 1.3rem; // **تم التعديل:** تقليل حجم الأيقونة
+            font-size: 1.3rem;
         }
     }
 
     p {
-        line-height: 1.6; // **تم التعديل:** تقليل
+        line-height: 1.6;
         color: $text-color;
         margin: 0;
-        font-size: 0.95rem; // **تم التعديل:** تقليل حجم الخط للوصف
+        font-size: 0.95rem;
     }
 }
 
 .image-gallery {
     @extend .info-card;
-    box-shadow: 0 6px 20px $shadow-medium; // **تم التعديل:** تقليل الظل
+    box-shadow: 0 6px 20px $shadow-medium;
     &:hover {
-        box-shadow: 0 6px 20px $shadow-medium; // **تم التعديل:** تقليل الظل
+        box-shadow: 0 6px 20px $shadow-medium;
     }
 
     .main-image-container {
         position: relative;
         width: 100%;
-        padding-top: 60%; // **تم التعديل:** تقليل ارتفاع الصورة الرئيسية قليلاً
+        padding-top: 60%;
         border-radius: 8px;
         overflow: hidden;
         margin-bottom: $spacing-md;
-        box-shadow: 0 4px 12px $shadow-deep; // **تم التعديل:** تقليل الظل
+        box-shadow: 0 4px 12px $shadow-deep;
         background-color: $secondary-color;
 
         img.main-image {
@@ -247,12 +246,12 @@ body {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease; // **تم التعديل:** تقليل مدة الانتقال
+            transition: transform 0.5s ease;
             display: block;
         }
 
         &:hover .main-image {
-            transform: scale(1.02); // **تم التعديل:** تقليل حجم التكبير
+            transform: scale(1.02);
         }
 
         .image-counter {
@@ -260,11 +259,11 @@ body {
             bottom: $spacing-lg;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7); // **تم التعديل:** تقليل الشفافية قليلاً
+            background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 0.3rem $spacing-md; // **تم التعديل:** تقليل الـ padding
-            border-radius: 20px; // **تم التعديل:** تقليل
-            font-size: 0.85rem; // **تم التعديل:** تقليل حجم الخط
+            padding: 0.3rem $spacing-md;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 500;
             z-index: 10;
         }
@@ -273,26 +272,26 @@ body {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.9); // **تم التعديل:** تقليل الشفافية قليلاً
+            background: rgba(255, 255, 255, 0.9);
             border: none;
-            width: 45px; // **تم التعديل:** تقليل الحجم
-            height: 45px; // **تم التعديل:** تقليل الحجم
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease; // **تم التعديل:** تقليل مدة الانتقال
-            box-shadow: 0 2px 8px $shadow-medium; // **تم التعديل:** تقليل الظل
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px $shadow-medium;
             color: $dark-color;
-            font-size: 1.1rem; // **تم التعديل:** تقليل حجم الأيقونة
+            font-size: 1.1rem;
             z-index: 11;
 
             &:hover {
                 background: $primary-color;
                 color: white;
-                transform: translateY(-50%) scale(1.05); // **تم التعديل:** تقليل حجم التكبير
-                box-shadow: 0 4px 12px $shadow-deep; // **تم التعديل:** تقليل الظل
+                transform: translateY(-50%) scale(1.05);
+                box-shadow: 0 4px 12px $shadow-deep;
             }
 
             &.prev {
@@ -307,19 +306,19 @@ body {
 
     .thumbnails {
         display: flex;
-        gap: $spacing-sm; // **تم التعديل:** تقليل الفجوة
+        gap: $spacing-sm;
         overflow-x: auto;
         padding: $spacing-xs 0;
         scrollbar-width: thin;
         scrollbar-color: $primary-color $border-color;
 
         &::-webkit-scrollbar {
-            height: 7px; // **تم التعديل:** تقليل سمك شريط التمرير
+            height: 7px;
         }
 
         &::-webkit-scrollbar-thumb {
             background-color: $primary-color;
-            border-radius: 3px; // **تم التعديل:** تقليل
+            border-radius: 3px;
         }
 
         &::-webkit-scrollbar-track {
@@ -327,15 +326,15 @@ body {
         }
 
         .thumbnail-item {
-            width: 90px; // **تم التعديل:** تقليل
-            height: 60px; // **تم التعديل:** تقليل
-            border-radius: 7px; // **تم التعديل:** تقليل
+            width: 90px;
+            height: 60px;
+            border-radius: 7px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.2s; // **تم التعديل:** تقليل مدة الانتقال
+            transition: all 0.2s;
             position: relative;
             flex-shrink: 0;
-            border: 2px solid transparent; // **تم التعديل:** تقليل سمك الحدود
+            border: 2px solid transparent;
 
             img {
                 width: 100%;
@@ -345,11 +344,11 @@ body {
 
             &.active {
                 border-color: $primary-color;
-                transform: scale(1.05); // **تم التعديل:** تقليل التكبير
+                transform: scale(1.05);
             }
 
             &:hover {
-                transform: scale(1.05); // **تم التعديل:** تقليل التكبير
+                transform: scale(1.05);
             }
 
             &::after {
@@ -359,8 +358,8 @@ body {
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(0, 0, 0, 0.2); // **تم التعديل:** تقليل الشفافية
-                transition: all 0.2s; // **تم التعديل:** تقليل مدة الانتقال
+                background: rgba(0, 0, 0, 0.2);
+                transition: all 0.2s;
             }
 
             &.active::after,
@@ -374,50 +373,79 @@ body {
 .details-grid {
     @extend .info-card;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); // **تم التعديل:** تقليل minmax
-    gap: $spacing-md; // **تم التعديل:** تقليل الفجوة
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-md;
 
     .detail-item {
         background: $secondary-color;
-        padding: $spacing-md; // **تم التعديل:** تقليل الـ padding
-        border-radius: 8px; // **تم التعديل:** تقليل
+        padding: $spacing-md;
+        border-radius: 8px;
         display: flex;
-        align-items: center;
-        gap: $spacing-sm; // **تم التعديل:** تقليل
-        box-shadow: 0 1px 6px $shadow-light; // **تم التعديل:** تقليل الظل
+        align-items: center; 
+        gap: $spacing-md;
+        box-shadow: 0 1px 6px $shadow-light;
         border: 1px solid lighten($border-color, 3%);
-        transition: all 0.2s; // **تم التعديل:** تقليل مدة الانتقال
+        transition: all 0.2s;
+
+        .icon {
+            font-size: 1.4rem;
+            color: $primary-color;
+            flex-shrink: 0;
+            width: 1.8rem;
+            text-align: center;
+        }
+
+        .word-item-inline {
+            display: flex;
+            align-items: baseline;
+            gap: $spacing-xs;
+            flex-grow: 1;
+
+            .label {
+                font-size: 0.85rem;
+                color: rgb(121, 120, 120);
+                font-weight: 900;
+                margin: 0;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                white-space: nowrap; 
+            }
+
+            .value {
+                font-weight: 700;
+                font-size: 1.1rem;
+                color: rgb(67, 67, 67);
+                margin: 0;
+                white-space: nowrap; 
+            }
+        }
 
         .word-item {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             justify-content: center;
-            gap: 2px; // **تم التعديل:** تقليل
+            flex-grow: 1;
+            gap: 2px;
+
+            .label {
+                font-size: 0.85rem;
+                color: rgb(121, 120, 120);
+                font-weight: 900;
+                margin: 0;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            .value {
+                font-weight: 700;
+                font-size: 1.1rem;
+                color: rgb(67, 67, 67);
+                margin: 0;
+            }
         }
 
         &:hover {
-            transform: translateY(-2px); // **تم التعديل:** تقليل حركة الرفع
-            box-shadow: 0 4px 10px $shadow-medium; // **تم التعديل:** تقليل الظل
-        }
-
-        .icon {
-            font-size: 1.4rem; // **تم التعديل:** تقليل
-            color: $primary-color;
-        }
-
-        .label {
-            font-size: 0.85rem; // **تم التعديل:** تقليل
-            color: rgb(121, 120, 120);
-            font-weight: 900;
-            margin-top: 0;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
-
-        .value {
-            font-weight: 700;
-            font-size: 1.1rem; // **تم التعديل:** تقليل
-            color: rgb(67, 67, 67);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px $shadow-medium;
         }
     }
 }
@@ -432,38 +460,38 @@ body {
 
 .header-section {
     h1 {
-        font-size: 2.2rem; // **تم التعديل:** تقليل
+        font-size: 2.2rem;
         color: $dark-color;
         margin-bottom: $spacing-md;
         font-weight: 700;
         text-align: center;
+        display: block; 
     }
 
     .price-section {
-        display: flex;
-        flex-direction: column;
+        display: flex; 
+        flex-direction: column; 
         align-items: center;
         margin-bottom: $spacing-xl;
         padding: $spacing-md $spacing-xl;
-        background-color: lighten($secondary-color, 2%);
-        border-radius: 10px; // **تم التعديل:** تقليل
+        background-color: rgb(236, 237, 238);
+        border-radius: 10px;
         border: 1px solid darken($border-color, 5%);
-        box-shadow: 0 1px 8px $shadow-light; // **تم التعديل:** تقليل
+        box-shadow: 0 1px 8px $shadow-light;
 
         .price {
-            font-size: 2.5rem; // **تم التعديل:** تقليل
+            font-size: 1.6rem;
             font-weight: 800;
             color: $dark-color;
             line-height: 1;
-            margin-bottom: $spacing-xs;
+            margin-bottom: $spacing-xs; 
+            display: flex; 
+            align-items: baseline; 
+            gap: $spacing-xs; 
         }
 
-        .price-label {
-            font-size: 1rem; // **تم التعديل:** تقليل
-            font-weight: 500;
-            color: $text-color;
-            text-transform: uppercase;
-            letter-spacing: 0.8px; // **تم التعديل:** تقليل
+        .price-label { 
+            display: none; 
         }
     }
 }
@@ -472,36 +500,34 @@ body {
 .type-kind-section {
     display: flex;
     justify-content: center;
-    gap: $spacing-md; // **تم التعديل:** تقليل الفجوة
+    gap: $spacing-md;
     margin-bottom: $spacing-lg;
     flex-wrap: wrap;
 
     .type-kind-item {
         flex: 1;
-        min-width: 140px; // **تم التعديل:** تقليل
-        max-width: 220px; // **تم التعديل:** تقليل
+        min-width: 140px;
+        max-width: 220px;
 
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: $spacing-xs; // **تم التعديل:** تقليل
-        padding: $spacing-md $spacing-lg; // **تم التعديل:** تقليل
-        border-radius: 10px; // **تم التعديل:** تقليل
+        gap: $spacing-xs;
+        padding: $spacing-md $spacing-lg;
+        border-radius: 10px;
         font-weight: 700;
-        font-size: 1rem; // **تم التعديل:** تقليل
+        font-size: 1rem;
         text-transform: uppercase;
-        letter-spacing: 0.4px; // **تم التعديل:** تقليل
-        box-shadow: 0 4px 15px $shadow-magical; // **تم التعديل:** تقليل
-        transition: all 0.3s ease-in-out; // **تم التعديل:** تقليل مدة الانتقال
+        letter-spacing: 0.4px;
+        box-shadow: 0 1px 1px $shadow-magical;
+        transition: all 0.3s ease-in-out;
 
         .icon {
-            font-size: 1.3rem; // **تم التعديل:** تقليل
+            font-size: 1.3rem;
         }
 
-        // Apply specific styles for 'sale' and 'rental' types
         &.type-item {
-            // Default styling, will be overridden by .type-sale or .type-rental
-            background: linear-gradient(135deg, #CCC 0%, #AAA 100%); // Fallback if type not matched
+            background: linear-gradient(135deg, #f4f4f4 0%, #f0ecec 100%);
             color: $dark-color;
             .icon { color: $dark-color; }
         }
@@ -518,10 +544,8 @@ body {
             .icon { color: $rental-icon-color; }
         }
 
-        // Apply specific styles for different 'kind' values
         &.kind-item {
-            // Default styling, will be overridden by .kind-apartment, .kind-house, .kind-land
-            background: linear-gradient(135deg, #CCC 0%, #AAA 100%); // Fallback if kind not matched
+            background: linear-gradient(135deg, #f4f4f4 0%, #f0ecec 100%);
             color: $dark-color;
             .icon { color: $dark-color; }
         }
@@ -546,8 +570,8 @@ body {
 
 
         &:hover {
-            transform: translateY(-3px) scale(1.01); // **تم التعديل:** تقليل حركة الرفع والتكبير
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); // **تم التعديل:** تقليل الظل
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
     }
 }
@@ -557,46 +581,46 @@ body {
     background: $color-panorama;
     color: white;
     border: none;
-    padding: $spacing-md $spacing-xl; // **تم التعديل:** تقليل
-    border-radius: 7px; // **تم التعديل:** تقليل
+    padding: $spacing-md $spacing-xl;
+    border-radius: 7px;
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.2s ease; // **تم التعديل:** تقليل مدة الانتقال
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: $spacing-sm; // **تم التعديل:** تقليل
-    box-shadow: 0 3px 10px rgba($color-panorama, 0.3); // **تم التعديل:** تقليل
+    gap: $spacing-sm;
+    box-shadow: 0 3px 10px rgba($color-panorama, 0.3);
     margin-top: $spacing-md;
     width: 100%;
-    font-size: 1rem; // **تم التعديل:** تقليل
+    font-size: 1rem;
 
     &:hover {
         background: darken($color-panorama, 10%);
-        transform: translateY(-2px); // **تم التعديل:** تقليل
-        box-shadow: 0 5px 15px rgba($color-panorama, 0.5); // **تم التعديل:** تقليل
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba($color-panorama, 0.5);
     }
 
     svg {
-        font-size: 1.1rem; // **تم التعديل:** تقليل
+        font-size: 1.1rem;
     }
 }
 
 .agency-info-box {
     @extend .info-card;
     display: flex;
-    align-items: center;
-    gap: $spacing-md; // **تم التعديل:** تقليل
-    border-left: 5px solid $primary-color; // **تم التعديل:** تقليل سمك الحد
-    box-shadow: 0 2px 8px $shadow-light; // **تم التعديل:** تقليل
-    padding: $spacing-lg; // **تم التعديل:** تقليل
+    flex-direction: column; 
+    gap: $spacing-sm; 
+    border-left: 5px solid $primary-color;
+    box-shadow: 0 2px 8px $shadow-light;
+    padding: $spacing-lg;
 
     .agency-details {
         flex-grow: 1;
 
         h3 {
             margin: 0 0 $spacing-xs 0;
-            font-size: 1.2rem; // **تم التعديل:** تقليل
+            font-size: 1.2rem;
             color: $text-color;
             font-weight: 600;
             padding-bottom: 0;
@@ -605,22 +629,25 @@ body {
             }
         }
 
-        p {
-            margin: 0.2rem 0; // **تم التعديل:** تقليل
-            font-size: 1.3rem; // **تم التعديل:** تقليل
+        p.agency-contact-line {
+            margin: 0.2rem 0;
+            font-size: 1rem;
             color: $dark-color;
-            display: flex;
-            align-items: center;
-            gap: $spacing-xs; // **تم التعديل:** تقليل
+            display: flex; 
+            align-items: center; 
+            gap: $spacing-xs;
+            flex-wrap: wrap; 
 
-            strong {
-                color: $dark-color;
-                font-weight: 900;
-                margin-left: 0;
+            .agency-phone-icon {
+                color: $primary-color;
+                font-size: 1.1rem;
+                transform: rotate(90deg);
+                flex-shrink: 0;
             }
 
-            svg {
-                color: $primary-color;
+            strong, span { 
+                flex-shrink: 1; 
+                min-width: 0; 
             }
         }
     }
@@ -628,69 +655,66 @@ body {
 
 .amenities-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); // **تم التعديل:** تقليل minmax
-    gap: $spacing-sm; // **تم التعديل:** تقليل
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: $spacing-sm;
 
     .amenity-item {
         background: $secondary-color;
-        padding: 0.6rem $spacing-md; // **تم التعديل:** تقليل
-        border-radius: 20px; // **تم التعديل:** تقليل
+        padding: 0.6rem $spacing-md;
+        border-radius: 20px;
         text-align: center;
-        font-size: 0.85rem; // **تم التعديل:** تقليل
+        font-size: 0.85rem;
         color: $dark-color;
         font-weight: 500;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04); // **تم التعديل:** تقليل
-        transition: transform 0.15s ease, background-color 0.15s ease; // **تم التعديل:** تقليل
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+        transition: transform 0.15s ease, background-color 0.15s ease;
 
         &:hover {
-            transform: translateY(-1px); // **تم التعديل:** تقليل
-            background-color: lighten($secondary-color, 1%); // **تم التعديل:** تقليل
+            transform: translateY(-1px);
+            background-color: lighten($secondary-color, 1%);
         }
     }
 }
 
 .map-section {
     .leaflet-container {
-        border-radius: 8px; // **تم التعديل:** تقليل
-        box-shadow: 0 3px 12px $shadow-light; // **تم التعديل:** تقليل
+        border-radius: 8px;
+        box-shadow: 0 3px 12px $shadow-light;
         border: 1px solid $border-color;
     }
 }
 
 .contact-sections {
-    h2 {
-        margin-bottom: $spacing-md;
-        color: $dark-color;
-        font-size: 20px; // **تم التعديل:** تقليل
-    }
+    @extend .info-card;
 
-    .contact-links {
+    .contact-links-grid {
         display: flex;
-        flex-wrap: wrap;
-        gap: $spacing-md; // **تم التعديل:** تقليل
-        justify-content: center;
+        justify-content: center; 
+        align-items: center;
+        gap: $spacing-md;
+        flex-wrap: wrap; 
     }
 
     a.whatsapp-link,
     a.telegram-link {
-        flex: 1;
-        min-width: 130px; // **تم التعديل:** تقليل
-        padding: $spacing-md $spacing-lg; // **تم التعديل:** تقليل
+        padding: $spacing-sm $spacing-md;
         border: none;
-        border-radius: 7px; // **تم التعديل:** تقليل
+        border-radius: 7px;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.2s; // **تم التعديل:** تقليل
+        transition: all 0.2s;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: $spacing-sm; // **تم التعديل:** تقليل
-        text-decoration: none;
-        font-size: 0.95rem; // **تم التعديل:** تقليل
+        gap: $spacing-xs;
+        font-size: 0.8rem;
         color: white;
+        flex-basis: 48%; 
+        max-width: 200px; 
+        text-decoration: none;
 
         .contact-icon {
-            font-size: 1.1rem; // **تم التعديل:** تقليل
+            font-size: 0.9rem;
         }
     }
 
@@ -699,7 +723,7 @@ body {
 
         &:hover {
             background: darken($color-whatsapp, 8%);
-            box-shadow: 0 3px 10px rgba($color-whatsapp, 0.3); // **تم التعديل:** تقليل
+            box-shadow: 0 3px 10px rgba($color-whatsapp, 0.3);
         }
     }
 
@@ -709,7 +733,7 @@ body {
 
         &:hover {
             background: darken($color-telegram, 8%);
-            box-shadow: 0 3px 10px rgba($color-telegram, 0.3); // **تم التعديل:** تقليل
+            box-shadow: 0 3px 10px rgba($color-telegram, 0.3);
         }
     }
 }
@@ -718,18 +742,58 @@ body {
 /* RTL Support */
 [dir="rtl"] {
     .property-content {
-        direction: rtl;
+        direction: rtl; 
 
-        .details-grid .detail-item {
-            flex-direction: row-reverse;
-            .word-item {
-                align-items: flex-end;
+        // Fix for .details-grid .detail-item alignment and wrapping
+        .details-grid {
+            .detail-item {
+                flex-direction: row-reverse; // الأيقونة على اليمين في RTL
+                gap: $spacing-md; 
+                align-items: center; 
+
+                .icon {
+                    margin-left: $spacing-xs; 
+                    margin-right: 0;
+                }
+
+                .word-item-inline {
+                    flex-direction: row; // **مهم جداً: الحفاظ على ترتيب "التسمية: القيمة"**
+                    gap: $spacing-xs; 
+                    flex-grow: 1; 
+                    
+                    .label {
+                        white-space: normal; // السماح بالتفاف النص
+                        word-break: break-word; // كسر الكلمات الطويلة
+                        text-align: right; // محاذاة النص لليمين
+                        flex-shrink: 0; 
+                    }
+
+                    .value {
+                        white-space: normal; // السماح بالتفاف النص
+                        word-break: break-all; // كسر الأرقام/الكلمات الطويلة
+                        text-align: right; // محاذاة النص لليمين
+                        flex-shrink: 1; 
+                    }
+                }
+                .word-item { 
+                    align-items: flex-end; 
+                }
             }
         }
 
-        .section-icon {
-            margin-left: $spacing-sm;
-            margin-right: 0;
+        // Fix for section icons alignment in RTL 
+        .info-card {
+            h2 {
+                flex-direction: row-reverse; 
+                .section-icon {
+                    margin-left: $spacing-sm; 
+                    margin-right: 0;
+                }
+                &::after {
+                    left: auto;
+                    right: 0; 
+                }
+            }
         }
     }
 
@@ -755,19 +819,36 @@ body {
         }
     }
 
-    .info-card h2::after {
-        left: auto;
-        right: 0;
-    }
-
     .agency-info-box {
-        border-left: none;
-        border-right: 5px solid $primary-color; // **تم التعديل:** سمك الحد
+        border-left: none; 
+        border-right: 5px solid $primary-color; 
+
+        .agency-details {
+            p.agency-contact-line {
+                flex-direction: row-reverse; // الأيقونة على اليمين، ثم الاسم، ثم الرقم
+                align-items: center; 
+                gap: $spacing-xs;
+                flex-wrap: wrap; 
+
+                .agency-phone-icon {
+                    margin-left: 0;
+                    margin-right: $spacing-xs; 
+                    transform: rotate(-90deg); 
+                }
+                strong, span {
+                    flex-shrink: 1; 
+                    min-width: 0; 
+                    text-align: right; // محاذاة النص لليمين
+                }
+            }
+        }
     }
 
-    .agency-details p svg {
-        margin-left: $spacing-xs;
-        margin-right: 0;
+    .header-section {
+        .price-section .price { 
+            flex-direction: row-reverse; 
+            gap: $spacing-xs; 
+        }
     }
 
     .view-panorama-button,
@@ -789,6 +870,20 @@ body {
             }
         }
     }
+
+    .contact-sections {
+        .contact-links-grid {
+            // لا تغيير هنا
+        }
+        a.whatsapp-link,
+        a.telegram-link {
+            flex-direction: row-reverse; 
+            .contact-icon {
+                margin-left: $spacing-xs; 
+                margin-right: 0;
+            }
+        }
+    }
 }
 
 /* Animations */
@@ -805,12 +900,11 @@ body {
 /* Responsive Design */
 @media (max-width: 1200px) {
     .property-details-page {
-        // حافظ على الـ padding لهذا الـ breakpoint لتبدو جيدة
         padding: $spacing-xxl 5%;
         .property-content {
             grid-template-columns: 1fr;
             gap: $spacing-3xl;
-            max-width: 750px; // **تم التعديل:** تقليل العرض الأقصى قليلاً
+            max-width: 750px;
             margin: 0 auto;
         }
 
@@ -838,12 +932,12 @@ body {
         .back-button,
         .add-360-button {
             padding: $spacing-sm $spacing-lg;
-            font-size: 0.9rem; // **تم التعديل:** تقليل الخط
+            font-size: 0.9rem;
         }
 
         .status-message {
             padding: $spacing-lg;
-            font-size: 1rem; // **تم التعديل:** تقليل الخط
+            font-size: 1rem;
         }
 
         .info-card {
@@ -856,9 +950,9 @@ body {
         .image-gallery .main-image-container {
             padding-top: 66.66%;
             .nav-button {
-                width: 40px; // **تم التعديل:** تقليل
-                height: 40px; // **تم التعديل:** تقليل
-                font-size: 1rem; // **تم التعديل:** تقليل
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
             }
         }
 
@@ -866,8 +960,8 @@ body {
             gap: $spacing-xs;
 
             .thumbnail-item {
-                width: 80px; // **تم التعديل:** تقليل
-                height: 55px; // **تم التعديل:** تقليل
+                width: 80px;
+                height: 55px;
             }
         }
 
@@ -878,33 +972,28 @@ body {
 
         .detail-item {
             padding: $spacing-md;
-
             .icon {
-                font-size: 1.2rem; // **تم التعديل:** تقليل
+                font-size: 1.2rem;
             }
 
             .label {
-                font-size: 0.8rem; // **تم التعديل:** تقليل
+                font-size: 0.8rem;
             }
 
             .value {
-                font-size: 1rem; // **تم التعديل:** تقليل
+                font-size: 1rem;
             }
         }
 
         .header-section {
             h1 {
-                font-size: 1.8rem; // **تم التعديل:** تقليل
+                font-size: 1.8rem;
             }
+        }
 
-            .price-section {
-                .price {
-                    font-size: 2.2rem; // **تم التعديل:** تقليل
-                }
-
-                .price-label {
-                    font-size: 0.9rem; // **تم التعديل:** تقليل
-                }
+        .price-section {
+            .price {
+                font-size: 1.6rem;
             }
         }
 
@@ -915,55 +1004,58 @@ body {
 
             .type-kind-item {
                 width: 100%;
-                max-width: 280px; // **تم التعديل:** تقليل
-                font-size: 0.9rem; // **تم التعديل:** تقليل
-                padding: 0.7rem $spacing-lg; // **تم التعديل:** تقليل
+                max-width: 280px;
+                font-size: 0.9rem;
+                padding: 0.7rem $spacing-lg;
             }
         }
 
         .agency-info-box {
             padding: $spacing-md;
             gap: $spacing-md;
-
-            .agency-icon-wrapper {
-                width: 50px; // **تم التعديل:** تقليل
-                height: 50px; // **تم التعديل:** تقليل
-                font-size: 1.6rem; // **تم التعديل:** تقليل
+            
+            .agency-details {
+                p.agency-contact-line { 
+                    flex-direction: column; 
+                    align-items: flex-start; 
+                    gap: $spacing-xs;
+                }
             }
 
             .agency-details h3 {
-                font-size: 1rem; // **تم التعديل:** تقليل
+                font-size: 1rem;
             }
 
             .agency-details p {
-                font-size: 0.85rem; // **تم التعديل:** تقليل
+                font-size: 0.85rem;
             }
         }
 
         .amenities-grid {
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); // **تم التعديل:** تقليل
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
             gap: $spacing-xs;
         }
 
         .amenity-item {
-            padding: 0.5rem $spacing-sm; // **تم التعديل:** تقليل
-            font-size: 0.8rem; // **تم التعديل:** تقليل
+            padding: 0.5rem $spacing-sm;
+            font-size: 0.8rem;
         }
 
-        .contact-sections .contact-links {
-            flex-direction: column;
-            gap: $spacing-sm;
+        .contact-sections .contact-links-grid { 
+            flex-direction: row; 
+            gap: $spacing-md;
         }
 
         a.whatsapp-link,
         a.telegram-link {
-            font-size: 0.9rem; // **تم التعديل:** تقليل
-            padding: 0.5rem 0.7rem; // **تم التعديل:** تقليل
+            font-size: 0.8rem;
+            padding: 0.5rem 0.7rem;
+            max-width: 48%; 
         }
 
         .view-panorama-button {
-            padding: 0.7rem $spacing-lg; // **تم التعديل:** تقليل
-            font-size: 0.95rem; // **تم التعديل:** تقليل
+            padding: 0.7rem $spacing-lg;
+            font-size: 0.95rem;
         }
     }
 }
@@ -979,8 +1071,8 @@ body {
 
         .back-button,
         .add-360-button {
-            padding: 0.5rem 0.8rem; // **تم التعديل:** تقليل
-            font-size: 0.8rem; // **تم التعديل:** تقليل
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
             justify-content: center;
         }
 
@@ -988,30 +1080,30 @@ body {
             padding: $spacing-md;
 
             h2 {
-                font-size: 1.2rem; // **تم التعديل:** تقليل
+                font-size: 1.2rem;
             }
         }
 
         .image-gallery .main-image-container {
             .nav-button {
-                width: 35px; // **تم التعديل:** تقليل
-                height: 35px; // **تم التعديل:** تقليل
-                font-size: 0.8rem; // **تم التعديل:** تقليل
+                width: 35px;
+                height: 35px;
+                font-size: 0.8rem;
             }
 
             .image-counter {
                 bottom: $spacing-sm;
-                padding: 0.2rem 0.5rem; // **تم التعديل:** تقليل
-                font-size: 0.75rem; // **تم التعديل:** تقليل
+                padding: 0.2rem 0.5rem;
+                font-size: 0.75rem;
             }
         }
 
         .thumbnails {
-            gap: 0.3rem; // **تم التعديل:** تقليل
+            gap: 0.3rem;
 
             .thumbnail-item {
-                width: 50px; // **تم التعديل:** تقليل
-                height: 35px; // **تم التعديل:** تقليل
+                width: 50px;
+                height: 35px;
                 border-width: 2px;
             }
         }
@@ -1022,24 +1114,20 @@ body {
 
         .header-section {
             h1 {
-                font-size: 1.6rem; // **تم التعديل:** تقليل
+                font-size: 1.6rem;
             }
+        }
 
-            .price-section {
-                .price {
-                    font-size: 1.8rem; // **تم التعديل:** تقليل
-                }
-
-                .price-label {
-                    font-size: 0.8rem; // **تم التعديل:** تقليل
-                }
+        .price-section {
+            .price {
+                font-size: 1.2rem;
             }
         }
         
         .type-kind-section {
             .type-kind-item {
-                font-size: 0.85rem; // **تم التعديل:** تقليل
-                padding: 0.5rem $spacing-md; // **تم التعديل:** تقليل
+                font-size: 0.85rem;
+                padding: 0.5rem $spacing-md;
             }
         }
 
@@ -1047,39 +1135,35 @@ body {
             padding: $spacing-sm;
             gap: $spacing-md;
 
-            .agency-icon-wrapper {
-                width: 45px; // **تم التعديل:** تقليل
-                height: 45px; // **تم التعديل:** تقليل
-                font-size: 1.5rem; // **تم التعديل:** تقليل
-            }
-
             .agency-details h3 {
-                font-size: 0.9rem; // **تم التعديل:** تقليل
+                font-size: 0.9rem;
             }
 
             .agency-details p {
-                font-size: 0.75rem; // **تم التعديل:** تقليل
+                font-size: 0.75rem;
             }
         }
 
         .amenities-grid {
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); // **تم التعديل:** تقليل
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
         }
 
         .amenity-item {
-            padding: 0.25rem 0.4rem; // **تم التعديل:** تقليل
-            font-size: 0.75rem; // **تم التعديل:** تقليل
+            padding: 0.25rem 0.4rem;
+            font-size: 0.75rem;
+        }
+
+        .contact-sections .contact-links-grid {
+            flex-direction: row; 
+            justify-content: space-between;
+            gap: $spacing-sm;
         }
 
         a.whatsapp-link,
         a.telegram-link {
-            font-size: 0.8rem; // **تم التعديل:** تقليل
-            padding: 0.5rem 0.7rem; // **تم التعديل:** تقليل
-        }
-
-        .view-panorama-button {
-            padding: 0.5rem 0.8rem; // **تم التعديل:** تقليل
-            font-size: 0.85rem; // **تم التعديل:** تقليل
+            font-size: 0.7rem;
+            padding: 0.4rem 0.6rem;
+            max-width: 48%;
         }
     }
 }

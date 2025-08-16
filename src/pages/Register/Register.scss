@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 // ألوان وثوابت
 $color-primary: #5a3dbe;
@@ -16,7 +16,7 @@ $shadow-strong: rgba(0, 0, 0, 0.2);
 $color-card-bg: rgba(255, 255, 255, 0.95);
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -33,7 +33,7 @@ body {
 }
 
 .register-container {
-  background-image: url('../../assets/login.jpg');
+  background-image: url("../../assets/login.jpg");
   background-size: cover;
   background-position: center;
   border-radius: 20px;
@@ -60,7 +60,7 @@ body {
   overflow-y: auto;
   box-shadow: 0 10px 30px $shadow-medium;
   margin: 0 auto;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   scrollbar-color: $color-primary rgba(0, 0, 0, 0.1);
 
   &::-webkit-scrollbar {
@@ -267,8 +267,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 1024px) {

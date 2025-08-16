@@ -1,0 +1,124 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  animation: fadeInScale 0.3s ease-out;
+
+  h2 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.8em;
+  }
+
+  p {
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    line-height: 1.5;
+  }
+
+  .modal-icon {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+
+  &.success-modal {
+    .modal-icon {
+      color: #28a745; // Green for success
+    }
+  }
+
+  &.error-modal {
+    .modal-icon {
+      color: #dc3545; // Red for error
+    }
+  }
+
+  &.confirmation-modal {
+    .modal-icon {
+      color: #ffc107; // Yellow/orange for warning/confirmation
+    }
+  }
+
+  .modal-button {
+    background: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px; // Space between buttons
+    margin-top: 20px;
+
+    .modal-button.confirm {
+      background-color: #28a745; // Green for confirm
+      &:hover {
+        background-color: #218838;
+      }
+    }
+
+    .modal-button.cancel {
+      background-color: #6c757d; // Gray for cancel
+      &:hover {
+        background-color: #5a6268;
+      }
+    }
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Dark mode adjustments (optional, based on your DarkModeContext)
+body.dark-mode {
+  .modal-content {
+    background: #333;
+    color: #eee;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+
+    h2 {
+      color: #eee;
+    }
+
+    p {
+      color: #bbb;
+    }
+  }
+}

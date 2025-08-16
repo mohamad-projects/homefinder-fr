@@ -46,7 +46,7 @@ $text-color: #2d3436;
 
     h2 {
         text-align: center;
-        color: $primary-color;
+        color: #f00;
         margin-bottom: 25px;
         font-size: 1.8rem;
     }
@@ -66,14 +66,15 @@ $text-color: #2d3436;
             font-size: 1rem;
             color: $text-color;
             margin-bottom: 8px;
-            font-weight: 500;
+            font-weight: 600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         input[type="number"],
         select {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #191818;
             border-radius: 5px;
             font-size: 0.95rem;
             box-sizing: border-box; // يتضمن الـ padding والـ border في العرض الكلي

@@ -35,6 +35,7 @@ const Register = () => {
     city: "Damascus",
     district: "",
     phone_no: "",
+    role:"0"
   });
 
   const [formErrors, setFormErrors] = useState({});

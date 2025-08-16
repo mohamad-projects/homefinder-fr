@@ -37,6 +37,7 @@ const Services = () => {
   };
 
   return (
+    <div className='page'>
     <div className="services-container">
       <h2 className="title">{translateMode ? 'Our Services' : 'خدماتنا'}</h2>
 
@@ -78,6 +79,7 @@ const Services = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

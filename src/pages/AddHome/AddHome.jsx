@@ -14,6 +14,12 @@ import { AddRealEstate } from '../../features/realestate/realEstateSlice';
 import { useRealEstateForm } from '../../hooks/useRealEstateForm';
 import FeatureToggle from './../../components/FeatureToggle/FeatureToggle ';
 import FeatureToggleForAdd from './../../components/FeatureToggleForAdd/FeatureToggleForAdd';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
+// New Modal Components (you'll create these files)
+import SuccessModal from '../../components/SuccessModal';
+import ErrorModal from '../../components/ErrorModal';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 
 const AddHome = () => {
@@ -21,6 +27,7 @@ const AddHome = () => {
   const { user } = useAuth();
   const { loaction: locationsData, loading: locationsLoading, error: locationsError } = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const { loading: addRealEstateLoading, error: addRealEstateError } = useSelector((state) => state.realestate);
 
@@ -42,8 +49,11 @@ const AddHome = () => {
 
   const fileInputRef = useRef(null);
 
-  // Consolidated feedback message state
-  const [feedbackMessage, setFeedbackMessage] = useState(null); // { type: 'success' | 'error', text: '...' }
+  const [feedbackMessage, setFeedbackMessage] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   const propertyCategories = [
     { value: 'apartment', icon: <MdApartment />, label: translateMode ? 'Apartment' : 'شقة' },
@@ -88,10 +98,18 @@ const AddHome = () => {
     fetchingLocations: translateMode ? 'Fetching locations...' : 'جاري جلب المواقع...',
     locationsLoadError: translateMode ? 'Failed to load locations.' : 'فشل تحميل المواقع.',
     noLocationsAvailable: translateMode ? 'No locations available.' : 'لا توجد مواقع متاحة.',
+    confirmPublish: translateMode ? 'Are you sure you want to publish this property?' : 'هل أنت متأكد من نشر العقار؟',
+    yes: translateMode ? 'Yes' : 'نعم',
+    no: translateMode ? 'No' : 'لا',
+    greenOption: translateMode ? 'Green' : 'أخضر', // Added translation for Green
+    courtOption: translateMode ? 'Court' : 'محكمة',   // Added translation for Court
+    directionOne: translateMode ? '1' : '1',
+    directionTwo: translateMode ? '2' : '2',
+    directionThree: translateMode ? '3' : '3',
+    directionFour: translateMode ? '4' : '4',
   };
 
   useEffect(() => {
-    // Cleanup for image previews
     return () => {
       previewImages.forEach(image => {
         URL.revokeObjectURL(image.url);
@@ -100,85 +118,81 @@ const AddHome = () => {
   }, [previewImages]);
 
   useEffect(() => {
-    // Timer for feedback messages
     if (feedbackMessage) {
       const timer = setTimeout(() => {
         setFeedbackMessage(null);
-      }, 5000); // 5 seconds
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [feedbackMessage]);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setFeedbackMessage(null);
+  const handlePublish = async () => {
+    setFeedbackMessage(null);
 
-  const isStepValid = validateStep(activeStep);
-  if (!isStepValid) {
-    const firstErrorKey = Object.keys(formValidationErrors)[0];
-    if (firstErrorKey) {
-      setFeedbackMessage({ type: 'error', text: formValidationErrors[firstErrorKey] });
-    } else {
-      setFeedbackMessage({ type: 'error', text: t.propertyAddFailed });
+    const formDataToSend = new FormData();
+    Object.keys(formData).forEach(key => {
+      if (key !== 'images' && key !== 'amenities') {
+        formDataToSend.append(key, formData[key]);
+      }
+    });
+    previewImages.forEach((image) => {
+      formDataToSend.append('images[]', image.file);
+    });
+
+    features.forEach(feature => {
+      formDataToSend.append(feature.name, formData[feature.name]);
+    });
+
+    try {
+      await dispatch(AddRealEstate(formDataToSend)).unwrap();
+      setModalMessage(t.propertyAddedSuccess);
+      setShowSuccessModal(true);
+      
+      // Removed alert, now handled by modal
+    } catch (error) {
+      console.error('Error adding property:', error);
+
+      let detailedMessage = t.propertyAddFailed;
+
+      if (error.errors && typeof error.errors === 'object') {
+        const errorMessages = Object.values(error.errors).flat();
+        detailedMessage = errorMessages.join('، ') || detailedMessage;
+      } else if (error.message) {
+        detailedMessage = error.message;
+      }
+      setModalMessage(detailedMessage);
+      setShowErrorModal(true);
+      // Removed alert, now handled by modal
     }
-    return;
-  }
+  };
 
-  if (activeStep < 4) {
-    nextStep();
-    return;
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFeedbackMessage(null);
 
-  if (previewImages.length === 0) {
-    setFeedbackMessage({ type: 'error', text: t.uploadImageRequired });
-    return;
-  }
-
-  // نافذة تأكيد
-  const confirm = window.confirm("هل أنت متأكد من نشر العقار؟");
-  if (!confirm) return;
-
-  const formDataToSend = new FormData();
-  Object.keys(formData).forEach(key => {
-    if (key !== 'images' && key !== 'amenities') {
-      formDataToSend.append(key, formData[key]);
+    const isStepValid = validateStep(activeStep);
+    if (!isStepValid) {
+      const firstErrorKey = Object.keys(formValidationErrors)[0];
+      if (firstErrorKey) {
+        setFeedbackMessage({ type: 'error', text: formValidationErrors[firstErrorKey] });
+      } else {
+        setFeedbackMessage({ type: 'error', text: t.propertyAddFailed });
+      }
+      return;
     }
-  });
-  previewImages.forEach((image) => {
-    formDataToSend.append('images[]', image.file);
-  });
 
-  features.forEach(feature => {
-    formDataToSend.append(feature.name, formData[feature.name] ? "1" : "0");
-  });
-
-  try {
-    await dispatch(AddRealEstate(formDataToSend)).unwrap();
-    // بعد النجاح
-    alert("تم نشر العقار بنجاح");
-    setFeedbackMessage({ type: 'success', text: t.propertyAddedSuccess });
-  } catch (error) {
-  console.error('Error adding property:', error);
-
-  // استخراج رسالة مفصلة من errors إذا كانت موجودة
-  let detailedMessage = "فشل نشر العقار، يرجى مراجعة البيانات المدخلة.";
-
-  if (error.errors && typeof error.errors === 'object') {
-    const firstErrorKey = Object.keys(error.errors)[0];
-    if (firstErrorKey && error.errors[firstErrorKey].length > 0) {
-      detailedMessage = error.errors[firstErrorKey][0]; // أول رسالة تفصيلية
+    if (activeStep < 4) {
+      nextStep();
+      return;
     }
-  }
 
-  setFeedbackMessage({
-    type: 'error',
-    text: detailedMessage,
-  });
+    if (previewImages.length === 0) {
+      setFeedbackMessage({ type: 'error', text: t.uploadImageRequired });
+      return;
+    }
 
-  alert(detailedMessage);
-}
-
-};
+    setShowConfirmationModal(true); // Show confirmation modal instead of window.confirm
+  };
 
 
   const preventEnterSubmit = (e) => {
@@ -188,7 +202,7 @@ const handleSubmit = async (e) => {
   };
 
   const locations = locationsData?.data || [];
-  
+
   return (
     <div className="add-home-page">
       <div className="form-container">
@@ -203,27 +217,25 @@ const handleSubmit = async (e) => {
               <div className="step-number">{step}</div>
               <div className="step-label">
                 {translateMode ?
-                  [t.stepPropertyType, t.stepLocation, t.stepDetails, t.stepMedia][step-1] :
-                  [t.stepPropertyType, t.stepLocation, t.stepDetails, t.stepMedia][step-1]
+                  [t.stepPropertyType, t.stepLocation, t.stepDetails, t.stepMedia][step - 1] :
+                  [t.stepPropertyType, t.stepLocation, t.stepDetails, t.stepMedia][step - 1]
                 }
               </div>
             </div>
           ))}
         </div>
 
-        {/* Centralized Feedback Message Display */}
         {feedbackMessage && (
           <p className={`status-message ${feedbackMessage.type === 'success' ? 'success-message' : 'error-message'}`}>
             {feedbackMessage.type === 'success' ? <FaCheckCircle /> : <FaExclamationCircle />} {feedbackMessage.text}
           </p>
         )}
-        {/* Redux loading/error, but ensure they don't duplicate timed messages */}
-        {addRealEstateLoading && !feedbackMessage && ( // Only show if no timed message is active
+        {addRealEstateLoading && !feedbackMessage && (
           <p className="status-message loading-message">
             <FaSpinner className="spinner" /> {t.publishProperty}
           </p>
         )}
-        {addRealEstateError && !feedbackMessage && ( // Only show if no timed message is active
+        {addRealEstateError && !feedbackMessage && (
           <p className="status-message error-message">
             <FaExclamationCircle /> {addRealEstateError.message || t.propertyAddFailed}
           </p>
@@ -369,18 +381,20 @@ const handleSubmit = async (e) => {
                   </div>
                   {formValidationErrors?.room_no && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.room_no}</p>}
 
-
+                  {/* Ownership Type Dropdown */}
                   <div className="input-group floating-label">
-                    <input
-                      type="text"
+                    <select
                       name="ownership_type"
                       value={formData.ownership_type}
                       onChange={handleInputChange}
-                      placeholder={t.ownershipType}
-                      onKeyDown={preventEnterSubmit}
-                    />
+                      required
+                    >
+                      <option value="">{t.ownershipType}</option>
+                      <option value="green">{t.greenOption}</option>
+                      <option value="court">{t.courtOption}</option>
+                    </select>
+                    {formValidationErrors?.ownership_type && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.ownership_type}</p>}
                   </div>
-                  {formValidationErrors?.ownership_type && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.ownership_type}</p>}
 
 
                   <div className="input-group floating-label">
@@ -408,19 +422,22 @@ const handleSubmit = async (e) => {
                   </div>
                   {formValidationErrors?.space_status && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.space_status}</p>}
 
-
+                  {/* Direction Dropdown */}
                   <div className="input-group floating-label">
-                    <input
-                      type="text"
+                    <select
                       name="direction"
                       value={formData.direction}
                       onChange={handleInputChange}
-                      placeholder={t.direction}
-                      onKeyDown={preventEnterSubmit}
-                    />
-                  </div>
-                  {formValidationErrors?.direction && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.direction}</p>}
+                      required
+                    >
+                      <option value="">{t.direction}</option>
+                      <option value="1">{t.directionOne}</option>
+                      <option value="2">{t.directionTwo}</option>
+                      <option value="3">{t.directionThree}</option>
+                    </select>
+                    {formValidationErrors?.direction && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.direction}</p>}
 
+                  </div>
                 </div>
               </div>
 
@@ -446,21 +463,21 @@ const handleSubmit = async (e) => {
               <div className="form-section card">
                 <h2><FaUpload className="section-icon" /> {t.propertyMedia}</h2>
                 <div className="image-uploader">
-             <label className="upload-zone">
-  <input
-    ref={fileInputRef}
-    type="file"
-    multiple
-      onChange={handleImageUpload}
-      accept="image/*"
-      style={{ display: 'none' }} 
-  />
-  <div className="upload-content">
-    <FaUpload className="upload-icon" />
-    <h3>{t.uploadImages}</h3>
-    <p>{t.dragDrop}</p>
-  </div>
-</label>
+                  <label className="upload-zone">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      multiple
+                      onChange={handleImageUpload}
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                    />
+                    <div className="upload-content">
+                      <FaUpload className="upload-icon" />
+                      <h3>{t.uploadImages}</h3>
+                      <p>{t.dragDrop}</p>
+                    </div>
+                  </label>
 
 
                   {previewImages.length > 0 && (
@@ -502,6 +519,37 @@ const handleSubmit = async (e) => {
           </div>
         </form>
       </div>
+
+      {/* Modals */}
+      {showSuccessModal && (
+        <SuccessModal
+          message={modalMessage}
+          onClose={() => {
+            setShowSuccessModal(false);
+            navigate('/'); // Redirect to /home after success
+          }}
+        />
+      )}
+
+      {showErrorModal && (
+        <ErrorModal
+          message={modalMessage}
+          onClose={() => setShowErrorModal(false)}
+        />
+      )}
+
+      {showConfirmationModal && (
+        <ConfirmationModal
+          message={t.confirmPublish}
+          onConfirm={() => {
+            setShowConfirmationModal(false);
+            handlePublish(); // Proceed with publishing if confirmed
+          }}
+          onCancel={() => setShowConfirmationModal(false)}
+          confirmText={t.yes}
+          cancelText={t.no}
+        />
+      )}
     </div>
   );
 };

@@ -1,262 +1,507 @@
-// src/components/ComparisonModal/ComparisonModal.scss
-$primary-color: #2A5C8D;
-$secondary-color: #f8f9fa;
-$light-bg: #f1f3f5;
-$text-color: #2d3436;
+/* ComparisonModal.scss */
 
+// --- Variables: Organized for Clarity and Maintainability ---
+
+// 1. Colors
+$color-primary: #3498db; // Main accent blue
+$color-primary-dark: #2980b9; // Darker blue for hover
+$color-secondary: #2980b9; // Darker blue for hover
+$color-accent-green: #2ecc71; // Success/Winner
+$color-accent-red: #e74c3c; // Danger/Close
+$color-accent-orange: #fff8ec; // Neutral/Tie
+
+$color-text-dark: #2c3e50; // Dark text for light backgrounds (almost black)
+$color-text-light: #ecf0f1; // Light text for dark backgrounds (off-white)
+
+$color-bg-light: #ffffff; // Pure white for light backgrounds
+$color-bg-light-alt: #f0f4f7; // Subtle off-white for section backgrounds
+$color-bg-overlay: rgba(0, 0, 0, 0.75); // Darker, less transparent overlay
+
+// 2. Gradients (for subtle depth)
+$gradient-blue: linear-gradient(135deg, $color-primary, $color-primary-dark);
+$gradient-green: linear-gradient(135deg, $color-accent-green, darken($color-accent-green, 10%));
+$gradient-orange: linear-gradient(135deg, $color-accent-orange, darken($color-accent-orange, 10%));
+
+// 3. Spacing
+$space-xs: 0.4rem; // Slightly smaller base spacing
+$space-sm: 0.6rem;
+$space-md: 0.8rem;
+$space-lg: 1.2rem;
+$space-xl: 1.8rem;
+$space-xxl: 2.5rem;
+
+// 4. Borders & Shadows
+$border-radius-pill: 40px; // For buttons, chips
+$border-radius-card: 12px; // Slightly less rounded for medium size
+$border-radius-sm: 6px;   // Smaller elements
+
+$shadow-lift-sm: 0 3px 10px rgba(0, 0, 0, 0.1); // Slightly less intense shadows
+$shadow-lift-md: 0 8px 20px rgba(0, 0, 0, 0.15);
+$shadow-lift-lg: 0 12px 30px rgba(0, 0, 0, 0.25);
+
+// 5. Typography
+$font-family-primary: 'Poppins', sans-serif;
+$font-family-secondary: 'Roboto', sans-serif;
+
+// --- Mixins: For Reusability and Cleanliness ---
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin transition-smooth($property: all, $duration: 0.3s, $timing-function: ease-in-out) {
+    transition: $property $duration $timing-function;
+}
+
+@mixin card-base($bg: $color-bg-light, $shadow: $shadow-lift-md, $radius: $border-radius-card) {
+    background-color: $bg;
+    border-radius: $radius;
+    box-shadow: $shadow;
+    @include transition-smooth;
+}
+
+@mixin button-variant($bg, $color: $color-text-light, $shadow-color: $color-primary) {
+    background: $bg;
+    color: $color;
+    padding: $space-md $space-xl;
+    border: none;
+    border-radius: $border-radius-pill;
+    cursor: pointer;
+    font-family: $font-family-primary;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    @include transition-smooth;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba($shadow-color, 0.3);
+    }
+    &:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+}
+
+@mixin scrollbar-style($thumb-color, $track-color) {
+    &::-webkit-scrollbar {
+        width: 7px;
+    }
+    &::-webkit-scrollbar-track {
+        background: $track-color;
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $thumb-color;
+        border-radius: 10px;
+        border: 2px solid $track-color;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: darken($thumb-color, 8%);
+    }
+}
+
+// --- Keyframe Animations (adjusted for less dramatic motion) ---
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px) scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseGreen {
+    0% { box-shadow: 0 0 0 0 rgba($color-accent-green, 0.6); }
+    70% { box-shadow: 0 0 0 8px rgba($color-accent-green, 0); }
+    100% { box-shadow: 0 0 0 0 rgba($color-accent-green, 0); }
+}
+
+// --- Dark Mode Theming ---
+body.dark-mode {
+    .comparison-modal-content {
+        @include card-base($bg: $color-text-dark, $shadow: $shadow-lift-lg, $radius: $border-radius-card);
+        color: $color-text-light;
+
+        h2, strong, th {
+            color: $color-text-light;
+        }
+
+        .overall-scores {
+            background-color: lighten($color-text-dark, 5%);
+            border: 1px solid darken($color-text-dark, 5%);
+            .score-item {
+                background-color: lighten($color-text-dark, 10%);
+                border-color: lighten($color-text-dark, 15%);
+                span { color: $color-text-light; }
+            }
+        }
+
+        .highlight-score {
+            background: $gradient-green;
+            border-color: darken($color-accent-green, 15%);
+            box-shadow: 0 6px 20px rgba($color-accent-green, 0.4);
+        }
+
+        &.winner-tie .score-item {
+            background: $gradient-orange;
+            border-color: darken($color-accent-orange, 15%);
+        }
+
+        table {
+            border: 1px solid lighten($color-text-dark, 15%);
+            thead th {
+                background-color: lighten($color-text-dark, 15%);
+                border-color: lighten($color-text-dark, 15%);
+            }
+            tbody tr {
+                background-color: lighten($color-text-dark, 5%);
+                &:nth-child(even) {
+                    background-color: lighten($color-text-dark, 10%);
+                }
+                &:hover {
+                    background-color: lighten($color-text-dark, 15%);
+                }
+            }
+            th, td {
+                border-color: lighten($color-text-dark, 15%);
+            }
+            td.winner-cell { color: $color-accent-green; }
+            td.tie-cell { color: $color-accent-orange; }
+        }
+
+        .close-button {
+            color: $color-text-light;
+            &:hover { color: $color-accent-red; }
+        }
+
+        .close-modal-btn {
+            @include button-variant($bg: $gradient-blue, $color: $color-text-light, $shadow-color: $color-primary);
+            box-shadow: 0 3px 10px rgba($color-primary, 0.3);
+            &:hover { box-shadow: 0 6px 15px rgba($color-primary, 0.4); }
+        }
+
+        // Dark mode scrollbar
+        @include scrollbar-style(lighten($color-primary, 15%), lighten($color-text-dark, 10%));
+    }
+}
+
+
+// --- Modal Overlay & Content ---
 .comparison-modal-overlay {
+    @include flex-center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: $color-bg-overlay;
     z-index: 1000;
+    padding: $space-lg;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease-out forwards;
 }
 
 .comparison-modal-content {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 90%;
-    width: 900px;
-    max-height: 90vh;
-    overflow-y: auto;
+    @include card-base($bg: $color-bg-light);
+    padding: $space-xxl;
+    width: 85%;
+    max-width: 780px;
     position: relative;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    animation: fadeInScale 0.3s ease-out forwards;
+    color: $color-text-dark;
+    font-family: $font-family-primary;
+    line-height: 1.5;
 
-    .close-button {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: none;
-        border: none;
-        font-size: 1.8rem;
-        cursor: pointer;
-        color: #333;
-        transition: color 0.3s;
-        &:hover {
-            color: #f00;
-        }
-    }
+    max-height: 85vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+
+    @include scrollbar-style($color-primary, $color-bg-light-alt);
+
+    animation: slideInUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 
     h2 {
         text-align: center;
-        color: $primary-color;
-        margin-bottom: 20px;
-        font-size: 2rem;
-    }
-
-    .comparison-message {
-        text-align: center;
-        margin-bottom: 25px;
-        font-size: 1.1rem;
-        color: #666;
-        font-weight: 500;
-    }
-
-    .overall-scores {
-        display: flex;
-        justify-content: space-around;
-        background-color: $light-bg;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 30px;
-        font-size: 1.2rem;
-        font-weight: 500;
-        flex-wrap: wrap;
-        gap: 15px;
-        border: 1px solid #e0e0e0;
-        transition: background-color 0.3s ease; // حركة لتغيير اللون
-
-        .score-item {
-            flex-basis: 45%;
-            text-align: center;
-            padding: 5px;
-            border-radius: 5px;
-            &.highlight-score { // ⬅️ NEW: تمييز نتيجة الفائز
-                background-color: #d4edda; // أخضر فاتح
-                color: #155724;
-                font-weight: bold;
-            }
-        }
-
-        .winner-highlight {
-            width: 100%;
-            text-align: center;
-            margin-top: 15px;
-            color: darken($primary-color, 10%);
-            font-size: 1.5rem;
-            font-weight: 700;
-            padding-top: 10px;
-            border-top: 1px dashed #ccc;
-        }
-
-        // ⬅️ NEW CLASSES: تلوين شامل لقسم النتائج بناءً على الفائز
-        &.winner-1 {
-            background-color: #e6ffe6; // أخضر فاتح جداً
-        }
-        &.winner-2 {
-            background-color: #fff0e6; // برتقالي فاتح جداً
-        }
-        &.winner-tie {
-            background-color: #e0f2f7; // أزرق فاتح جداً
-        }
-    }
-
-    .comparison-table-container {
-        overflow-x: auto;
-        width: 100%;
-        margin-bottom: 25px;
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 750px;
-
-            th, td {
-                border: 1px solid #ddd;
-                padding: 12px 15px;
-                text-align: start;
-                font-size: 0.95rem;
-            }
-
-            th {
-                background-color: $primary-color;
-                color: white;
-                font-weight: 600;
-                position: sticky;
-                top: 0;
-                z-index: 1;
-            }
-
-            tr:nth-child(even) {
-                background-color: #f9f9f9;
-            }
-
-            tbody tr:hover {
-                background-color: #f0f0f0;
-            }
-        }
-    }
-
-    .close-modal-btn {
-        display: block;
-        margin: 20px auto 0;
-        padding: 12px 30px;
-        background-color: $primary-color;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 1.1rem;
-        font-weight: 600;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-
-        &:hover {
-            background-color: darken($primary-color, 10%);
-            transform: translateY(-2px);
-        }
+        color: $color-primary;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: $space-sm;
+        line-height: 1.2;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.08);
     }
 }
 
-// الرسوم المتحركة
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
+// --- Close Button (Top Right) ---
+.close-button {
+    position: absolute;
+    top: $space-md;
+    right: $space-md;
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: $color-secondary;
+    cursor: pointer;
+    line-height: 1;
+    z-index: 10;
+    @include transition-smooth(all, 0.3s);
+
+    &:hover {
+        color: $color-accent-red;
+        transform: rotate(90deg) scale(1.05);
     }
 }
 
-// دعم RTL للمودال
-[dir="rtl"] {
-    .comparison-modal-content {
-        .close-button {
-            right: auto;
-            left: 15px;
-        }
-        h2, .comparison-message, .overall-scores, .winner-highlight {
-            text-align: right;
-        }
-        .comparison-table-container table {
-            th, td {
-                text-align: right;
-            }
-        }
-    }
-}
+// --- Overall Scores Section ---
+.overall-scores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: $space-lg;
+    padding: $space-lg;
+    background-color: $color-bg-light-alt;
+    border-radius: $border-radius-sm;
+    border: 1px solid lighten($color-bg-light-alt, 2%);
+    box-shadow: $shadow-lift-sm;
+    margin-bottom: $space-md;
 
-@media (min-width: 992px) {
-    .comparison-modal-content {
-        width: 850px; /* يمكن تعديل العرض أكثر لتناسب المحتوى */
-    }
-}
-
-@media (max-width: 991px) {
-    .comparison-modal-content {
-        width: 95%;
-        padding: 25px;
-    }
-    .overall-scores {
+    .score-item {
+        @include flex-center;
         flex-direction: column;
-        .score-item {
-            flex-basis: auto;
+        padding: $space-lg;
+        background-color: $color-bg-light;
+        border-radius: $border-radius-sm;
+        border: 2px solid $color-bg-light-alt;
+        box-shadow: $shadow-lift-sm;
+        @include transition-smooth;
+
+        &:hover:not(.highlight-score) {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
         }
+
+        strong {
+            font-family: $font-family-secondary;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: $color-text-dark;
+            margin-bottom: $space-xs;
+        }
+        span {
+            font-family: $font-family-primary;
+            font-size: 3rem;
+            font-weight: 800;
+            color: $color-primary;
+            line-height: 1;
+            text-shadow: 1px 1px 5px rgba($color-primary, 0.15);
+        }
+    }
+
+    .highlight-score {
+        background: $gradient-green;
+        color: $color-text-light;
+        border-color: darken($color-accent-green, 10%);
+        transform: scale(1.03);
+        box-shadow: 0 8px 20px rgba($color-accent-green, 0.4);
+        animation: pulseGreen 1.3s infinite ease-out;
+
+        strong, span {
+            color: $color-text-light;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+    }
+
+    &.winner-tie .score-item {
+        background: lighten($color-accent-orange, 40%);
+        border-color: $color-accent-orange;
+        color: $color-text-dark;
+        span {
+            color: $color-accent-orange;
+            text-shadow: 1px 1px 2px rgba($color-accent-orange, 0.2);
+        }
+    }
+}
+
+// --- Comparison Table ---
+.comparison-table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: $border-radius-sm;
+    box-shadow: $shadow-lift-sm;
+
+    table {
+        width: 100%;
+        min-width: 680px;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-family: $font-family-secondary;
+        overflow: hidden;
+        border-radius: $border-radius-sm;
+
+        th, td {
+            padding: $space-md $space-lg;
+            border-bottom: 1px solid lighten($color-bg-light-alt, 5%);
+            border-right: 1px solid lighten($color-bg-light-alt, 5%);
+            text-align: left;
+            vertical-align: middle;
+            @include transition-smooth(background-color);
+
+            &:first-child { border-left: 1px solid lighten($color-bg-light-alt, 5%); }
+        }
+
+        th {
+            background: $gradient-blue;
+            color: $color-text-light;
+            font-weight: 600;
+            white-space: nowrap;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+
+            // --- IMPORTANT ADDITIONS FOR STICKY HEADER ---
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background-color: $color-primary; // Fallback for browsers not supporting gradient sticky
+            background-image: $gradient-blue;
+            // ---------------------------------------------
+
+            &:first-child { border-top-left-radius: $border-radius-sm; }
+            &:last-child { border-top-right-radius: $border-radius-sm; }
+        }
+
+        tbody {
+            tr {
+                background-color: $color-bg-light;
+                &:nth-child(even) {
+                    background-color: $color-bg-light-alt;
+                }
+                &:hover {
+                    background-color: lighten($color-bg-light-alt, 2%);
+                    transform: scale(1.002);
+                    box-shadow: 0 1px 5px rgba(0,0,0,0.06);
+                    position: relative;
+                    z-index: 1;
+                }
+            }
+            tr:last-child td { border-bottom: none; }
+            td:last-child { border-right: none; }
+
+            td {
+                font-size: 0.9rem;
+                &.winner-cell {
+                    font-weight: bold;
+                    color: $color-accent-green;
+                }
+                &.tie-cell {
+                    font-weight: bold;
+                    color: $color-accent-orange;
+                }
+            }
+        }
+    }
+}
+
+// --- Final Close Button ---
+.close-modal-btn {
+    @include button-variant($bg: $gradient-blue, $color: $color-text-light, $shadow-color: $color-primary);
+    width: fit-content;
+    margin: $space-xl auto $space-md;
+    border-radius: $border-radius-pill;
+    box-shadow: $shadow-lift-sm;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba($color-primary, 0.4);
+    }
+}
+
+
+// --- Responsive Adjustments ---
+@media (max-width: 992px) {
+    .comparison-modal-content {
+        padding: $space-xl;
+        max-width: 85%;
+        gap: $space-lg;
+    }
+    h2 { font-size: 2rem; }
+    .overall-scores {
+        grid-template-columns: 1fr;
+        gap: $space-md;
+    }
+    .score-item {
+        span { font-size: 2.8rem; }
+        strong { font-size: 1rem; }
+    }
+    .comparison-table-container table {
+        min-width: 550px;
+    }
+    .close-modal-btn {
+        padding: $space-md $space-xl;
     }
 }
 
 @media (max-width: 768px) {
     .comparison-modal-content {
-        padding: 20px;
-        h2 {
-            font-size: 1.6rem;
-        }
-        .overall-scores {
-            font-size: 1rem;
-        }
-        .comparison-table-container table {
-            th, td {
-                font-size: 0.85rem;
-                padding: 10px;
-            }
-            min-width: 500px;
-        }
-        .close-modal-btn {
-            font-size: 1rem;
-            padding: 10px 20px;
-        }
+        padding: $space-lg;
+        max-width: 90%;
+        max-height: 90vh;
+        gap: $space-md;
+    }
+    h2 { font-size: 1.8rem; }
+    .close-button { font-size: 2.2rem; }
+    .overall-scores { padding: $space-md; }
+    .score-item {
+        padding: $space-md;
+        span { font-size: 2.2rem; }
+        strong { font-size: 0.9rem; }
+    }
+    .comparison-table-container {
+        font-size: 0.85rem;
+        table { min-width: 420px; }
+        th, td { padding: $space-sm $space-md; }
+    }
+    .close-modal-btn {
+        padding: $space-md $space-xl;
+        font-size: 0.9rem;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .comparison-modal-content {
-        padding: 15px;
-        h2 {
-            font-size: 1.3rem;
-        }
-        .comparison-message {
-            font-size: 0.9rem;
-        }
-        .overall-scores {
-            padding: 10px;
-            .winner-highlight {
-                font-size: 1.2rem;
-            }
-        }
-        .comparison-table-container table {
-            th, td {
-                font-size: 0.75rem;
-                padding: 8px;
-            }
-            min-width: 400px;
-        }
+        padding: $space-md;
+        max-height: 94vh;
+        gap: $space-md;
+    }
+    h2 { font-size: 1.4rem; margin-bottom: $space-xs; }
+    .close-button { font-size: 1.8rem; top: $space-xs; right: $space-xs; }
+    .overall-scores { padding: $space-sm; }
+    .score-item {
+        padding: $space-sm;
+        span { font-size: 1.8rem; }
+        strong { font-size: 0.85rem; }
+    }
+    .comparison-table-container {
+        font-size: 0.8rem;
+        table { min-width: 320px; }
+        th, td { padding: $space-xs $space-sm; }
+    }
+    .close-modal-btn {
+        padding: $space-sm $space-lg;
+        font-size: 0.85rem;
+        margin: $space-lg auto $space-sm;
     }
 }

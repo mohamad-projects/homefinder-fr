@@ -330,16 +330,27 @@ $text-color: black;
     margin-bottom: 1.8rem;
     
     &.floating-label {
-      input, textarea {
+      input,
+      select, /* <--- تم إضافة هذا المحدد هنا */
+      textarea {
         color: $dark-color;
         padding: 1.2rem 1rem 0.8rem;
         height: auto;
         border: 1px solid $light-color;
         border-radius: $border-radius;
-        width: 100%;
+        width: 100%; /* تم تغيير العرض إلى 100% ليملأ المساحة المتاحة بشكل أفضل */
         font-size: 1rem;
         transition: $transition;
         background: rgb(245, 242, 242);
+
+        // أنماط خاصة بـ select لإزالة السهم الافتراضي وإضافة سهم مخصص
+        // هذه الأنماط ستنطبق على كل من "ownership_type" و "direction"
+        appearance: none; // لإزالة السهم الافتراضي للمتصفح
+        background-image: url('data:image/svg+xml;utf8,<svg fill="#{$dark-color}" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 0.8rem center;
+        background-size: 1.2em;
+        padding-right: 2.5rem; /* لتجنب تداخل النص مع السهم */
 
         &:focus {
           border-color: $primary-color;
@@ -604,9 +615,19 @@ $text-color: black;
           right: 1rem;
           left: auto;
         }
-        input, textarea {
+        input,
+        select, /* <--- تم إضافة هذا المحدد هنا أيضًا لـ RTL */
+        textarea {
           text-align: right;
         }
+        // أنماط خاصة بـ select في RTL
+        appearance: none; // لضمان تطبيقها في RTL أيضًا
+        background-image: url('data:image/svg+xml;utf8,<svg fill="#{$dark-color}" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+        background-repeat: no-repeat;
+        background-position: left 0.8rem center; /* عكس اتجاه السهم في RTL */
+        background-size: 1.2em;
+        padding-left: 2.5rem; /* لترك مساحة للسهم */
+        padding-right: 1rem; /* إعادة ضبط الـ padding الأيمن */
       }
 
       &.icon-input {
@@ -711,7 +732,17 @@ $text-color: black;
     .input-group {
       margin-bottom: 1.2rem;
       &.floating-label {
-        input, textarea { padding: 1rem 1rem 0.6rem; font-size: 0.95rem; }
+        input,
+        select, /* <--- تم إضافة هذا المحدد هنا لـ Responsive */
+        textarea {
+          padding: 1rem 1rem 0.6rem;
+          font-size: 0.95rem;
+
+          &[name="ownership_type"],
+          &[name="direction"] {
+            padding-right: 2rem; /* تقليل الـ padding في Responsive */
+          }
+        }
         label { top: 0.6rem; font-size: 0.85rem; }
       }
       &.icon-input input { padding-left: 2.2rem; }
@@ -764,11 +795,20 @@ $text-color: black;
     .category-option { padding: 1rem 0.5rem; }
     .input-group {
       &.floating-label {
-        input, textarea { padding: 0.8rem 1rem 0.5rem; font-size: 0.9rem; }
+        input,
+        select, /* <--- تم إضافة هذا المحدد هنا لـ Responsive */
+        textarea {
+          padding: 0.8rem 1rem 0.5rem;
+          font-size: 0.9rem;
+
+          &[name="ownership_type"],
+          &[name="direction"] {
+            padding-right: 1.8rem; /* تقليل الـ padding أكثر في Responsive */
+          }
+        }
         label { top: 0.5rem; font-size: 0.8rem; }
       }
-      &.icon-input input { padding-left: 2rem; }
-      .input-icon { left: 0.6rem; font-size: 0.9rem; }
+      &.icon-input input { left: 0.6rem; font-size: 0.9rem; }
     }
     .image-uploader {
       .upload-zone { padding: 1.5rem 1rem; }
@@ -803,7 +843,7 @@ $text-color: black;
   }
 }
 
-@keyframes spin {
+@keyframes spin { 
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }

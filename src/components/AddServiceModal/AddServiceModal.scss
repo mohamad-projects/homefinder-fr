@@ -1,53 +1,113 @@
+/* src/components/AddServiceModal/AddServiceModal.scss */
+
+// Variables for consistent theming
+:root {
+  --primary-color: #007bff;
+  --primary-hover-color: #0056b3;
+  --secondary-color: #6c757d; // A more neutral grey
+  --secondary-hover-color: #5a6268;
+  --text-color-dark: #212529;
+  --text-color-medium: #495057;
+  --text-color-light: #6c757d;
+  --border-color-light: #e9ecef;
+  // Manually derived a slightly lighter shade of --border-color-light (#e9ecef)
+  --background-color-light-focus: #f2f5f7;
+  --border-color-medium: #ced4da;
+  // Manually derived a slightly darker shade of --border-color-medium (#ced4da)
+  --border-color-medium-darken: #b0b6bc;
+  --background-white: #ffffff;
+  --background-overlay: rgba(0, 0, 0, 0.6); // Slightly darker overlay
+  --box-shadow-light: rgba(0, 0, 0, 0.1);
+  --box-shadow-medium: rgba(0, 0, 0, 0.2);
+  --focus-ring-color: rgba(0, 123, 255, 0.25);
+  --error-color: #dc3545; // Added for potential error states
+
+  --spacing-xs: 0.5rem;   // 8px
+  --spacing-sm: 0.75rem;  // 12px
+  --spacing-md: 1rem;     // 16px
+  --spacing-lg: 1.5rem;   // 24px
+  --spacing-xl: 2rem;     // 32px
+}
+
 .modal-backdrop {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.55);
+  background-color: var(--background-overlay);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10000;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased; // Smoother font rendering
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .modal-box {
-  background: #fff;
-  padding: 25px 30px;
-  width: 420px;
-  border-radius: 14px;
+  background: var(--background-white);
+  padding: var(--spacing-xl); // Generous padding
+  width: 100%;
+  max-width: 500px; // Increased max-width for a more spacious feel
+  border-radius: 16px; // Slightly more rounded corners
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 15px 35px var(--box-shadow-medium); // Deeper, softer shadow
   position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease-out; // Simple fade-in animation
+
+  @media (max-width: 600px) {
+    margin: var(--spacing-md); // Add some margin on smaller screens
+    width: auto; // Allow width to adjust
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-xl);
 
   h2 {
     margin: 0;
     font-weight: 700;
-    color: #222;
-    font-size: 1.5rem;
+    color: var(--text-color-dark);
+    font-size: 1.8rem; // Larger, more prominent title
   }
 
   .lang-toggle-btn {
-    background: #007bff;
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--background-white);
     border: none;
-    padding: 6px 14px;
+    padding: var(--spacing-sm) var(--spacing-md);
     font-size: 0.9rem;
     font-weight: 600;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
     &:hover {
-      background-color: #0056b3;
+      background-color: var(--primary-hover-color);
+      transform: translateY(-2px); // More noticeable lift
+      box-shadow: 0 4px 10px var(--focus-ring-color);
+    }
+    &:active {
+      transform: translateY(0);
+      box-shadow: none;
     }
   }
 }
@@ -55,97 +115,130 @@
 .service-types {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: var(--spacing-sm); // Slightly smaller gap for density
+  margin-bottom: var(--spacing-lg);
 }
 
 .service-type {
-  padding: 10px 18px;
-  border: 2px solid #ccc;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid var(--border-color-medium);
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 12px; // Softer rounded corners
   font-weight: 600;
-  color: #444;
+  color: var(--text-color-light);
   user-select: none;
   transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0; // Prevent shrinking on smaller screens
 
   &:hover {
-    border-color: #007bff;
-    color: #007bff;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px var(--box-shadow-light);
   }
-}
 
-.service-type.selected {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
+  &.selected {
+    background-color: var(--primary-color);
+    color: var(--background-white);
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px var(--focus-ring-color); // More pronounced shadow for selected
+    transform: scale(1.02); // Slightly larger when selected
+  }
 }
 
 label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: var(--spacing-xs);
   font-weight: 600;
-  color: #333;
+  color: rgb(13, 13, 13);
+  font-size: 1rem; // Clearer label font size
 }
 
+/* --- Field Specific Styling Improvements --- */
 input[type="text"],
 textarea {
-  width: 100%;
-  padding: 12px 15px;
-  border: 1.8px solid #ddd;
+  width: 90%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color-medium); // Thinner, cleaner border
   border-radius: 8px;
   font-size: 1rem;
   font-family: inherit;
-  color: #333;
+  color:rgb(0, 0, 0);
   resize: vertical;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  margin-bottom: var(--spacing-md);
+  background-color:rgb(248, 244, 244); 
+  &:hover {
+    // Using the new CSS variable directly, which fixes the SASS error
+    border-color: var(--border-color-medium-darken);
+  }
 
   &:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 8px rgba(0,123,255,0.3);
+    border-color:black;
+    // Using the new CSS variable directly, which fixes the SASS error
+    background-color:white;
+  }
+
+  &::placeholder {
+    color: black;
+    opacity: 0.7; // Slightly more transparent placeholder
+  }
+
+  // Style for required fields (optional, but good for visual indication)
+  &:required {
+    // You could add a subtle asterisk or border change here
   }
 }
 
 textarea {
-  min-height: 90px;
+  min-height: 120px;
+  line-height: 1.5; // Better line spacing for readability
 }
 
 .modal-actions {
-  margin-top: 25px;
+  margin-top: var(--spacing-xl); // Ample space above action buttons
   display: flex;
   justify-content: flex-end;
-  gap: 15px;
+  gap: var(--spacing-md); // Consistent gap
 }
 
-.submit-btn {
-  background-color: #007bff;
+.submit-btn,
+.cancel-btn {
   border: none;
-  padding: 10px 25px;
+  padding: var(--spacing-sm) var(--spacing-lg); // More generous button padding
   border-radius: 8px;
-  color: white;
+  color: var(--background-white);
   font-weight: 700;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 100px;
 
   &:hover {
-    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--box-shadow-light);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+}
+
+.submit-btn {
+  background-color: var(--primary-color);
+
+  &:hover {
+    background-color: var(--primary-hover-color);
   }
 }
 
 .cancel-btn {
-  background-color: #aaa;
-  border: none;
-  padding: 10px 25px;
-  border-radius: 8px;
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+  background-color: var(--secondary-color);
 
   &:hover {
-    background-color: #666;
+    background-color: var(--secondary-hover-color);
   }
 }

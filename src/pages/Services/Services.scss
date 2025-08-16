@@ -1,12 +1,17 @@
+.page{
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+}
 .services-container {
   padding: 50px 30px;
   max-width: 1200px;
   margin: 0 auto;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom right, #f0f4f8, #ffffff);
+  background-color: #ffffff;
   border-radius: 25px;
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
-  color: #2c3e50;
+  color: #1664b1;
 }
 
 .title {
@@ -54,7 +59,7 @@
   }
 
   &.selected {
-    background: linear-gradient(to top right, #9d9d9d, #ffffff);
+    background: linear-gradient(to top right, #dddfdd, #ffffff);
     color: #ffffff;
     box-shadow: 0 11px 10px rgba(0, 0, 0, 0.5);
     transform: scale(1.03);
@@ -71,7 +76,7 @@
   h3 {
     font-size: 2.2rem;
     font-weight: 800;
-    color: #2f99e4;
+    color: #000000;
     margin-bottom: 30px;
     border-bottom: 2px dashed #0a3d62;
     padding-bottom: 12px;
@@ -121,10 +126,11 @@
     font-weight: 600;
 
     .publisher-link {
-      color: #e62424;
+      color: #008042;
       font-weight: 700;
       text-decoration: underline;
       margin-left: 6px;
+      
       
 
       &:hover {

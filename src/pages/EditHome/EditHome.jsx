@@ -3,10 +3,10 @@ import { DarkModeContext } from '../../context/DarkModeContext';
 import {
   FaMoneyBillWave, FaBuilding, FaSpinner, FaExclamationCircle, FaCheckCircle,
   FaTree, FaCar, FaSolarPanel, FaWater, FaDirections, FaBolt, FaShower, FaHome
-} from 'react-icons/fa'; // استورد جميع الأيقونات التي قد تحتاجها
-import { MdApartment, MdVilla, MdCabin, MdElevator } from 'react-icons/md'; // استورد الأيقونات الجديدة
+} from 'react-icons/fa';
+import { MdApartment, MdVilla, MdCabin, MdElevator } from 'react-icons/md';
 import MapPicker from '../../MapPicker';
-import './EditHome.scss'; 
+import './EditHome.scss';
 import useAuth from './../../hooks/useAuth';
 import useLocation from './../../hooks/useLocation';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,12 @@ import { useRealEstateForm } from '../../hooks/useRealEstateForm';
 import FeatureToggle from './../../components/FeatureToggle/FeatureToggle ';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getRealEstateDetails } from '../../features/auth/authSlice';
-import api from './../../services/api'; 
+import api from './../../services/api';
+
+// استيراد مكونات المودال الجديدة
+import SuccessModal from '../../components/SuccessModal';
+import ErrorModal from '../../components/ErrorModal';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 const EditHome = () => {
   const { id } = useParams();
@@ -24,13 +29,12 @@ const EditHome = () => {
   const { loaction: locationsData, loading: locationsLoading, error: locationsError } = useLocation();
   const dispatch = useDispatch();
 
-  const { loading: editRealEstateLoadingFromRedux, error: editRealEstateErrorFromRedux } = useSelector((state) => state.realestate);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
 
   const featuresConfig = [
     {
       name: 'garden_status',
-      icon: 'FaTree', 
+      icon: 'FaTree',
       label: translateMode ? 'Garden' : 'حديقة',
       options: [1, 2],
       labels: translateMode ? ['Yes', 'No'] : ['نعم', 'لا'],
@@ -44,14 +48,14 @@ const EditHome = () => {
     },
     {
       name: 'garage',
-      icon: 'FaCar', 
+      icon: 'FaCar',
       label: translateMode ? 'Garage' : 'كراج',
       options: [1, 2], // 1: Yes, 2: No
       labels: translateMode ? ['Yes', 'No'] : ['نعم', 'لا'],
     },
     {
       name: 'water_well',
-      icon: 'FaWater', 
+      icon: 'FaWater',
       label: translateMode ? 'Water Well' : 'بئر ماء',
       options: [1, 2], // 1: Yes, 2: No
       labels: translateMode ? ['Yes', 'No'] : ['نعم', 'لا'],
@@ -65,7 +69,7 @@ const EditHome = () => {
     },
     {
       name: 'transportation_status',
-      icon: 'FaDirections', 
+      icon: 'FaDirections',
       label: translateMode ? 'Transportation' : 'مواصلات',
       options: [1, 2, 3], // 1: Excellent, 2: Good, 3: None
       labels: translateMode ? ['Excellent', 'Good', 'None'] : ['ممتاز', 'جيد', 'لا يوجد'],
@@ -84,7 +88,6 @@ const EditHome = () => {
       options: [1, 2, 3],
       labels: translateMode ? ['Available', 'Poor', 'None'] : ['متاح', 'ضعيف', 'لا يوجد'],
     },
-
   ];
 
   const {
@@ -94,15 +97,17 @@ const EditHome = () => {
     handleInputChange,
     handleLocationSelect,
     nextStep,
-    // features, // لم نعد نستخدم features من useRealEstateForm مباشرة هنا
     prevStep,
     formValidationErrors,
     validateStep,
   } = useRealEstateForm(user, translateMode);
 
-  const [feedbackMessage, setFeedbackMessage] = useState(null);
-  const [localLoading, setLocalLoading] = useState(false); 
-  const [localError, setLocalError] = useState(null);     
+  // حالات المودال المخصصة
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [localLoading, setLocalLoading] = useState(false);
 
   // تحميل بيانات العقار عند التحميل الأولي
   useEffect(() => {
@@ -111,22 +116,22 @@ const EditHome = () => {
         const response = await dispatch(getRealEstateDetails(id)).unwrap();
 
         setFormData({
-          ...formData, 
-          type: response.type ? response.type.charAt(0).toUpperCase() + response.type.slice(1).toLowerCase() : '', 
-          kind: response.kind ? response.kind.charAt(0).toUpperCase() + response.kind.slice(1).toLowerCase() : '', 
+          ...formData,
+          type: response.type ? response.type.charAt(0).toUpperCase() + response.type.slice(1).toLowerCase() : '',
+          kind: response.kind ? response.kind.charAt(0).toUpperCase() + response.kind.slice(1).toLowerCase() : '',
           real_estate_location_id: response.real_estate_location_id,
           latitude: response.latitude,
           longitude: response.longitude,
           description: response.description,
           price: response.price,
           room_no: response.properties?.room_no,
-          bathroom_no: response.properties?.bathroom_no || 0, 
-          ownership_type: response.properties?.ownership_type ? response.properties.ownership_type.charAt(0).toUpperCase() + response.properties.ownership_type.slice(1).toLowerCase() : '', 
+          bathroom_no: response.properties?.bathroom_no || 0,
+          ownership_type: response.properties?.ownership_type ? response.properties.ownership_type.charAt(0).toUpperCase() + response.properties.ownership_type.slice(1).toLowerCase() : '',
           floor: response.properties?.floor,
           space_status: response.properties?.space_status,
-          direction: response.properties?.direction,
-          electricity_status: parseInt(response.properties?.electricity_status), 
-          water_status: parseInt(response.properties?.water_status), 
+          direction: parseInt(response.properties?.direction), // التأكد من أن الاتجاه يتم تحويله إلى عدد صحيح
+          electricity_status: parseInt(response.properties?.electricity_status),
+          water_status: parseInt(response.properties?.water_status),
           transportation_status: parseInt(response.properties?.transportation_status),
           water_well: parseInt(response.properties?.water_well),
           solar_energy: parseInt(response.properties?.solar_energy),
@@ -138,23 +143,15 @@ const EditHome = () => {
         setInitialDataLoaded(true);
       } catch (error) {
         console.error('Error fetching real estate details:', error);
-        setFeedbackMessage({
-          type: 'error',
-          text: translateMode ? 'Failed to load property data' : 'فشل تحميل بيانات العقار'
-        });
+        setModalMessage(translateMode ? 'Failed to load property data.' : 'فشل تحميل بيانات العقار.');
+        setShowErrorModal(true);
       }
     };
 
     if (id && !initialDataLoaded) {
       fetchRealEstateData();
     }
-  }, [id, dispatch, initialDataLoaded, setFormData, formData, translateMode]); 
-
-  const propertyCategories = [
-    { value: 'Apartment', icon: <MdApartment />, label: translateMode ? 'Apartment' : 'شقة' }, 
-    { value: 'Villa', icon: <MdVilla />, label: translateMode ? 'Villa' : 'فيلا' },      
-    { value: 'Chalet', icon: <MdCabin />, label: translateMode ? 'Chalet' : 'شاليه' },  
-  ];
+  }, [id, dispatch, initialDataLoaded, setFormData, formData, translateMode]);
 
   const t = {
     editPropertyTitle: translateMode ? 'Edit Property' : 'تعديل العقار',
@@ -170,13 +167,15 @@ const EditHome = () => {
     selectedLocation: translateMode ? 'Selected Location:' : 'الموقع المحدد:',
     propertyInformation: translateMode ? 'Property Information' : 'معلومات العقار',
     detailedDescription: translateMode ? 'Detailed Description' : 'الوصف التفصيلي',
-    specifications: translateMode ? 'Specifications' : 'مواصفات العقار', 
+    specifications: translateMode ? 'Specifications' : 'مواصفات العقار',
     price: translateMode ? 'Price' : 'السعر',
     numRooms: translateMode ? 'Number of Rooms' : 'عدد الغرف',
-    bathroomNo: translateMode ? 'Number of Bathrooms' : 'عدد الحمامات', 
-    ownershipType: translateMode ? 'Ownership Type' : 'نوع الملكية', 
+    bathroomNo: translateMode ? 'Number of Bathrooms' : 'عدد الحمامات',
+    ownershipType: translateMode ? 'Ownership Type' : 'نوع الملكية',
+    ownershipGreen: translateMode ? 'Green' : 'أخضر',
+    ownershipCourt: translateMode ? 'Court' : 'محكمة',
     floorNumber: translateMode ? 'Floor Number' : 'رقم الطابق',
-    space: translateMode ? 'Space (m²)' : 'المساحة (m²)', 
+    space: translateMode ? 'Space (m²)' : 'المساحة (m²)',
     direction: translateMode ? 'Direction' : 'الاتجاه',
     features: translateMode ? 'Features' : 'المميزات',
     updateProperty: translateMode ? 'Update Property' : 'تحديث العقار',
@@ -185,112 +184,111 @@ const EditHome = () => {
     fetchingLocations: translateMode ? 'Fetching locations...' : 'جاري جلب المواقع...',
     locationsLoadError: translateMode ? 'Failed to load locations.' : 'فشل تحميل المواقع.',
     noLocationsAvailable: translateMode ? 'No locations available.' : 'لا توجد مواقع متاحة.',
-    next: translateMode ? 'Next' : 'التالي', // أضف الترجمة للزر التالي
-    previous: translateMode ? 'Previous' : 'السابق', // أضف الترجمة للزر السابق
+    next: translateMode ? 'Next' : 'التالي',
+    previous: translateMode ? 'Previous' : 'السابق',
+    confirmUpdate: translateMode ? "Are you sure you want to update this property?" : "هل أنت متأكد من تعديل العقار؟",
   };
-
-  useEffect(() => {
-    if (feedbackMessage) {
-      const timer = setTimeout(() => {
-        setFeedbackMessage(null);
-      }, 5000); 
-      return () => clearTimeout(timer);
-    }
-  }, [feedbackMessage]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFeedbackMessage(null); 
-    setLocalError(null); 
-    setLocalLoading(true); 
+    setLocalLoading(true);
+    setModalMessage(''); // مسح الرسالة السابقة
+    setShowErrorModal(false); // إخفاء مودال الخطأ السابق
+    setShowSuccessModal(false); // إخفاء مودال النجاح السابق (لضمان حالة نظيفة)
 
     const isStepValid = validateStep(activeStep);
     if (!isStepValid) {
       const firstErrorKey = Object.keys(formValidationErrors)[0];
       if (firstErrorKey) {
-        setFeedbackMessage({ type: 'error', text: formValidationErrors[firstErrorKey] });
+        setModalMessage(formValidationErrors[firstErrorKey]);
+        setShowErrorModal(true);
       } else {
-        setFeedbackMessage({ type: 'error', text: t.propertyUpdateFailed });
+        setModalMessage(t.propertyUpdateFailed);
+        setShowErrorModal(true);
       }
-      setLocalLoading(false); 
+      setLocalLoading(false);
       return;
     }
 
-    if (activeStep < 3) { 
+    if (activeStep < 3) {
       nextStep();
-      setLocalLoading(false); 
+      setLocalLoading(false);
       return;
     }
-    
-    const confirm = window.confirm(translateMode ? "Are you sure you want to update this property?" : "هل أنت متأكد من تعديل العقار؟");
-    if (!confirm) {
-      setLocalLoading(false); 
-      return;
-    }
+
+    // Show confirmation modal before final submission
+    setModalMessage(t.confirmUpdate);
+    setShowConfirmationModal(true);
+  };
+
+  const confirmSubmit = async () => {
+    setShowConfirmationModal(false);
+    setLocalLoading(true); // إعادة تمكين حالة التحميل عند بدء الإرسال الفعلي
+    setModalMessage(''); // مسح الرسالة السابقة قبل محاولة الإرسال
 
     const dataToSend = { ...formData };
 
     Object.keys(dataToSend).forEach(key => {
-        if (dataToSend[key] === null || dataToSend[key] === undefined || dataToSend[key] === '') {
-            delete dataToSend[key]; 
-            return; 
-        }
+      if (dataToSend[key] === null || dataToSend[key] === undefined || dataToSend[key] === '') {
+        delete dataToSend[key];
+        return;
+      }
 
-        let value = dataToSend[key];
+      let value = dataToSend[key];
 
-        if (key === 'type' || key === 'kind' || key === 'ownership_type') {
-            value = String(value); 
+      if (key === 'type' || key === 'kind' || key === 'ownership_type') {
+        value = String(value);
+      }
+      else if (['price', 'room_no', 'bathroom_no', 'floor', 'space_status'].includes(key)) {
+        value = Number(value);
+        if (isNaN(value)) {
+          value = 0;
         }
-        else if (['price', 'room_no', 'bathroom_no', 'floor', 'space_status'].includes(key)) {
-            value = Number(value);
-            if (isNaN(value)) {
-                value = 0; 
-            }
-        }
-        else if (['electricity_status', 'water_status', 'transportation_status', 'water_well', 
-                  'solar_energy', 'garage', 'elevator', 'garden_status', 'attired'].includes(key)) {
-            value = String(value); 
-        }
-        else {
-             value = String(value); 
-        }
-        
-        dataToSend[key] = value;
+      }
+      // Keep direction and other statuses as strings for API
+      else if (['electricity_status', 'water_status', 'transportation_status', 'water_well',
+        'solar_energy', 'garage', 'elevator', 'garden_status', 'attired', 'direction'].includes(key)) {
+        value = String(value);
+      }
+      else {
+        value = String(value);
+      }
+      dataToSend[key] = value;
     });
 
     if (user && user.id) {
-        dataToSend.user_id = String(user.id);
+      dataToSend.user_id = String(user.id);
     } else {
-        console.warn("User ID is missing, API might reject the request.");
-        setFeedbackMessage({ type: 'error', text: translateMode ? "User not authenticated." : "المستخدم غير موثق." });
-        setLocalLoading(false);
-        return;
+      console.warn("User ID is missing, API might reject the request.");
+      setModalMessage(translateMode ? "User not authenticated." : "المستخدم غير موثق.");
+      setShowErrorModal(true);
+      setLocalLoading(false);
+      return;
     }
 
     if (dataToSend.status === null || dataToSend.status === undefined) {
-        dataToSend.status = "open"; 
+      dataToSend.status = "open";
     } else {
-        dataToSend.status = String(dataToSend.status).toLowerCase(); 
+      dataToSend.status = String(dataToSend.status).toLowerCase();
     }
-    
-    console.log("JSON Data to send (from Frontend - direct axios):", dataToSend);
-    console.log("Current formData state (from component):", formData); 
 
     try {
       const response = await api.post(`/RealEstate/update/${id}`, dataToSend, {
-          headers: {
-              'Content-Type': 'application/json', 
-              'Accept': 'application/json',
-          },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
       });
 
-      if (response.data && response.data.message === "Real estate updated successfully ") {
-        setFeedbackMessage({ type: 'success', text: t.propertyUpdatedSuccess });
-        setTimeout(() => navigate(-1), 2000); 
+      if (response.data && response.data.message &&
+        response.data.message === "Real estate updated successfully") {
+        setModalMessage(t.propertyUpdatedSuccess);
+        setShowSuccessModal(true);
       } else {
-        setFeedbackMessage({ type: 'error', text: response.data.message || t.propertyUpdateFailed });
+        setModalMessage(response.data?.message || t.propertyUpdateFailed);
+        setShowErrorModal(true);
       }
-      
+
     } catch (error) {
       console.error('Error updating property (direct axios):', error);
       let detailedMessage = translateMode
@@ -299,23 +297,25 @@ const EditHome = () => {
 
       if (error.response && error.response.data) {
         if (error.response.data.errors && typeof error.response.data.errors === 'object') {
-          const allErrors = Object.values(error.response.data.errors).flat(); 
-          detailedMessage = allErrors.join(', ') || detailedMessage; 
+          const allErrors = Object.values(error.response.data.errors).flat();
+          detailedMessage = allErrors.join(', ') || detailedMessage;
         } else if (error.response.data.message) {
           detailedMessage = error.response.data.message;
         }
       } else if (error.message) {
-        detailedMessage = error.message; 
+        detailedMessage = error.message;
       }
 
-      setFeedbackMessage({
-        type: 'error',
-        text: detailedMessage,
-      });
-      setLocalError(error); 
+      setModalMessage(detailedMessage);
+      setShowErrorModal(true);
     } finally {
-      setLocalLoading(false); 
+      setLocalLoading(false); // تأكد من إيقاف التحميل دائمًا
     }
+  };
+
+  const handleSuccessModalClose = () => {
+    setShowSuccessModal(false);
+    navigate(-1); // الانتقال إلى صفحة الملف الشخصي بعد إغلاق مودال النجاح
   };
 
   const preventEnterSubmit = (e) => {
@@ -341,7 +341,7 @@ const EditHome = () => {
         <h1 className="page-title">{t.editPropertyTitle}</h1>
 
         <div className="progress-steps">
-          {[1, 2, 3].map(step => ( 
+          {[1, 2, 3].map(step => (
             <div
               key={step}
               className={`step ${step === activeStep ? 'active' : ''} ${step < activeStep ? 'completed' : ''}`}
@@ -349,7 +349,7 @@ const EditHome = () => {
               <div className="step-number">{step}</div>
               <div className="step-label">
                 {translateMode ?
-                  [t.stepPropertyType, t.stepLocation, t.stepDetails][step - 1] : 
+                  [t.stepPropertyType, t.stepLocation, t.stepDetails][step - 1] :
                   [t.stepPropertyType, t.stepLocation, t.stepDetails][step - 1]
                 }
               </div>
@@ -357,19 +357,10 @@ const EditHome = () => {
           ))}
         </div>
 
-        {feedbackMessage && (
-          <p className={`status-message ${feedbackMessage.type === 'success' ? 'success-message' : 'error-message'}`}>
-            {feedbackMessage.type === 'success' ? <FaCheckCircle /> : <FaExclamationCircle />} {feedbackMessage.text}
-          </p>
-        )}
-        {localLoading && !feedbackMessage && ( 
+        {/* مؤشر التحميل يمكن أن يبقى هنا */}
+        {localLoading && (
           <p className="status-message loading-message">
             <FaSpinner className="spinner" /> {t.updateProperty}
-          </p>
-        )}
-        {localError && !feedbackMessage && ( 
-          <p className="status-message error-message">
-            <FaExclamationCircle /> {localError.message || t.propertyUpdateFailed}
           </p>
         )}
 
@@ -380,12 +371,12 @@ const EditHome = () => {
               <div className="form-section card">
                 <h2>{t.listingType}</h2>
                 <div className="type-selector">
-                  {['Sale', 'Rental'].map(typeOption => ( 
+                  {['Sale', 'Rental'].map(typeOption => (
                     <label key={typeOption} className={`type-option ${formData.type === typeOption ? 'active' : ''}`}>
                       <input
                         type="radio"
                         name="type"
-                        value={typeOption} 
+                        value={typeOption}
                         checked={formData.type === typeOption}
                         onChange={handleInputChange}
                       />
@@ -400,9 +391,9 @@ const EditHome = () => {
                 <h2>{t.propertyCategory}</h2>
                 <div className="category-grid">
                   {[
-                    { value: 'Apartment', icon: <MdApartment />, label: translateMode ? 'Apartment' : 'شقة' }, 
-                    { value: 'Villa', icon: <MdVilla />, label: translateMode ? 'Villa' : 'فيلا' },      
-                    { value: 'Chalet', icon: <MdCabin />, label: translateMode ? 'Chalet' : 'شاليه' },  
+                    { value: 'Apartment', icon: <MdApartment />, label: translateMode ? 'Apartment' : 'شقة' },
+                    { value: 'Villa', icon: <MdVilla />, label: translateMode ? 'Villa' : 'فيلا' },
+                    { value: 'Chalet', icon: <MdCabin />, label: translateMode ? 'Chalet' : 'شاليه' },
                   ].map(category => (
                     <label
                       key={category.value}
@@ -411,7 +402,7 @@ const EditHome = () => {
                       <input
                         type="radio"
                         name="kind"
-                        value={category.value} 
+                        value={category.value}
                         checked={formData.kind === category.value}
                         onChange={handleInputChange}
                       />
@@ -523,27 +514,17 @@ const EditHome = () => {
                   </div>
                   {formValidationErrors?.room_no && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.room_no}</p>}
 
+                  {/* قائمة منسدلة لنوع الملكية */}
                   <div className="input-group floating-label">
-                    <input
-                      type="number"
-                      name="bathroom_no"
-                      value={formData.bathroom_no === 0 ? '' : formData.bathroom_no}
-                      onChange={handleInputChange}
-                      placeholder={t.bathroomNo}
-                      onKeyDown={preventEnterSubmit}
-                    />
-                  </div>
-                  {formValidationErrors?.bathroom_no && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.bathroom_no}</p>}
-
-                  <div className="input-group floating-label">
-                    <input
-                      type="text"
+                    <select
                       name="ownership_type"
                       value={formData.ownership_type}
                       onChange={handleInputChange}
-                      placeholder={t.ownershipType}
-                      onKeyDown={preventEnterSubmit}
-                    />
+                    >
+                      <option value="">{t.ownershipType}</option>
+                      <option value="Green">{t.ownershipGreen}</option>
+                      <option value="Court">{t.ownershipCourt}</option>
+                    </select>
                   </div>
                   {formValidationErrors?.ownership_type && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.ownership_type}</p>}
 
@@ -571,15 +552,18 @@ const EditHome = () => {
                   </div>
                   {formValidationErrors?.space_status && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.space_status}</p>}
 
+                  {/* قائمة منسدلة للاتجاهات 1، 2، 3 بدون كلمة "Direction" */}
                   <div className="input-group floating-label">
-                    <input
-                      type="text"
+                    <select
                       name="direction"
                       value={formData.direction}
                       onChange={handleInputChange}
-                      placeholder={t.direction}
-                      onKeyDown={preventEnterSubmit}
-                    />
+                    >
+                      <option value="">{t.direction}</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
                   </div>
                   {formValidationErrors?.direction && <p className="validation-error"><FaExclamationCircle /> {formValidationErrors.direction}</p>}
 
@@ -589,7 +573,6 @@ const EditHome = () => {
               <div className="form-section card">
                 <h2>{t.features}</h2>
                 <div className="features-grid">
-                  {/* هنا نستخدم featuresConfig التي عرفناها في هذا المكون */}
                   {featuresConfig.map((feature) => (
                     <FeatureToggle
                       key={feature.name}
@@ -598,15 +581,15 @@ const EditHome = () => {
                       label={feature.label}
                       options={feature.options}
                       labels={feature.labels}
-                      value={formData[feature.name]} 
-                      onChange={handleInputChange} 
+                      value={formData[feature.name]}
+                      onChange={handleInputChange}
                     />
                   ))}
                 </div>
               </div>
             </div>
           )}
-          
+
           <div className="form-navigation">
             {activeStep > 1 && (
               <button type="button" className="nav-button prev-button" onClick={prevStep}>
@@ -617,12 +600,40 @@ const EditHome = () => {
               {localLoading ? (
                 <> <FaSpinner className="spinner" /> {t.updateProperty} </>
               ) : (
-                activeStep < 3 ? t.next : t.updateProperty 
+                activeStep < 3 ? t.next : t.updateProperty
               )}
             </button>
           </div>
         </form>
       </div>
+
+      {/* مودالات التأكيد والنجاح والخطأ */}
+      {showConfirmationModal && (
+        <ConfirmationModal
+          message={modalMessage}
+          onConfirm={confirmSubmit}
+          onCancel={() => {
+            setShowConfirmationModal(false);
+            setLocalLoading(false); // إيقاف التحميل إذا تم الإلغاء
+          }}
+          confirmText={translateMode ? 'Yes, Update' : 'نعم، تحديث'}
+          cancelText={translateMode ? 'Cancel' : 'إلغاء'}
+        />
+      )}
+
+      {showSuccessModal && (
+        <SuccessModal
+          message={modalMessage}
+          onClose={handleSuccessModalClose} // نمرر الدالة الجديدة هنا
+        />
+      )}
+
+      {showErrorModal && (
+        <ErrorModal
+          message={modalMessage}
+          onClose={() => setShowErrorModal(false)}
+        />
+      )}
     </div>
   );
 };
